@@ -37,5 +37,4 @@ public class Class03 {
             System.out.printf("\t %s %s", (char) integer, breakLine);
        }
     }
-    
 }

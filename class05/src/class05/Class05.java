@@ -20,7 +20,6 @@ public class Class05 {
         int[] newRowValues = new int[rows];
 
         for (int i = 0; i < rows; i++) {
-            newRowValues = rowValues.clone();
             for (int j = 0; j <= i; j++) {
                 int output = 1;
                 if (i == 0) {
@@ -40,5 +39,4 @@ public class Class05 {
             rowValues = newRowValues.clone();
         }
     }
-    
 }
