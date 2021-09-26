@@ -4,8 +4,6 @@
  */
 package class02;
 
-import java.util.Objects;
-
 /**
  *
  * @author leonardozanotti
@@ -19,7 +17,7 @@ public class Class02 {
         Integer index = 0;
         Integer tabIndex = 0;
         for(int i = 1; i < 16; i++) {
-            if (Objects.equals(tabIndex, index)) {
+            if (index == tabIndex) {
                 System.out.println(i);
                 index++;
                 tabIndex = 0;
