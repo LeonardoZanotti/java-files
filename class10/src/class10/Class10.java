@@ -4,6 +4,8 @@
  */
 package class10;
 
+import java.util.Scanner;
+
 /**
  *
  * @author leonardozanotti
@@ -14,7 +16,16 @@ public class Class10 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Scanner scanner = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter the text: ");
+        String text = scanner.nextLine();  // Read user input
+        System.out.println(removeVogals(text));
+    }
+    
+    public static String removeVogals(String text) {
+        String formattedText;
+        formattedText = text.replaceAll("(a|e|i|o|u|A|E|I|O|U)", "");
+        return formattedText;
     }
     
 }
