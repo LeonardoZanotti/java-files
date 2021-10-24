@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package calculator;
+package CalcPackage;
 
 /**
  *
@@ -47,8 +47,9 @@ public class CalcForm extends javax.swing.JFrame {
         jButton16 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Calculator");
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(330, 70));
+        jPanel1.setPreferredSize(new java.awt.Dimension(400, 70));
 
         jTextField1.setText("jTextField1");
         jTextField1.setEnabled(false);
@@ -57,9 +58,9 @@ public class CalcForm extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -70,16 +71,14 @@ public class CalcForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 12, 12, 12));
+        jPanel2.setMaximumSize(new java.awt.Dimension(2, 32767));
+        jPanel2.setPreferredSize(new java.awt.Dimension(200, 230));
         jPanel2.setLayout(new java.awt.GridLayout(4, 4, 8, 8));
 
         jButton1.setText("7");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
         jPanel2.add(jButton1);
 
         jButton2.setText("8");
@@ -118,9 +117,7 @@ public class CalcForm extends javax.swing.JFrame {
         jButton13.setText("0");
         jPanel2.add(jButton13);
 
-        jButton14.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButton14.setText("=");
-        jButton14.setAlignmentX(0.5F);
         jPanel2.add(jButton14);
 
         jButton15.setText("C");
@@ -133,10 +130,6 @@ public class CalcForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
