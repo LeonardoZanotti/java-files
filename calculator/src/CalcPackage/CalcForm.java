@@ -300,7 +300,11 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
     }
     
     private void performResultAction() {
-        input2 = jTextField1.getText();
+        if (calcStatus.equals(CalculatorStatus.RESULT)) {
+            input1 = resultString;
+        } else {
+            input2 = jTextField1.getText();
+        }
         if (input1.length() > 0 && input2.length() > 0 && operator.length() > 0) {
             Integer input1Number = Integer.parseInt(this.input1);
             Integer input2Number = Integer.parseInt(this.input2);
