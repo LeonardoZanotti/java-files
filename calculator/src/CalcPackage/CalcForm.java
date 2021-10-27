@@ -6,6 +6,7 @@ package CalcPackage;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -16,7 +17,7 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
         INITIAL, INPUT1, INPUT2, OPERATOR, RESULT
     }
     private CalculatorStatus calcStatus = CalculatorStatus.INITIAL;
-    private String input1 = "", operator = "", input2 = "", resultString = "";
+    private String input1 = "", operator = "", input2 = "", signal = "", resultString = "";
     
     /**
      * Creates new form CalcForm
@@ -43,6 +44,7 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
         jButton15.addActionListener(this);
         jButton16.addActionListener(this);
         
+        jTextField1.setHorizontalAlignment(SwingConstants.RIGHT);
         jTextField1.setText("0");
     }
 
@@ -278,9 +280,10 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
     
     private void performNumberAction(String number) {
         if (calcStatus.equals(CalculatorStatus.INPUT1) || calcStatus.equals(CalculatorStatus.INPUT2)) {
-            jTextField1.setText(jTextField1.getText()+number);
+            jTextField1.setText(jTextField1.getText() + number);
         } else {
-            jTextField1.setText(number);
+            jTextField1.setText(signal + number);
+            signal = "";
             if (!"0".equals(number)) {
                 calcStatus = calcStatus.equals(CalculatorStatus.OPERATOR) ? CalculatorStatus.INPUT2 : CalculatorStatus.INPUT1;
             }
@@ -288,14 +291,13 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
     }
     
     private void performOperatorAction(String operator) {
-        if (calcStatus.equals(CalculatorStatus.INPUT1)) {
-            input1 = jTextField1.getText();
+        if (calcStatus.equals(CalculatorStatus.INPUT1) || calcStatus.equals(CalculatorStatus.RESULT)) {
+            input1 = calcStatus.equals(CalculatorStatus.INPUT1) ? jTextField1.getText() : resultString; // use the previous result as input
             this.operator = operator;
-            calcStatus = CalculatorStatus.OPERATOR;
-        } else if (calcStatus.equals(CalculatorStatus.RESULT)) {    // use the previous result as input
-            input1 = resultString;
-            this.operator = operator;
-            calcStatus = CalculatorStatus.OPERATOR;
+            calcStatus = CalculatorStatus.OPERATOR;            
+        }
+        if (operator.equals("-")) {
+            signal = "-";
         }
     }
     
@@ -311,13 +313,13 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
             Integer result = 0;
             switch (operator) {
                 case "-":
-                    result = input1Number - input2Number;
+                    result = input1Number + input2Number;
                     break;
                 case "+":
                     result = input1Number + input2Number;
                     break;
                 case "/":
-                    result = input1Number / input2Number;
+                    result = (input2Number.equals(0)) ? 0 : input1Number / input2Number;
                     break;
                 case "X":
                     result = input1Number * input2Number;
@@ -330,7 +332,6 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
             calcStatus = CalculatorStatus.RESULT;
         }        
     }
-
     
     private void performClearAction() {
         jTextField1.setText("0");
