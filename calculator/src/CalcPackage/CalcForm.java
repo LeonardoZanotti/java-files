@@ -292,7 +292,7 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
             input1 = jTextField1.getText();
             this.operator = operator;
             calcStatus = CalculatorStatus.OPERATOR;
-        } else if (calcStatus.equals(CalculatorStatus.RESULT)) {
+        } else if (calcStatus.equals(CalculatorStatus.RESULT)) {    // use the previous result as input
             input1 = resultString;
             this.operator = operator;
             calcStatus = CalculatorStatus.OPERATOR;
@@ -301,7 +301,7 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
     
     private void performResultAction() {
         if (calcStatus.equals(CalculatorStatus.RESULT)) {
-            input1 = resultString;
+            input1 = resultString;      // pressing result again without new inputs
         } else {
             input2 = jTextField1.getText();
         }
