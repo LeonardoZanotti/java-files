@@ -16,7 +16,7 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
         INITIAL, INPUT1, INPUT2, OPERATOR, RESULT
     }
     private CalculatorStatus calcStatus = CalculatorStatus.INITIAL;
-    private String input1, operator, input2;
+    private String input1 = "", operator = "", input2 = "", resultString = "";
     
     /**
      * Creates new form CalcForm
@@ -292,37 +292,47 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
             input1 = jTextField1.getText();
             this.operator = operator;
             calcStatus = CalculatorStatus.OPERATOR;
+        } else if (calcStatus.equals(CalculatorStatus.RESULT)) {
+            input1 = resultString;
+            this.operator = operator;
+            calcStatus = CalculatorStatus.OPERATOR;
         }
     }
     
     private void performResultAction() {
         input2 = jTextField1.getText();
-        Integer input1Number = Integer.parseInt(this.input1);
-        Integer input2Number = Integer.parseInt(this.input2);
-        Integer result = 0;
-        switch (operator) {
-            case "-":
-                result = input1Number - input2Number;
-                break;
-            case "+":
-                result = input1Number + input2Number;
-                break;
-            case "/":
-                System.out.println("dale");
-                result = input1Number / input2Number;
-                break;
-            case "X":
-                result = input1Number * input2Number;
-                break;
-            default:
-                break;
-        }
-        jTextField1.setText(result.toString());
-        calcStatus = CalculatorStatus.RESULT;
+        if (input1.length() > 0 && input2.length() > 0 && operator.length() > 0) {
+            Integer input1Number = Integer.parseInt(this.input1);
+            Integer input2Number = Integer.parseInt(this.input2);
+            Integer result = 0;
+            switch (operator) {
+                case "-":
+                    result = input1Number - input2Number;
+                    break;
+                case "+":
+                    result = input1Number + input2Number;
+                    break;
+                case "/":
+                    result = input1Number / input2Number;
+                    break;
+                case "X":
+                    result = input1Number * input2Number;
+                    break;
+                default:
+                    break;
+            }
+            resultString = result.toString();
+            jTextField1.setText(result.toString());
+            calcStatus = CalculatorStatus.RESULT;
+        }        
     }
+
     
     private void performClearAction() {
         jTextField1.setText("0");
+        input1 = "";
+        input2 = "";
+        operator = "";
         calcStatus = CalculatorStatus.INITIAL;        
     }
 }
