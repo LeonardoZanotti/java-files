@@ -4,17 +4,39 @@
  */
 package CalcPackage;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author leonardozanotti
  */
-public class CalcForm extends javax.swing.JFrame {
+public class CalcForm extends javax.swing.JFrame implements ActionListener {
 
     /**
      * Creates new form CalcForm
      */
     public CalcForm() {
         initComponents();
+        setLocationRelativeTo(null);
+        
+        // Listeners
+        jButton1.addActionListener(this);
+        jButton2.addActionListener(this);
+        jButton3.addActionListener(this);
+        jButton4.addActionListener(this);
+        jButton5.addActionListener(this);
+        jButton6.addActionListener(this);
+        jButton7.addActionListener(this);
+        jButton8.addActionListener(this);
+        jButton9.addActionListener(this);
+        jButton10.addActionListener(this);
+        jButton11.addActionListener(this);
+        jButton12.addActionListener(this);
+        jButton13.addActionListener(this);
+        jButton14.addActionListener(this);
+        jButton15.addActionListener(this);
+        jButton16.addActionListener(this);
     }
 
     /**
@@ -187,4 +209,45 @@ public class CalcForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+        switch (command) {
+            case "0":
+                break;
+            case "1":
+                break;
+            case "2":
+                break;
+            case "3":
+                break;
+            case "4":
+                break;
+            case "5":
+                break;
+            case "6":
+                break;
+            case "7":
+                break;
+            case "8":
+                break;
+            case "9":
+                break;
+            case "C":
+                break;
+            case "X":
+                break;
+            case "/":
+                break;
+            case "+":
+                break;
+            case "-":
+                break;
+            case "=":
+                break;
+            default:
+                break;
+        }
+    }
 }
