@@ -280,13 +280,15 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
     
     private void performNumberAction(String number) {
         if (calcStatus.equals(CalculatorStatus.INPUT1) || calcStatus.equals(CalculatorStatus.INPUT2)) {
-            jTextField1.setText(jTextField1.getText() + number);
+            if ("0".equals(jTextField1.getText())) {
+                jTextField1.setText(number);
+            } else {
+                jTextField1.setText(jTextField1.getText() + number);
+            }
         } else {
             jTextField1.setText(signal + number);
             signal = "";
-            if (!"0".equals(number)) {
-                calcStatus = calcStatus.equals(CalculatorStatus.OPERATOR) ? CalculatorStatus.INPUT2 : CalculatorStatus.INPUT1;
-            }
+            calcStatus = calcStatus.equals(CalculatorStatus.OPERATOR) ? CalculatorStatus.INPUT2 : CalculatorStatus.INPUT1;
         }
     }
     
@@ -295,9 +297,10 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
             input1 = calcStatus.equals(CalculatorStatus.INPUT1) ? jTextField1.getText() : resultString; // use the previous result as input
             this.operator = operator;
             calcStatus = CalculatorStatus.OPERATOR;            
-        }
-        if (operator.equals("-")) {
-            signal = "-";
+        } else if (calcStatus.equals(CalculatorStatus.INITIAL) || calcStatus.equals(CalculatorStatus.OPERATOR) || calcStatus.equals(CalculatorStatus.RESULT)) {
+            if (operator.equals("-")) {
+                signal = "-";
+            }   
         }
     }
     
@@ -313,7 +316,7 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
             Integer result = 0;
             switch (operator) {
                 case "-":
-                    result = input1Number + input2Number;
+                    result = input1Number - input2Number;
                     break;
                 case "+":
                     result = input1Number + input2Number;
@@ -338,6 +341,7 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
         input1 = "";
         input2 = "";
         operator = "";
+        signal = "";
         calcStatus = CalculatorStatus.INITIAL;        
     }
 }
