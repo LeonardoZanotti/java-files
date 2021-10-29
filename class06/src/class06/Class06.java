@@ -7,7 +7,7 @@ import java.util.Scanner;  // Import the Scanner class
 
 /**
  *
- * @author leonardozanotti
+ * @author Leonardo José Zanotti
  */
 public class Class06 {
 

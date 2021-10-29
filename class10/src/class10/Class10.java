@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author leonardozanotti
+ * @author Leonardo José Zanotti
  */
 public class Class10 {
 
