@@ -297,10 +297,13 @@ public class CalcForm extends javax.swing.JFrame implements ActionListener {
             input1 = calcStatus.equals(CalculatorStatus.INPUT1) ? jTextField1.getText() : resultString; // use the previous result as input
             this.operator = operator;
             calcStatus = CalculatorStatus.OPERATOR;            
-        } else if (calcStatus.equals(CalculatorStatus.INITIAL) || calcStatus.equals(CalculatorStatus.OPERATOR) || calcStatus.equals(CalculatorStatus.RESULT)) {
+        } else if (calcStatus.equals(CalculatorStatus.INITIAL) || calcStatus.equals(CalculatorStatus.OPERATOR)) {
             if (operator.equals("-")) {
                 signal = "-";
             }   
+        } else if (calcStatus.equals(CalculatorStatus.INPUT2)) {
+            this.performResultAction();
+            this.performOperatorAction(operator);
         }
     }
     
