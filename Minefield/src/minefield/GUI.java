@@ -48,6 +48,7 @@ public class GUI extends JFrame {
         this.revealed = new boolean[rows][cols];
         this.flagged = new boolean[rows][cols];
 
+        // set the bombs and revealeds
         boolean repeating = false;
         while (bombs > 0) {
             for (int col = 0; col < cols; col++) {
@@ -58,9 +59,58 @@ public class GUI extends JFrame {
                     } else if (!repeating) {
                         mines[row][col] = false;
                     }
+                    revealed[row][col] = false;
                 }
             }
             repeating = true;
+        }
+        
+        for (int col = 0; col < cols; col++) {
+            for (int row = 0; row < rows; row++) {
+                int count = 0;
+                
+                // check upward
+                if (row > 0 && mines[row - 1][col]) {
+                    count++;
+                }
+                                
+                // check downward
+                if (row < rows - 1 && mines[row + 1][col]) {
+                    count++;
+                }
+                
+                // check left
+                if (col > 0 && mines[row][col - 1]) {
+                    count++;
+                }
+                
+                // check right
+                if (col < cols - 1 && mines[row][col + 1]) {
+                    count++;
+                }
+                
+                // check top left
+                if (row > 0 && col > 0 && mines[row - 1][col - 1]) {
+                    count++;
+                }
+                
+                // check top right
+                if (row > 0 && col < cols - 1 && mines[row - 1][col + 1]) {
+                    count++;
+                }
+                
+                // check down left
+                if (row < rows - 1 && col > 0 && mines[row + 1][col - 1]) {
+                    count++;
+                }
+                
+                // check down right
+                if (row < rows - 1 && col < cols - 1 && mines[row + 1][col + 1]) {
+                    count++;
+                }
+                
+                neighbours[row][col] = count;
+            }
         }
         
         this.setTitle("Minesweeper");
@@ -94,6 +144,9 @@ public class GUI extends JFrame {
                     if (mines[row][col]) {
                         g.setColor(Color.YELLOW);
                     }
+                    if (revealed[row][col]) {
+                        g.setColor(Color.GREEN);
+                    }
                     if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing + buttonSide && mouseY <= positionY + 2 * buttonSide) {
                         g.setColor(Color.RED);
                     }
@@ -125,7 +178,8 @@ public class GUI extends JFrame {
         public void mouseClicked(MouseEvent e) {
             int[] buttonXY = insideBox();
             if (buttonXY[0] != -1) {
-                System.out.printf("Inside %d %d", buttonXY[0], buttonXY[1]);
+                revealed[buttonXY[0]][buttonXY[1]] = true;
+                System.out.printf("Neighbours: %d\n", neighbours[buttonXY[0]][buttonXY[1]]);
             }
         }
 
