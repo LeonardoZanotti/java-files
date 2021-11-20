@@ -10,7 +10,6 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -19,24 +18,25 @@ import javax.swing.JPanel;
  * @author leonardozanotti
  */
 public class GUI extends JFrame {
-    private int rows;
-    private int cols;
-    private int rowSize, colSize;
-    private int buttonSize;
-    private int spacing;
+    private final int rows;
+    private final int cols;
+    private final int rowSize, colSize;
+    private final int buttonSize;
+    private final int spacing;
     private int bombs;
     
-    private int mouseX = -100, mouseY = -100;
+    private int mouseX, mouseY;
     
-    private double probability;
+    private final double probability;
     
-    private int[][] neighbours;
-    private boolean[][] mines;
-    private boolean[][] revealed;
-    private boolean[][] flagged;
+    private final int[][] neighbours;
+    private final boolean[][] mines;
+    private final boolean[][] revealed;
+    private final boolean[][] flagged;
     
-    private int smileX;
-    private int smileY;
+    private final int smileX;
+    private final int smileY;
+    private int happiness = 2;
     
     public GUI(int rows, int cols, int rowsSize, int colsSize, int buttonSize, int spacing, int bombs) {
         this.rows = rows;
@@ -51,6 +51,8 @@ public class GUI extends JFrame {
         this.neighbours = new int[rows][cols];
         this.revealed = new boolean[rows][cols];
         this.flagged = new boolean[rows][cols];
+        this.mouseX = -100;
+        this.mouseY = -100;
         this.smileX = rowsSize/2 - buttonSize/2;
         this.smileY = 5;
         
@@ -202,6 +204,30 @@ public class GUI extends JFrame {
             
             g.setColor(Color.YELLOW);
             g.fillOval(smileX, smileY, buttonSize, buttonSize);
+            g.setColor(Color.BLACK);
+            
+            switch (happiness) {
+                case 1:
+                    g.fillOval(smileX + buttonSize/5, smileY + buttonSize/4, buttonSize/4, buttonSize/4);
+                    g.fillOval(smileX + buttonSize - 2 * spacing - buttonSize/5, smileY + buttonSize/4, buttonSize/4, buttonSize/4);
+                    g.fillRect(smileX + buttonSize/5, smileY + buttonSize * 5/7, buttonSize * 5/8, buttonSize/10);
+                    g.fillRect(smileX + buttonSize/7, smileY + buttonSize * 5/8, buttonSize * 1/8, buttonSize/8);
+                    g.fillRect(smileX + buttonSize - spacing - buttonSize/7, smileY + buttonSize * 5/8, buttonSize * 1/8, buttonSize/8);
+                    break;
+                case 2:
+                    g.setFont(new Font("Tahoma", Font.BOLD, buttonSize * 1/3));
+                    g.drawString("X", smileX + buttonSize/5, smileY + buttonSize/2);
+                    g.drawString("X", smileX + buttonSize - 2 * spacing - buttonSize/5, smileY + buttonSize/2);
+                    g.fillRect(smileX + buttonSize/5, smileY + buttonSize * 4/7, buttonSize * 5/8, buttonSize/10);
+                    g.fillRect(smileX + buttonSize/7, smileY + buttonSize * 5/8, buttonSize * 1/8, buttonSize/8);
+                    g.fillRect(smileX + buttonSize - spacing - buttonSize/7, smileY + buttonSize * 5/8, buttonSize * 1/8, buttonSize/8);
+                    break;
+                default:
+                    g.fillOval(smileX + buttonSize/5, smileY + buttonSize/4, buttonSize/4, buttonSize/4);
+                    g.fillOval(smileX + buttonSize - 2 * spacing - buttonSize/5, smileY + buttonSize/4, buttonSize/4, buttonSize/4);
+                    g.fillOval(smileX + buttonSize/3, smileY + buttonSize * 5/8, buttonSize/3, buttonSize/3);
+                    break;
+            }
         }
     }
     
@@ -232,12 +258,15 @@ public class GUI extends JFrame {
 
         @Override
         public void mousePressed(MouseEvent arg0) {
-            // Not implemented yet
+            happiness = 3;
         }
 
         @Override
         public void mouseReleased(MouseEvent arg0) {
-            // Not implemented yet
+            int[] buttonXY = insideBox();
+            if (buttonXY[0] != -1) {
+                happiness = mines[buttonXY[0]][buttonXY[1]] ? 2 : 1;
+            }
         }
 
         @Override
