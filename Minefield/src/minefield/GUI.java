@@ -5,6 +5,7 @@
 package minefield;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -132,25 +133,46 @@ public class GUI extends JFrame {
     
     public class Board extends JPanel {
         public void paintComponent(Graphics g) {
+            // background
             g.setColor(Color.DARK_GRAY);
             g.fillRect(0, 0, rowSize, colSize);
+            
             int positionX, positionY, buttonSide;
             for (int col = 0; col < cols; col++) {
                 for (int row = 0; row < rows; row++) {
+                    // stuff that says position and size of the button
                     positionX = spacing + col * buttonSize;
                     positionY = spacing + (row + 1) * buttonSize;
                     buttonSide = buttonSize - 2 * spacing;
+                    
+                    // default button
                     g.setColor(Color.GRAY);
-                    if (mines[row][col]) {
-                        g.setColor(Color.YELLOW);
-                    }
+
+                    // if revealed, change the color, and if mouse over make special effect of hover
                     if (revealed[row][col]) {
-                        g.setColor(Color.GREEN);
+                        g.setColor(Color.DARK_GRAY);
+                        if (mines[row][col])
+                            g.setColor(Color.RED);
+                    } else if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing + buttonSide && mouseY <= positionY + 2 * buttonSide) {
+                        g.setColor(Color.LIGHT_GRAY);
                     }
-                    if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing + buttonSide && mouseY <= positionY + 2 * buttonSide) {
-                        g.setColor(Color.RED);
-                    }
+                    
+                    // paint the buttons                    
                     g.fillRect(positionX, positionY, buttonSide, buttonSide);
+                    
+                    // if button is already revealed, fill the numbers/mines
+                    if (revealed[row][col]) {
+                        if (mines[row][col]) {
+                            g.setColor(Color.BLACK);
+                            g.fillRect(positionX + buttonSize/7 + buttonSize/8, positionY + buttonSize/7, buttonSize/4, buttonSize/2);
+                            g.fillRect(positionX + buttonSize/7, positionY + buttonSize/7 + buttonSize/8, buttonSize/2, buttonSize/4);
+                            g.fillRect(positionX + buttonSize/7 + buttonSize/16, positionY + buttonSize/7 + buttonSize/16, buttonSize * 3/8, buttonSize * 3/8);
+                        } else {
+                            g.setColor(Color.WHITE);
+                            g.setFont(new Font("Tahoma", Font.BOLD, buttonSize* 2/3));
+                            g.drawString(Integer.toString(neighbours[row][col]), positionX + buttonSize/6, positionY + buttonSize * 2/3);
+                        }
+                    }
                 }
             }
             
