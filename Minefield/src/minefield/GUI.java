@@ -35,10 +35,13 @@ public class GUI extends JFrame {
     private boolean[][] revealed;
     private boolean[][] flagged;
     
-    public GUI(int rows, int cols, int rowSize, int colsSize, int buttonSize, int spacing, int bombs) {
+    private int smileX;
+    private int smileY;
+    
+    public GUI(int rows, int cols, int rowsSize, int colsSize, int buttonSize, int spacing, int bombs) {
         this.rows = rows;
         this.cols = cols;
-        this.rowSize = rowSize;
+        this.rowSize = rowsSize;
         this.colSize = colsSize;
         this.buttonSize = buttonSize;
         this.spacing = spacing;
@@ -48,7 +51,9 @@ public class GUI extends JFrame {
         this.neighbours = new int[rows][cols];
         this.revealed = new boolean[rows][cols];
         this.flagged = new boolean[rows][cols];
-
+        this.smileX = rowsSize/2 - buttonSize/2;
+        this.smileY = 5;
+        
         // set the bombs and revealeds
         boolean repeating = false;
         while (bombs > 0) {
@@ -60,10 +65,10 @@ public class GUI extends JFrame {
                     } else if (!repeating) {
                         mines[row][col] = false;
                     }
-                    revealed[row][col] = true;
+                    revealed[row][col] = false;
                 }
             }
-            repeating = false;
+            repeating = true;
         }
         
         for (int col = 0; col < cols; col++) {
@@ -142,7 +147,7 @@ public class GUI extends JFrame {
                 for (int row = 0; row < rows; row++) {
                     // stuff that says position and size of the button
                     positionX = spacing + col * buttonSize;
-                    positionY = spacing + (row + 1) * buttonSize;
+                    positionY = 10 + spacing + (row + 1) * buttonSize;
                     buttonSide = buttonSize - 2 * spacing;
                     
                     // default button
@@ -195,6 +200,8 @@ public class GUI extends JFrame {
                 }
             }
             
+            g.setColor(Color.YELLOW);
+            g.fillOval(smileX, smileY, buttonSize, buttonSize);
         }
     }
     
@@ -220,7 +227,6 @@ public class GUI extends JFrame {
             int[] buttonXY = insideBox();
             if (buttonXY[0] != -1) {
                 revealed[buttonXY[0]][buttonXY[1]] = true;
-                System.out.printf("Neighbours: %d\n", neighbours[buttonXY[0]][buttonXY[1]]);
             }
         }
 
@@ -252,7 +258,7 @@ public class GUI extends JFrame {
         for (int col = 0; col < cols; col++) {
             for (int row = 0; row < rows; row++) {
                 positionX = spacing + col * buttonSize;
-                positionY = spacing + (row + 1) * buttonSize;
+                positionY = 10 + spacing + (row + 1) * buttonSize;
                 buttonSide = buttonSize - 2 * spacing;
                 if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing + buttonSide && mouseY <= positionY + 2 * buttonSide) {
                     return new int[]{ row, col };
