@@ -60,10 +60,10 @@ public class GUI extends JFrame {
                     } else if (!repeating) {
                         mines[row][col] = false;
                     }
-                    revealed[row][col] = false;
+                    revealed[row][col] = true;
                 }
             }
-            repeating = true;
+            repeating = false;
         }
         
         for (int col = 0; col < cols; col++) {
@@ -167,9 +167,28 @@ public class GUI extends JFrame {
                             g.fillRect(positionX + buttonSize/7 + buttonSize/8, positionY + buttonSize/7, buttonSize/4, buttonSize/2);
                             g.fillRect(positionX + buttonSize/7, positionY + buttonSize/7 + buttonSize/8, buttonSize/2, buttonSize/4);
                             g.fillRect(positionX + buttonSize/7 + buttonSize/16, positionY + buttonSize/7 + buttonSize/16, buttonSize * 3/8, buttonSize * 3/8);
+                            g.fillRect(positionX + buttonSize/3, positionY + buttonSize/15, buttonSize/10, buttonSize * 65/100);
+                            g.fillRect(positionX + buttonSize/15, positionY + buttonSize/5 + buttonSize/8, buttonSize * 65/100, buttonSize/10);
                         } else {
                             g.setColor(Color.WHITE);
-                            g.setFont(new Font("Tahoma", Font.BOLD, buttonSize* 2/3));
+                            if (neighbours[row][col] == 1) {
+                                g.setColor(Color.BLUE);
+                            } else if (neighbours[row][col] == 2) {
+                                g.setColor(Color.GREEN);
+                            } else if (neighbours[row][col] == 3) {
+                                g.setColor(Color.RED);
+                            } else if (neighbours[row][col] == 4) {
+                                g.setColor(new Color(0, 0, 128));
+                            } else if (neighbours[row][col] == 5) {
+                                g.setColor(new Color(178, 34, 34));
+                            } else if (neighbours[row][col] == 6) {
+                                g.setColor(new Color(72, 209, 204));
+                            } else if (neighbours[row][col] == 7) {
+                                g.setColor(Color.PINK);
+                            } else if (neighbours[row][col] == 8) {
+                                g.setColor(Color.BLACK);
+                            } 
+                            g.setFont(new Font("Tahoma", Font.BOLD, buttonSize * 2/3));
                             g.drawString(Integer.toString(neighbours[row][col]), positionX + buttonSize/6, positionY + buttonSize * 2/3);
                         }
                     }
