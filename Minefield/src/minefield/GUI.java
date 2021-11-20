@@ -23,6 +23,8 @@ public class GUI extends JFrame {
     private int buttonSize;
     private int spacing;
     
+    private int mouseX = -100, mouseY = -100;
+    
     public GUI(int rows, int cols, int rowSize, int colsSize, int buttonSize, int spacing) {
         this.rows = rows;
         this.cols = cols;
@@ -51,10 +53,17 @@ public class GUI extends JFrame {
         public void paintComponent(Graphics g) {
             g.setColor(Color.DARK_GRAY);
             g.fillRect(0, 0, rowSize, colSize);
-            g.setColor(Color.GRAY);
+            int positionX, positionY, buttonSide;
             for (int col = 0; col < cols; col++) {
                 for (int row = 0; row < rows; row++) {
-                    g.fillRect(spacing + col * buttonSize, buttonSize + spacing + row * buttonSize, buttonSize - 2*spacing, buttonSize - 2*spacing);
+                    positionX = spacing + col * buttonSize;
+                    positionY = spacing + (row + 1) * buttonSize;
+                    buttonSide = buttonSize - 2 * spacing;
+                    g.setColor(Color.GRAY);
+                    if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing + buttonSide && mouseY <= positionY + 2 * buttonSide) {
+                        g.setColor(Color.RED);
+                    }
+                    g.fillRect(positionX, positionY, buttonSide, buttonSide);
                 }
             }
             
@@ -70,7 +79,8 @@ public class GUI extends JFrame {
 
         @Override
         public void mouseMoved(MouseEvent e) {
-            System.out.println("Moved");
+            mouseX = e.getX();
+            mouseY = e.getY();
         }
         
     }
@@ -101,10 +111,6 @@ public class GUI extends JFrame {
         public void mouseExited(MouseEvent arg0) {
             // Not implemented yet
         }
-        
-    }
-    
-    public void repaint() {
         
     }
 }
