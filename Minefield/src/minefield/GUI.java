@@ -6,6 +6,9 @@ package minefield;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -36,6 +39,12 @@ public class GUI extends JFrame {
         
         Board board = new Board();
         this.setContentPane(board);
+        
+        Move move = new Move();
+        this.addMouseMotionListener(move);
+        
+        Click click = new Click();
+        this.addMouseListener(click);
     }
     
     public class Board extends JPanel {
@@ -50,6 +59,49 @@ public class GUI extends JFrame {
             }
             
         }
+    }
+    
+    public class Move implements MouseMotionListener {
+
+        @Override
+        public void mouseDragged(MouseEvent arg0) {
+            // Not implemented yet
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            System.out.println("Moved");
+        }
+        
+    }
+    
+    public class Click implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            System.out.println("Clicked");
+        }
+
+        @Override
+        public void mousePressed(MouseEvent arg0) {
+            // Not implemented yet
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent arg0) {
+            // Not implemented yet
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent arg0) {
+            // Not implemented yet
+        }
+
+        @Override
+        public void mouseExited(MouseEvent arg0) {
+            // Not implemented yet
+        }
+        
     }
     
     public void repaint() {
