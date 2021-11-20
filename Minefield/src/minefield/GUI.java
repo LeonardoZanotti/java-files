@@ -123,7 +123,10 @@ public class GUI extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("Clicked");
+            int[] buttonXY = insideBox();
+            if (buttonXY[0] != -1) {
+                System.out.printf("Inside %d %d", buttonXY[0], buttonXY[1]);
+            }
         }
 
         @Override
@@ -146,5 +149,22 @@ public class GUI extends JFrame {
             // Not implemented yet
         }
         
+    }
+    
+    private int[] insideBox() {
+        int positionX, positionY, buttonSide;
+        
+        for (int col = 0; col < cols; col++) {
+            for (int row = 0; row < rows; row++) {
+                positionX = spacing + col * buttonSize;
+                positionY = spacing + (row + 1) * buttonSize;
+                buttonSide = buttonSize - 2 * spacing;
+                if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing + buttonSide && mouseY <= positionY + 2 * buttonSide) {
+                    return new int[]{ row, col };
+                }
+            }
+        }
+        
+        return new int[]{ -1 };
     }
 }
