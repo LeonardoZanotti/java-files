@@ -61,11 +61,14 @@ public class GUI extends JFrame {
     private boolean defeat = false;
     private final String winMessage = "Winner winner chicken dinner!";
     
-    // Create the items inside the dropdown
+    // create the items inside the dropdown
     final JMenuItem setEasy = new JMenuItem("Easy");
     final JMenuItem setMedium = new JMenuItem("Medium");
     final JMenuItem setHard = new JMenuItem("Hard");
     final JMenuItem exitAction = new JMenuItem("Exit");
+    
+    // position of clicked mine
+    private int mineRow, mineCol;
     
     public GUI(int rows, int cols, int rowsSize, int colsSize, int buttonSize, int spacing, int bombs) {
         this.initialize(rows, cols, rowsSize, colsSize, buttonSize, spacing, bombs, false);
@@ -351,7 +354,7 @@ public class GUI extends JFrame {
                     // if revealed, change the color, and if mouse over make special effect of hover
                     if (revealed[row][col]) {
                         g.setColor(Color.DARK_GRAY);
-                        if (mines[row][col])
+                        if (mines[row][col] && row == mineRow && col == mineCol)
                             g.setColor(Color.RED);
                     } else if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing  && mouseY <= positionY + buttonSide) {
                         g.setColor(Color.LIGHT_GRAY);
@@ -490,6 +493,10 @@ public class GUI extends JFrame {
             
             if (e.getButton() == MouseEvent.BUTTON1) {                  // left button clicked
                 if (!defeat && !victory && buttonXY[0] != -1) {
+                    if (mines[buttonXY[0]][buttonXY[1]]) {
+                        mineRow = buttonXY[0];
+                        mineCol = buttonXY[1];
+                    }
                     revealCell(buttonXY[0], buttonXY[1]);
                     if (flagged[buttonXY[0]][buttonXY[1]])
                         bombs++;
