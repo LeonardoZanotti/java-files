@@ -20,37 +20,45 @@ import javax.swing.JPanel;
  */
 public class GUI extends JFrame {
     // game variables (change difficult)
-    private final int rows;
-    private final int cols;
-    private final int rowSize, colSize;
-    private final int buttonSize;
-    private final int spacing;
+    private int rows;
+    private int cols;
+    private int rowSize, colSize;
+    private int buttonSize;
+    private int spacing;
     private int bombs;
     
     // mouse control variables
     private int mouseX, mouseY;
     
     // probability of bomb in a button
-    private final double probability;
+    private double probability;
     
     // control variables
-    private final int[][] neighbours;
-    private final boolean[][] mines;
-    private final boolean[][] revealed;
-    private final boolean[][] flagged;
+    private int[][] neighbours;
+    private boolean[][] mines;
+    private boolean[][] revealed;
+    private boolean[][] flagged;
     
     // smile face varaibles
-    private final int smileX;
-    private final int smileY;
+    private int smileX, smileY, smileCenterX, smileCenterY;
     private int happiness = 1;
     
     // timer variables
-    private Date startDate = new Date();
+    private Date startDate;
     private int seconds = 0;
-    private final int timeX;
-    private final int timeY;
+    private int timeX;
+    private int timeY;
+    
+    // game state variables
+    private int difficulty = 1;
+    private boolean victory = false;
+    private boolean defeat = false;
     
     public GUI(int rows, int cols, int rowsSize, int colsSize, int buttonSize, int spacing, int bombs) {
+        this.initialize(rows, cols, rowsSize, colsSize, buttonSize, spacing, bombs, false);
+    }
+    
+    private void initialize(int rows, int cols, int rowsSize, int colsSize, int buttonSize, int spacing, int bombs, boolean reset) {
         this.rows = rows;
         this.cols = cols;
         this.rowSize = rowsSize;
@@ -67,8 +75,14 @@ public class GUI extends JFrame {
         this.mouseY = -100;
         this.smileX = rowsSize/2 - buttonSize/2;
         this.smileY = 5;
+        this.smileCenterX = this.smileX + buttonSize/2;
+        this.smileCenterY = this.smileY + buttonSize/2;
         this.timeX = rowsSize - 5/2 * buttonSize;
         this.timeY = 5;
+        this.happiness = 1;
+        this.startDate = new Date();
+        this.victory = false;
+        this.defeat = false;
         
         // set the bombs and revealeds
         boolean repeating = false;
@@ -82,6 +96,7 @@ public class GUI extends JFrame {
                         mines[row][col] = false;
                     }
                     revealed[row][col] = false;
+                    flagged[row][col] = false;
                 }
             }
             repeating = true;
@@ -137,24 +152,27 @@ public class GUI extends JFrame {
         }
         
         // set board
-        this.setTitle("Minesweeper");
-        this.setSize(rowSize, colSize);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-        
-        Board board = new Board();
-        this.setContentPane(board);
-        
-        Move move = new Move();
-        this.addMouseMotionListener(move);
-        
-        Click click = new Click();
-        this.addMouseListener(click);
-    }
+        if (!reset) {
+            this.setTitle("Minesweeper");
+            this.setSize(rowSize, colSize);
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.setResizable(false);
+            this.setLocationRelativeTo(null);
+            this.setVisible(true);
+
+            Board board = new Board();
+            this.setContentPane(board);
+
+            Move move = new Move();
+            this.addMouseMotionListener(move);
+
+            Click click = new Click();
+            this.addMouseListener(click);
+        }
+    } 
     
     public class Board extends JPanel {
+        @Override
         public void paintComponent(Graphics g) {
             // background
             g.setColor(Color.DARK_GRAY);
@@ -176,7 +194,7 @@ public class GUI extends JFrame {
                         g.setColor(Color.DARK_GRAY);
                         if (mines[row][col])
                             g.setColor(Color.RED);
-                    } else if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing + buttonSide && mouseY <= positionY + 2 * buttonSide) {
+                    } else if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing  && mouseY <= positionY + buttonSide) {
                         g.setColor(Color.LIGHT_GRAY);
                     }
                     
@@ -194,23 +212,34 @@ public class GUI extends JFrame {
                             g.fillRect(positionX + buttonSize/15, positionY + buttonSize/5 + buttonSize/8, buttonSize * 65/100, buttonSize/10);
                         } else {
                             g.setColor(Color.WHITE);
-                            if (neighbours[row][col] == 1) {
-                                g.setColor(Color.BLUE);
-                            } else if (neighbours[row][col] == 2) {
-                                g.setColor(Color.GREEN);
-                            } else if (neighbours[row][col] == 3) {
-                                g.setColor(Color.RED);
-                            } else if (neighbours[row][col] == 4) {
-                                g.setColor(new Color(0, 0, 128));
-                            } else if (neighbours[row][col] == 5) {
-                                g.setColor(new Color(178, 34, 34));
-                            } else if (neighbours[row][col] == 6) {
-                                g.setColor(new Color(72, 209, 204));
-                            } else if (neighbours[row][col] == 7) {
-                                g.setColor(Color.PINK);
-                            } else if (neighbours[row][col] == 8) {
-                                g.setColor(Color.BLACK);
-                            } 
+                            switch (neighbours[row][col]) {
+                                case 1:
+                                    g.setColor(Color.BLUE);
+                                    break;
+                                case 2:
+                                    g.setColor(Color.GREEN);
+                                    break;
+                                case 3:
+                                    g.setColor(Color.RED);
+                                    break;
+                                case 4:
+                                    g.setColor(new Color(0, 0, 128));
+                                    break;
+                                case 5:
+                                    g.setColor(new Color(178, 34, 34));
+                                    break;
+                                case 6: 
+                                    g.setColor(new Color(72, 209, 204));
+                                    break;
+                                case 7:
+                                    g.setColor(Color.PINK);
+                                    break;
+                                case 8:
+                                    g.setColor(Color.BLACK);
+                                    break;
+                                default:
+                                    break;
+                            }
                             g.setFont(new Font("Tahoma", Font.BOLD, buttonSize * 2/3));
                             g.drawString(Integer.toString(neighbours[row][col]), positionX + buttonSize/6, positionY + buttonSize * 2/3);
                         }
@@ -265,7 +294,7 @@ public class GUI extends JFrame {
         @Override
         public void mouseMoved(MouseEvent e) {
             mouseX = e.getX();
-            mouseY = e.getY();
+            mouseY = e.getY() - 30;  // header
         }
         
     }
@@ -277,6 +306,10 @@ public class GUI extends JFrame {
             int[] buttonXY = insideBox();
             if (buttonXY[0] != -1) {
                 revealed[buttonXY[0]][buttonXY[1]] = true;
+            }
+            
+            if (insideSmile()) {
+                resetAll();
             }
         }
 
@@ -305,6 +338,29 @@ public class GUI extends JFrame {
         
     }
     
+    public void resetAll() {
+        this.setDifficultAndInitialize(difficulty);
+    }
+    
+    private void setDifficultAndInitialize(Integer difficulty) {
+        switch (difficulty) {
+            case 1:
+                this.initialize(9, 9, 360, 435, 40, 5, 10, true);
+                break;
+            case 2:
+                this.initialize(16, 16, 530, 600, 530/16, 4, 40, true);
+                break;
+            default:
+                this.initialize(16, 30, 990, 600, 530/16, 3, 99, true);
+                break;
+        }
+    }
+    
+    public boolean insideSmile() {
+        double mouseDistanceToCenter = Math.sqrt(Math.pow(mouseX - smileCenterX, 2) + Math.pow(mouseY - smileCenterY, 2));
+        return mouseDistanceToCenter < buttonSize/2;
+    }
+    
     private int[] insideBox() {
         int positionX, positionY, buttonSide;
         
@@ -313,7 +369,7 @@ public class GUI extends JFrame {
                 positionX = spacing + col * buttonSize;
                 positionY = 10 + spacing + (row + 1) * buttonSize;
                 buttonSide = buttonSize - 2 * spacing;
-                if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing + buttonSide && mouseY <= positionY + 2 * buttonSide) {
+                if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing && mouseY <= positionY + buttonSide) {
                     return new int[]{ row, col };
                 }
             }
