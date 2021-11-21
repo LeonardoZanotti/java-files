@@ -368,6 +368,13 @@ public class GUI extends JFrame {
                 }
             }
             
+            // set flags counter
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 5, buttonSize * 2, buttonSize);
+            g.setColor(defeat ? Color.RED : victory ? Color.GREEN : Color.WHITE);
+            g.setFont(new Font("Digital-7", Font.PLAIN, buttonSize));
+            g.drawString(String.format("%03d", bombs), 0, 5 + buttonSize - spacing);
+            
             // set smile
             g.setColor(Color.YELLOW);
             g.fillOval(smileX, smileY, buttonSize, buttonSize);
