@@ -9,9 +9,9 @@ package minefield;
  * @author leonardozanotti
  */
 public class Minefield implements Runnable {
-    GUI gui = new GUI(9, 9, 360, 435, 40, 5, 10);
-//    GUI gui = new GUI(16, 16, 530, 600, 530/16, 4, 40);
-//    GUI gui = new GUI(16, 30, 990, 600, 530/16, 3, 99);
+    GUI gui = new GUI(9, 9, 360, 455, 40, 5, 10);           // easy mode
+//    GUI gui = new GUI(16, 16, 530, 620, 530/16, 4, 40);   // medium mode
+//    GUI gui = new GUI(16, 30, 990, 620, 530/16, 3, 99);   // hard mode
     
     /**
      * @param args the command line arguments

@@ -7,11 +7,16 @@ package minefield;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -55,6 +60,12 @@ public class GUI extends JFrame {
     private boolean victory = false;
     private boolean defeat = false;
     private final String winMessage = "Winner winner chicken dinner!";
+    
+    // Create the items inside the dropdown
+    final JMenuItem setEasy = new JMenuItem("Easy");
+    final JMenuItem setMedium = new JMenuItem("Medium");
+    final JMenuItem setHard = new JMenuItem("Hard");
+    final JMenuItem exitAction = new JMenuItem("Exit");
     
     public GUI(int rows, int cols, int rowsSize, int colsSize, int buttonSize, int spacing, int bombs) {
         this.initialize(rows, cols, rowsSize, colsSize, buttonSize, spacing, bombs, false);
@@ -153,13 +164,38 @@ public class GUI extends JFrame {
             }
         }
         
-        // set board
+        this.setSize(rowSize, colSize);
+        this.setLocationRelativeTo(null);
+
+        // set board and window configurations
         if (!reset) {
+             // Create menu bar
+            JMenuBar menuBar = new JMenuBar();
+
+            // Add menu bar to the JFrame
+            this.setJMenuBar(menuBar);
+
+            // Define game option (dropdown)
+            JMenu gameMenu = new JMenu("Game");
+            menuBar.add(gameMenu);
+
+            // set actions in the menu
+            MenuActions menuActions = new MenuActions();
+            this.setEasy.addActionListener(menuActions);
+            this.setMedium.addActionListener(menuActions);
+            this.setHard.addActionListener(menuActions);
+            this.exitAction.addActionListener(menuActions);
+            
+            // Add buttons in the menu option
+            gameMenu.add(setEasy);
+            gameMenu.add(setMedium);
+            gameMenu.add(setHard);
+            gameMenu.addSeparator();
+            gameMenu.add(exitAction);
+            
             this.setTitle("Minesweeper");
-            this.setSize(rowSize, colSize);
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setResizable(false);
-            this.setLocationRelativeTo(null);
             this.setVisible(true);
 
             Board board = new Board();
@@ -172,6 +208,82 @@ public class GUI extends JFrame {
             this.addMouseListener(click);
         }
     } 
+    
+    private boolean checkLose() {
+        for (int col = 0; col < cols; col++) {
+            for (int row = 0; row < rows; row++) {
+                if (revealed[row][col] && mines[row][col])
+                    return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean checkWin() {
+        for (int col = 0; col < cols; col++) {
+            for (int row = 0; row < rows; row++) {
+                if ((!revealed[row][col] && !flagged[row][col]) || mines[row][col] != flagged[row][col])
+                    return false;
+            }
+        }
+        return true;
+    }
+    
+    private int checkGameStatus() {
+        defeat = checkLose();
+        victory = checkWin();
+        if (victory) {              // win message dialog
+            JOptionPane.showMessageDialog(new JFrame(), winMessage, "You win!", JOptionPane.INFORMATION_MESSAGE);
+        } else if (defeat) {        // reveal all bombs
+            for (int col = 0; col < cols; col++) {
+                for (int row = 0; row < rows; row++) {
+                    if (mines[row][col])
+                        revealed[row][col] = true;
+                }
+            }
+        }
+        return defeat ? 2 : 1;
+    }
+    
+    private void resetAll() {
+        this.setDifficultAndInitialize();
+    }
+    
+    private void setDifficultAndInitialize() {
+        switch (difficulty) {
+            case 1:
+                this.initialize(9, 9, 360, 455, 40, 5, 10, true);
+                break;
+            case 2:
+                this.initialize(16, 16, 530, 620, 530/16, 4, 40, true);
+                break;
+            default:
+                this.initialize(16, 30, 990, 620, 530/16, 3, 99, true);
+                break;
+        }
+    }
+    
+    private boolean insideSmile() {
+        double mouseDistanceToCenter = Math.sqrt(Math.pow(mouseX - smileCenterX, 2) + Math.pow(mouseY - smileCenterY, 2));
+        return mouseDistanceToCenter < buttonSize/2;
+    }
+    
+    private int[] insideBox() {
+        int positionX, positionY, buttonSide;
+        
+        for (int col = 0; col < cols; col++) {
+            for (int row = 0; row < rows; row++) {
+                positionX = spacing + col * buttonSize;
+                positionY = 10 + spacing + (row + 1) * buttonSize;
+                buttonSide = buttonSize - 2 * spacing;
+                if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing && mouseY <= positionY + buttonSide) {
+                    return new int[]{ row, col };
+                }
+            }
+        }
+        
+        return new int[]{ -1 };
+    }
     
     public class Board extends JPanel {
         @Override
@@ -291,7 +403,6 @@ public class GUI extends JFrame {
     }
     
     public class Move implements MouseMotionListener {
-
         @Override
         public void mouseDragged(MouseEvent arg0) {
             // Not implemented yet
@@ -300,13 +411,12 @@ public class GUI extends JFrame {
         @Override
         public void mouseMoved(MouseEvent e) {
             mouseX = e.getX();
-            mouseY = e.getY() - 30;  // header
+            mouseY = e.getY() - 50;  // header
         }
         
     }
     
     public class Click implements MouseListener {
-
         @Override
         public void mouseClicked(MouseEvent e) {
             // Not implemented yet
@@ -359,79 +469,19 @@ public class GUI extends JFrame {
         
     }
     
-    private boolean checkLose() {
-        for (int col = 0; col < cols; col++) {
-            for (int row = 0; row < rows; row++) {
-                if (revealed[row][col] && mines[row][col])
-                    return true;
+    public class MenuActions implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource().equals(exitAction)) {
+                System.exit(0);
+            } else if (e.getSource().equals(setEasy)) {
+                difficulty = 1;
+            } else if (e.getSource().equals(setMedium)) {
+                difficulty = 2;
+            } else if (e.getSource().equals(setHard)) {
+                difficulty = 3;
             }
+            setDifficultAndInitialize();
         }
-        return false;
-    }
-    
-    private boolean checkWin() {
-        for (int col = 0; col < cols; col++) {
-            for (int row = 0; row < rows; row++) {
-                if ((!revealed[row][col] && !flagged[row][col]) || mines[row][col] != flagged[row][col])
-                    return false;
-            }
-        }
-        return true;
-    }
-    
-    private int checkGameStatus() {
-        defeat = checkLose();
-        victory = checkWin();
-        if (victory) {              // win message dialog
-            JOptionPane.showMessageDialog(new JFrame(), winMessage, "You win!", JOptionPane.INFORMATION_MESSAGE);
-        } else if (defeat) {        // reveal all bombs
-            for (int col = 0; col < cols; col++) {
-                for (int row = 0; row < rows; row++) {
-                    if (mines[row][col])
-                        revealed[row][col] = true;
-                }
-            }
-        }
-        return defeat ? 2 : 1;
-    }
-    
-    private void resetAll() {
-        this.setDifficultAndInitialize(difficulty);
-    }
-    
-    private void setDifficultAndInitialize(Integer difficulty) {
-        switch (difficulty) {
-            case 1:
-                this.initialize(9, 9, 360, 435, 40, 5, 10, true);
-                break;
-            case 2:
-                this.initialize(16, 16, 530, 600, 530/16, 4, 40, true);
-                break;
-            default:
-                this.initialize(16, 30, 990, 600, 530/16, 3, 99, true);
-                break;
-        }
-    }
-    
-    private boolean insideSmile() {
-        double mouseDistanceToCenter = Math.sqrt(Math.pow(mouseX - smileCenterX, 2) + Math.pow(mouseY - smileCenterY, 2));
-        return mouseDistanceToCenter < buttonSize/2;
-    }
-    
-    private int[] insideBox() {
-        int positionX, positionY, buttonSide;
-        
-        for (int col = 0; col < cols; col++) {
-            for (int row = 0; row < rows; row++) {
-                positionX = spacing + col * buttonSize;
-                positionY = 10 + spacing + (row + 1) * buttonSize;
-                buttonSide = buttonSize - 2 * spacing;
-                if (mouseX >= positionX && mouseX <= positionX + buttonSide && mouseY >= positionY - spacing && mouseY <= positionY + buttonSide) {
-                    return new int[]{ row, col };
-                }
-            }
-        }
-        
-        return new int[]{ -1 };
     }
 }
