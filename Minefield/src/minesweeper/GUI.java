@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package minefield;
+package minesweeper;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -214,6 +214,9 @@ public class GUI extends JFrame {
     
     private void revealCell(int row, int col) {
         revealed[row][col] = true;
+        if (flagged[row][col])
+            bombs++;
+        flagged[row][col] = false;
         if (!mines[row][col] && neighbours[row][col] == 0) {        // reveal parents of cells with 0 bombs around
             // check upward
             if (row > 0 && !revealed[row - 1][col]) {
@@ -371,7 +374,7 @@ public class GUI extends JFrame {
                             g.drawString("X", positionX + buttonSize/6, positionY + buttonSize * 2/3);
                             g.fillRect(positionX + buttonSize/3, positionY + buttonSize/15, buttonSize/10, buttonSize * 65/100);
                             g.fillRect(positionX + buttonSize/15, positionY + buttonSize/5 + buttonSize/8, buttonSize * 65/100, buttonSize/10);
-                            g.fillOval(positionX + buttonSize * 10/95, positionY + buttonSize * 10/95, buttonSize/2, buttonSize/2);
+                            g.fillOval(positionX - spacing + buttonSize/9 + buttonSize/8, positionY- spacing  + buttonSize/9 + buttonSize/8, buttonSize/2, buttonSize/2);
                             g.setColor(Color.WHITE);
                             g.fillOval(positionX + buttonSize/4, positionY + buttonSize/4, buttonSize/10, buttonSize/10);
                         } else {
@@ -498,9 +501,6 @@ public class GUI extends JFrame {
                         mineCol = buttonXY[1];
                     }
                     revealCell(buttonXY[0], buttonXY[1]);
-                    if (flagged[buttonXY[0]][buttonXY[1]])
-                        bombs++;
-                    flagged[buttonXY[0]][buttonXY[1]] = false;
                 }
 
                 if (insideSmile()) {
