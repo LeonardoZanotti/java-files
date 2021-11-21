@@ -357,10 +357,13 @@ public class GUI extends JFrame {
                             g.setFont(new Font("Tahoma", Font.BOLD, buttonSize * 2/3));
                             g.drawString(Integer.toString(neighbours[row][col]), positionX + buttonSize/6, positionY + buttonSize * 2/3);
                         }
-                    } else if (flagged[row][col]) {
-                        g.setColor(Color.WHITE);
-                        g.setFont(new Font("Tahoma", Font.BOLD, buttonSize * 2/3));
-                        g.drawString("F", positionX + buttonSize/6, positionY + buttonSize * 2/3);
+                    } else if (flagged[row][col]) {             // if is flagged, show the flag
+                        g.setColor(Color.BLACK);
+                        g.fillRect(positionX + buttonSize/7, positionY + buttonSize/2, buttonSize/2, buttonSize/8);
+                        g.fillRect(positionX + buttonSize/3, positionY + buttonSize/7, buttonSize/8, buttonSize/2);
+                        g.fillRect(positionX + buttonSize/7, positionY + buttonSize/7, buttonSize/3, buttonSize/5);
+                        g.setColor(Color.RED);
+                        g.fillRect(positionX + buttonSize/7 + 2, positionY + buttonSize/7 + 2, buttonSize/3 - 4, buttonSize/5 - 4);
                     }
                 }
             }
