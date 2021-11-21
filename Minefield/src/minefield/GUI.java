@@ -245,6 +245,10 @@ public class GUI extends JFrame {
                             g.setFont(new Font("Tahoma", Font.BOLD, buttonSize * 2/3));
                             g.drawString(Integer.toString(neighbours[row][col]), positionX + buttonSize/6, positionY + buttonSize * 2/3);
                         }
+                    } else if (flagged[row][col]) {
+                        g.setColor(Color.WHITE);
+                        g.setFont(new Font("Tahoma", Font.BOLD, buttonSize * 2/3));
+                        g.drawString("F", positionX + buttonSize/6, positionY + buttonSize * 2/3);
                     }
                 }
             }
@@ -310,21 +314,37 @@ public class GUI extends JFrame {
 
         @Override
         public void mousePressed(MouseEvent arg0) {
-            happiness = defeat ? 2 : 3;
+            happiness = defeat ? 2 : victory ? 1 : 3;
         }
 
         @Override
-        public void mouseReleased(MouseEvent arg0) {
+        public void mouseReleased(MouseEvent e) {
             int[] buttonXY = insideBox();
-            if (!defeat && buttonXY[0] != -1) {
-                revealed[buttonXY[0]][buttonXY[1]] = true;
-                happiness = mines[buttonXY[0]][buttonXY[1]] ? 2 : 1;
-                checkGameStatus(happiness);
-            }
             
-            if (insideSmile()) {
-                resetAll();
+            if (e.getButton() == MouseEvent.BUTTON1) {                  // left button clicked
+                if (!defeat && !victory && buttonXY[0] != -1) {
+                    revealed[buttonXY[0]][buttonXY[1]] = true;
+                    if (flagged[buttonXY[0]][buttonXY[1]])
+                        bombs++;
+                    flagged[buttonXY[0]][buttonXY[1]] = false;
+                }
+
+                if (insideSmile()) {
+                    resetAll();
+                }
+            } else if (e.getButton() == MouseEvent.BUTTON3) {           // right button clicked
+                if (!defeat && !victory && buttonXY[0] != -1) {
+                    if (flagged[buttonXY[0]][buttonXY[1]]) {
+                        flagged[buttonXY[0]][buttonXY[1]] = false;
+                        bombs++;
+                    } else if (!flagged[buttonXY[0]][buttonXY[1]] && bombs > 0) {
+                        flagged[buttonXY[0]][buttonXY[1]] = true;
+                        bombs--;
+                    }
+                }
             }
+
+            happiness = checkGameStatus();
         }
 
         @Override
@@ -339,22 +359,28 @@ public class GUI extends JFrame {
         
     }
     
-    private boolean checkLose(int gameStatus) {
-        return gameStatus == 2;
+    private boolean checkLose() {
+        for (int col = 0; col < cols; col++) {
+            for (int row = 0; row < rows; row++) {
+                if (revealed[row][col] && mines[row][col])
+                    return true;
+            }
+        }
+        return false;
     }
     
     private boolean checkWin() {
         for (int col = 0; col < cols; col++) {
             for (int row = 0; row < rows; row++) {
-                if (mines[row][col] != flagged[row][col])
+                if ((!revealed[row][col] && !flagged[row][col]) || mines[row][col] != flagged[row][col])
                     return false;
             }
         }
         return true;
     }
     
-    private void checkGameStatus(int gameStatus) {
-        defeat = checkLose(gameStatus);
+    private int checkGameStatus() {
+        defeat = checkLose();
         victory = checkWin();
         if (victory) {              // win message dialog
             JOptionPane.showMessageDialog(new JFrame(), winMessage, "You win!", JOptionPane.INFORMATION_MESSAGE);
@@ -366,6 +392,7 @@ public class GUI extends JFrame {
                 }
             }
         }
+        return defeat ? 2 : 1;
     }
     
     private void resetAll() {
