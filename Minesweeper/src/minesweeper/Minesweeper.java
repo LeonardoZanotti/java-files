@@ -6,7 +6,7 @@ package minesweeper;
 
 /**
  *
- * @author leonardozanotti
+ * @author Leonardo José Zanotti
  */
 public class Minesweeper implements Runnable {
     GUI gui = new GUI(9, 9, 360, 455, 40, 5, 10);           // easy mode
