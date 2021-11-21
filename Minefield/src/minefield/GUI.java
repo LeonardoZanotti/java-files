@@ -364,11 +364,13 @@ public class GUI extends JFrame {
                     if (revealed[row][col]) {
                         if (mines[row][col]) {
                             g.setColor(Color.BLACK);
-                            g.fillRect(positionX + buttonSize/7 + buttonSize/8, positionY + buttonSize/7, buttonSize/4, buttonSize/2);
-                            g.fillRect(positionX + buttonSize/7, positionY + buttonSize/7 + buttonSize/8, buttonSize/2, buttonSize/4);
-                            g.fillRect(positionX + buttonSize/7 + buttonSize/16, positionY + buttonSize/7 + buttonSize/16, buttonSize * 3/8, buttonSize * 3/8);
+                            g.setFont(new Font("Open sans", Font.BOLD, buttonSize * 3/4));
+                            g.drawString("X", positionX + buttonSize/6, positionY + buttonSize * 2/3);
                             g.fillRect(positionX + buttonSize/3, positionY + buttonSize/15, buttonSize/10, buttonSize * 65/100);
                             g.fillRect(positionX + buttonSize/15, positionY + buttonSize/5 + buttonSize/8, buttonSize * 65/100, buttonSize/10);
+                            g.fillOval(positionX + buttonSize * 10/95, positionY + buttonSize * 10/95, buttonSize/2, buttonSize/2);
+                            g.setColor(Color.WHITE);
+                            g.fillOval(positionX + buttonSize/4, positionY + buttonSize/4, buttonSize/10, buttonSize/10);
                         } else {
                             g.setColor(Color.DARK_GRAY);
                             switch (neighbours[row][col]) {
