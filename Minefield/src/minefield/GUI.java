@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
  * @author leonardozanotti
  */
 public class GUI extends JFrame {
+    // game variables (change difficult)
     private final int rows;
     private final int cols;
     private final int rowSize, colSize;
@@ -25,18 +27,28 @@ public class GUI extends JFrame {
     private final int spacing;
     private int bombs;
     
+    // mouse control variables
     private int mouseX, mouseY;
     
+    // probability of bomb in a button
     private final double probability;
     
+    // control variables
     private final int[][] neighbours;
     private final boolean[][] mines;
     private final boolean[][] revealed;
     private final boolean[][] flagged;
     
+    // smile face varaibles
     private final int smileX;
     private final int smileY;
-    private int happiness = 2;
+    private int happiness = 1;
+    
+    // timer variables
+    private Date startDate = new Date();
+    private int seconds = 0;
+    private final int timeX;
+    private final int timeY;
     
     public GUI(int rows, int cols, int rowsSize, int colsSize, int buttonSize, int spacing, int bombs) {
         this.rows = rows;
@@ -55,6 +67,8 @@ public class GUI extends JFrame {
         this.mouseY = -100;
         this.smileX = rowsSize/2 - buttonSize/2;
         this.smileY = 5;
+        this.timeX = rowsSize - 5/2 * buttonSize;
+        this.timeY = 5;
         
         // set the bombs and revealeds
         boolean repeating = false;
@@ -73,6 +87,7 @@ public class GUI extends JFrame {
             repeating = true;
         }
         
+        // set neighbours
         for (int col = 0; col < cols; col++) {
             for (int row = 0; row < rows; row++) {
                 int count = 0;
@@ -121,6 +136,7 @@ public class GUI extends JFrame {
             }
         }
         
+        // set board
         this.setTitle("Minesweeper");
         this.setSize(rowSize, colSize);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -202,6 +218,7 @@ public class GUI extends JFrame {
                 }
             }
             
+            // set smile
             g.setColor(Color.YELLOW);
             g.fillOval(smileX, smileY, buttonSize, buttonSize);
             g.setColor(Color.BLACK);
@@ -228,6 +245,13 @@ public class GUI extends JFrame {
                     g.fillOval(smileX + buttonSize/3, smileY + buttonSize * 5/8, buttonSize/3, buttonSize/3);
                     break;
             }
+            
+            // set timer
+            g.fillRect(timeX, timeY, buttonSize * 2, buttonSize);
+            seconds = seconds >= 999 ? 999 : (int) (new Date().getTime() - startDate.getTime()) / 1000;
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Digital-7", Font.PLAIN, buttonSize));
+            g.drawString(String.format("%03d", seconds), timeX, timeY + buttonSize - spacing);
         }
     }
     
