@@ -274,11 +274,11 @@ public class GUI extends JFrame {
                     g.fillOval(smileX + buttonSize/3, smileY + buttonSize * 5/8, buttonSize/3, buttonSize/3);
                     break;
             }
-            
+
             // set timer
             g.fillRect(timeX, timeY, buttonSize * 2, buttonSize);
-            seconds = seconds >= 999 ? 999 : (int) (new Date().getTime() - startDate.getTime()) / 1000;
-            g.setColor(Color.WHITE);
+            seconds = victory || defeat ? seconds : seconds >= 999 ? 999 : (int) (new Date().getTime() - startDate.getTime()) / 1000;
+            g.setColor(defeat ? Color.RED : victory ? Color.GREEN : Color.WHITE);
             g.setFont(new Font("Digital-7", Font.PLAIN, buttonSize));
             g.drawString(String.format("%03d", seconds), timeX, timeY + buttonSize - spacing);
         }
@@ -303,26 +303,26 @@ public class GUI extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            int[] buttonXY = insideBox();
-            if (buttonXY[0] != -1) {
-                revealed[buttonXY[0]][buttonXY[1]] = true;
-            }
-            
-            if (insideSmile()) {
-                resetAll();
-            }
+            // Not implemented yet
         }
 
         @Override
         public void mousePressed(MouseEvent arg0) {
-            happiness = 3;
+            happiness = defeat ? 2 : 3;
         }
 
         @Override
         public void mouseReleased(MouseEvent arg0) {
             int[] buttonXY = insideBox();
-            if (buttonXY[0] != -1) {
+            if (!defeat && buttonXY[0] != -1) {
+                revealed[buttonXY[0]][buttonXY[1]] = true;
                 happiness = mines[buttonXY[0]][buttonXY[1]] ? 2 : 1;
+            }
+            
+            checkGameStatus(happiness);
+            
+            if (insideSmile()) {
+                resetAll();
             }
         }
 
@@ -338,7 +338,22 @@ public class GUI extends JFrame {
         
     }
     
-    public void resetAll() {
+    private boolean checkWin() {
+        for (int col = 0; col < cols; col++) {
+            for (int row = 0; row < rows; row++) {
+                if (mines[row][col] != flagged[row][col])
+                    return false;
+            }
+        }
+        return true;
+    }
+    
+    private void checkGameStatus(int gameStatus) {
+        defeat = gameStatus == 2;
+        victory = checkWin();
+    }
+    
+    private void resetAll() {
         this.setDifficultAndInitialize(difficulty);
     }
     
@@ -356,7 +371,7 @@ public class GUI extends JFrame {
         }
     }
     
-    public boolean insideSmile() {
+    private boolean insideSmile() {
         double mouseDistanceToCenter = Math.sqrt(Math.pow(mouseX - smileCenterX, 2) + Math.pow(mouseY - smileCenterY, 2));
         return mouseDistanceToCenter < buttonSize/2;
     }
