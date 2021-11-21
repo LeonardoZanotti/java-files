@@ -207,7 +207,52 @@ public class GUI extends JFrame {
             Click click = new Click();
             this.addMouseListener(click);
         }
-    } 
+    }
+    
+    private void revealCell(int row, int col) {
+        revealed[row][col] = true;
+        if (!mines[row][col] && neighbours[row][col] == 0) {        // reveal parents of cells with 0 bombs around
+            // check upward
+            if (row > 0 && !revealed[row - 1][col]) {
+                revealCell(row -1, col);
+            }
+
+            // check downward
+            if (row < rows - 1 && !revealed[row + 1][col]) {
+                revealCell(row + 1, col);
+            }
+
+            // check left
+            if (col > 0 && !revealed[row][col - 1]) {
+                revealCell(row, col - 1);
+            }
+
+            // check right
+            if (col < cols - 1 && !revealed[row][col + 1]) {
+                revealCell(row, col + 1);
+            }
+                
+            // check top left
+            if (row > 0 && col > 0 && !revealed[row - 1][col - 1]) {
+                revealCell(row - 1, col - 1);
+            }
+
+            // check top right
+            if (row > 0 && col < cols - 1 && !revealed[row - 1][col + 1]) {
+                revealCell(row - 1, col + 1);
+            }
+
+            // check down left
+            if (row < rows - 1 && col > 0 && !revealed[row + 1][col - 1]) {
+                revealCell(row + 1, col - 1);
+            }
+
+            // check down right
+            if (row < rows - 1 && col < cols - 1 && !revealed[row + 1][col + 1]) {
+                revealCell(row + 1, col + 1);
+            }
+        }
+    }
     
     private boolean checkLose() {
         for (int col = 0; col < cols; col++) {
@@ -325,7 +370,7 @@ public class GUI extends JFrame {
                             g.fillRect(positionX + buttonSize/3, positionY + buttonSize/15, buttonSize/10, buttonSize * 65/100);
                             g.fillRect(positionX + buttonSize/15, positionY + buttonSize/5 + buttonSize/8, buttonSize * 65/100, buttonSize/10);
                         } else {
-                            g.setColor(Color.WHITE);
+                            g.setColor(Color.DARK_GRAY);
                             switch (neighbours[row][col]) {
                                 case 1:
                                     g.setColor(Color.BLUE);
@@ -443,7 +488,7 @@ public class GUI extends JFrame {
             
             if (e.getButton() == MouseEvent.BUTTON1) {                  // left button clicked
                 if (!defeat && !victory && buttonXY[0] != -1) {
-                    revealed[buttonXY[0]][buttonXY[1]] = true;
+                    revealCell(buttonXY[0], buttonXY[1]);
                     if (flagged[buttonXY[0]][buttonXY[1]])
                         bombs++;
                     flagged[buttonXY[0]][buttonXY[1]] = false;
