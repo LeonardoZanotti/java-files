@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -53,6 +54,7 @@ public class GUI extends JFrame {
     private int difficulty = 1;
     private boolean victory = false;
     private boolean defeat = false;
+    private final String winMessage = "Winner winner chicken dinner!";
     
     public GUI(int rows, int cols, int rowsSize, int colsSize, int buttonSize, int spacing, int bombs) {
         this.initialize(rows, cols, rowsSize, colsSize, buttonSize, spacing, bombs, false);
@@ -317,9 +319,8 @@ public class GUI extends JFrame {
             if (!defeat && buttonXY[0] != -1) {
                 revealed[buttonXY[0]][buttonXY[1]] = true;
                 happiness = mines[buttonXY[0]][buttonXY[1]] ? 2 : 1;
+                checkGameStatus(happiness);
             }
-            
-            checkGameStatus(happiness);
             
             if (insideSmile()) {
                 resetAll();
@@ -338,6 +339,10 @@ public class GUI extends JFrame {
         
     }
     
+    private boolean checkLose(int gameStatus) {
+        return gameStatus == 2;
+    }
+    
     private boolean checkWin() {
         for (int col = 0; col < cols; col++) {
             for (int row = 0; row < rows; row++) {
@@ -349,8 +354,11 @@ public class GUI extends JFrame {
     }
     
     private void checkGameStatus(int gameStatus) {
-        defeat = gameStatus == 2;
+        defeat = checkLose(gameStatus);
         victory = checkWin();
+        if (victory) {
+            JOptionPane.showMessageDialog(new JFrame(), winMessage, "You win!", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
     private void resetAll() {
