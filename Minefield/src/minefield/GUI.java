@@ -356,8 +356,15 @@ public class GUI extends JFrame {
     private void checkGameStatus(int gameStatus) {
         defeat = checkLose(gameStatus);
         victory = checkWin();
-        if (victory) {
+        if (victory) {              // win message dialog
             JOptionPane.showMessageDialog(new JFrame(), winMessage, "You win!", JOptionPane.INFORMATION_MESSAGE);
+        } else if (defeat) {        // reveal all bombs
+            for (int col = 0; col < cols; col++) {
+                for (int row = 0; row < rows; row++) {
+                    if (mines[row][col])
+                        revealed[row][col] = true;
+                }
+            }
         }
     }
     
