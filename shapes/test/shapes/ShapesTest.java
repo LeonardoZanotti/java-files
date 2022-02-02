@@ -4,6 +4,7 @@
  */
 package shapes;
 
+import java.io.ByteArrayInputStream;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,9 +41,35 @@ public class ShapesTest {
      * Test of main method, of class Shapes.
      */
     @Test
-    public void testMain() {
+    public void testMain1() {
         System.out.println("main");
         String[] args = null;
+        ByteArrayInputStream in = new ByteArrayInputStream("1\n10\n12.5\n ".getBytes());
+        System.setIn(in);
+        Shapes.main(args);
+    }
+
+    /**
+     * Test of main method, of class Shapes.
+     */
+    @Test
+    public void testMain2() {
+        System.out.println("main");
+        String[] args = null;
+        ByteArrayInputStream in = new ByteArrayInputStream("2\n8\n ".getBytes());
+        System.setIn(in);
+        Shapes.main(args);
+    }
+
+    /**
+     * Test of main method, of class Shapes.
+     */
+    @Test
+    public void testMain3() {
+        System.out.println("main");
+        String[] args = null;
+        ByteArrayInputStream in = new ByteArrayInputStream("3\n40\n15\n ".getBytes());
+        System.setIn(in);
         Shapes.main(args);
     }
 

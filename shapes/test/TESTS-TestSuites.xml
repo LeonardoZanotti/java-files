@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="0" hostname="linuxzanotti" id="0" name="ShapesTest" package="shapes" skipped="0" tests="7" time="0.084" timestamp="2022-02-02T12:45:59">
+  <testsuite errors="0" failures="0" hostname="linuxzanotti" id="0" name="ShapesTest" package="shapes" skipped="0" tests="9" time="0.106" timestamp="2022-02-02T15:04:15">
       <properties>
           <property name="libs.spring-framework300.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/modules/org-apache-commons-logging.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/cglib-2.2.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-aop-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-aspects-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-beans-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-context-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-context-support-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-core-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-expression-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-instrument-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-instrument-tomcat-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-jdbc-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-jms-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-orm-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-oxm-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-struts-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-test-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-tx-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-web-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-webmvc-3.2.18.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-3.0/spring-webmvc-portlet-3.2.18.RELEASE.jar" />
 
@@ -12,9 +12,9 @@
 
           <property name="jar.index.metainf" value="false" />
 
-          <property name="libs.spring-webmvc4.0.javadoc" value="" />
-
           <property name="libs.spring-framework400.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/modules/org-apache-commons-logging.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/cglib-2.2.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-aop-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-aspects-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-beans-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-context-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-context-support-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-core-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-expression-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-instrument-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-instrument-tomcat-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-jdbc-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-jms-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-messaging-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-orm-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-oxm-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-test-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-tx-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-web-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-webmvc-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-webmvc-portlet-4.3.29.RELEASE.jar:/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-4/spring-websocket-4.3.29.RELEASE.jar" />
+
+          <property name="libs.spring-webmvc4.0.javadoc" value="" />
 
           <property name="test.binaryincludes" value="&lt;nothing&gt;" />
 
@@ -26,15 +26,15 @@
 
           <property name="debug.modulepath" value="" />
 
-          <property name="libs.jsp-compilation.src" value="" />
-
           <property name="libs.eclipselink.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/docs/javax.persistence-2.2.1-doc.zip" />
+
+          <property name="libs.jsp-compilation.src" value="" />
 
           <property name="libs.JWSAntTasks.javadoc" value="" />
 
           <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk-amd64/lib" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner shapes.ShapesTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/leonardozanotti/Desktop/projetos-linux/java-files/shapes/build/test/results/TEST-shapes.ShapesTest.xml crashfile=/home/leonardozanotti/Desktop/projetos-linux/java-files/shapes/build/junitvmwatcher12277140485130256359.properties propsfile=/home/leonardozanotti/Desktop/projetos-linux/java-files/shapes/build/junit9980464607749108171.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner shapes.ShapesTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/home/leonardozanotti/Desktop/projetos-linux/java-files/shapes/build/test/results/TEST-shapes.ShapesTest.xml crashfile=/home/leonardozanotti/Desktop/projetos-linux/java-files/shapes/build/junitvmwatcher10445674064599384381.properties propsfile=/home/leonardozanotti/Desktop/projetos-linux/java-files/shapes/build/junit16496017591849527381.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -82,11 +82,11 @@
 
           <property name="jnidispatch.path" value="/home/leonardozanotti/.cache/JNA/temp/jna16508030174598641799.tmp" />
 
-          <property name="libs.primefaces.javadoc" value="" />
+          <property name="libs.jsf12.src" value="" />
 
           <property name="libs.jsp-compilation.javadoc" value="" />
 
-          <property name="libs.jsf12.src" value="" />
+          <property name="libs.primefaces.javadoc" value="" />
 
           <property name="libs.groovy-all.maven-pom" value="" />
 
@@ -100,9 +100,9 @@
 
           <property name="java.version" value="11.0.11" />
 
-          <property name="libs.jakartaee-api-8.0.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/docs/jakartaee8-doc-api.jar" />
-
           <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+
+          <property name="libs.jakartaee-api-8.0.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/docs/jakartaee8-doc-api.jar" />
 
           <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib" />
 
@@ -110,9 +110,9 @@
 
           <property name="java.vendor" value="Ubuntu" />
 
-          <property name="libs.testng.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/docs/testng-6.13.1-javadoc.jar" />
-
           <property name="libs.groovy-all.src" value="" />
+
+          <property name="libs.testng.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/docs/testng-6.13.1-javadoc.jar" />
 
           <property name="meta.inf.dir" value="src/META-INF" />
 
@@ -150,9 +150,9 @@
 
           <property name="java.vm.specification.version" value="11" />
 
-          <property name="libs.junit_5.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/modules/ext/junit-jupiter-api-5.6.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/modules/ext/junit-jupiter-params-5.6.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/modules/ext/junit-jupiter-engine-5.6.0.jar" />
-
           <property name="libs.eclipselinkmodelgen.javadoc" value="" />
+
+          <property name="libs.junit_5.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/modules/ext/junit-jupiter-api-5.6.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/modules/ext/junit-jupiter-params-5.6.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/modules/ext/junit-jupiter-engine-5.6.0.jar" />
 
           <property name="javadoc.noindex" value="false" />
 
@@ -270,9 +270,9 @@
 
           <property name="libs.javaee-web-api-6.0.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/docs/javaee-doc-api.jar" />
 
-          <property name="libs.javaee-api-7.0.maven-pom" value="" />
-
           <property name="libs.groovy-all.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/groovy/modules/ext/groovy-3.0.8.jar:/home/leonardozanotti/netbeans-12.5/netbeans/groovy/modules/ext/groovy-ant-3.0.8.jar" />
+
+          <property name="libs.javaee-api-7.0.maven-pom" value="" />
 
           <property name="libs.absolutelayout.javadoc" value="" />
 
@@ -294,9 +294,9 @@
 
           <property name="javadoc.version" value="false" />
 
-          <property name="libs.metro.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/ide/modules/ext/jaxb/activation.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/metro/webservices-api.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/metro/webservices-extra-api.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/metro/webservices-extra.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/metro/webservices-rt.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/metro/webservices-tools.jar" />
-
           <property name="libs.metro.src" value="" />
+
+          <property name="libs.metro.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/ide/modules/ext/jaxb/activation.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/metro/webservices-api.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/metro/webservices-extra-api.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/metro/webservices-extra.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/metro/webservices-rt.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/metro/webservices-tools.jar" />
 
           <property name="platforms.JDK_8.home" value="/usr/lib/jvm/java-8-openjdk-amd64" />
 
@@ -330,9 +330,9 @@
 
           <property name="apple.laf.useScreenMenuBar" value="true" />
 
-          <property name="sun.java.launcher" value="SUN_STANDARD" />
-
           <property name="user.country" value="US" />
+
+          <property name="sun.java.launcher" value="SUN_STANDARD" />
 
           <property name="libs.jakartaee-api-9.0.maven-pom" value="" />
 
@@ -360,11 +360,11 @@
 
           <property name="javadoc.encoding" value="UTF-8" />
 
-          <property name="netbeans.hash.code" value="unique=NB_EXTIDE_JAVA_PHP_WEBCOMMON_WEBEE0d8308017-301a-4d8b-8946-63afbf688789_d9051082-d12e-4dc1-9ad8-6b6b7f2cf961" />
+          <property name="libs.jsp-compilation-syscp.maven-pom" value="" />
 
           <property name="libs.jstl.src" value="" />
 
-          <property name="libs.jsp-compilation-syscp.maven-pom" value="" />
+          <property name="netbeans.hash.code" value="unique=NB_EXTIDE_JAVA_PHP_WEBCOMMON_WEBEE0d8308017-301a-4d8b-8946-63afbf688789_d9051082-d12e-4dc1-9ad8-6b6b7f2cf961" />
 
           <property name="ant.file.type.shapes" value="file" />
 
@@ -374,9 +374,9 @@
 
           <property name="java.runtime.name" value="OpenJDK Runtime Environment" />
 
-          <property name="manifest.available" value="true" />
-
           <property name="libs.jaxb.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/ide/docs/jaxb-api-doc.jar" />
+
+          <property name="manifest.available" value="true" />
 
           <property name="libs.spring-framework500.maven-pom" value="" />
 
@@ -418,13 +418,13 @@
 
           <property name="sun.arch.data.model" value="64" />
 
-          <property name="libs.jakartaee-web-api-9.0.maven-pom" value="" />
-
           <property name="nb.show.statistics.ui" value="usageStatisticsEnabled" />
 
-          <property name="libs.javaee-endorsed-api-7.0.src" value="" />
+          <property name="libs.jakartaee-web-api-9.0.maven-pom" value="" />
 
           <property name="sun.font.fontmanager" value="sun.awt.X11FontManager" />
+
+          <property name="libs.javaee-endorsed-api-7.0.src" value="" />
 
           <property name="annotation.processing.enabled" value="true" />
 
@@ -468,9 +468,9 @@
 
           <property name="run.test.modulepath" value="" />
 
-          <property name="libs.graaljs.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/webcommon/modules/ext/js-20.3.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/webcommon/modules/ext/js-launcher-20.3.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/webcommon/modules/ext/regex-20.3.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/webcommon/modules/ext/icu4j-67.1.jar:/home/leonardozanotti/netbeans-12.5/netbeans/ide/modules/ext/graal-sdk-20.3.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/ide/modules/ext/launcher-common-20.3.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/ide/modules/ext/truffle-api-20.3.0.jar" />
-
           <property name="libs.javaee-web-api-6.0.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/javaee-web-api-6.0.jar" />
+
+          <property name="libs.graaljs.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/webcommon/modules/ext/js-20.3.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/webcommon/modules/ext/js-launcher-20.3.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/webcommon/modules/ext/regex-20.3.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/webcommon/modules/ext/icu4j-67.1.jar:/home/leonardozanotti/netbeans-12.5/netbeans/ide/modules/ext/graal-sdk-20.3.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/ide/modules/ext/launcher-common-20.3.0.jar:/home/leonardozanotti/netbeans-12.5/netbeans/ide/modules/ext/truffle-api-20.3.0.jar" />
 
           <property name="libs.jsp-compiler.javadoc" value="" />
 
@@ -486,6 +486,8 @@
 
           <property name="libs.restlib.javadoc" value="" />
 
+          <property name="nu.validator.checker.imageCandidateString.hasWidth" value="0" />
+
           <property name="libs.absolutelayout.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/AbsoluteLayout.jar" />
 
           <property name="do.archive" value="true" />
@@ -500,9 +502,9 @@
 
           <property name="libs.testng.src" value="" />
 
-          <property name="platform.active" value="default_platform" />
-
           <property name="libs.javaee-web-api-8.0.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/javaee-web-api-8.0.jar" />
+
+          <property name="platform.active" value="default_platform" />
 
           <property name="manifest.file" value="manifest.mf" />
 
@@ -512,9 +514,9 @@
 
           <property name="default.javac.source" value="11" />
 
-          <property name="netbeans.dynamic.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/org-openide-filesystems-compat8.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/asm-9.2.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/asm-commons-9.2.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/asm-tree-9.2.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/core.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/org-openide-filesystems.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/org-netbeans-libs-asm.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/core-base.jar:/home/leonardozanotti/netbeans-12.5/netbeans/nb/core/org-netbeans-upgrader.jar:/home/leonardozanotti/netbeans-12.5/netbeans/nb/core/locale/core_nb.jar" />
-
           <property name="libs.javaee-web-api-8.0.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/docs/javaee-doc-api.jar" />
+
+          <property name="netbeans.dynamic.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/org-openide-filesystems-compat8.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/asm-9.2.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/asm-commons-9.2.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/asm-tree-9.2.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/core.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/org-openide-filesystems.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/org-netbeans-libs-asm.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/core/core-base.jar:/home/leonardozanotti/netbeans-12.5/netbeans/nb/core/org-netbeans-upgrader.jar:/home/leonardozanotti/netbeans-12.5/netbeans/nb/core/locale/core_nb.jar" />
 
           <property name="libs.eclipselinkmodelgen.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/eclipselink/org.eclipse.persistence.jpa.modelgen.processor-2.7.7.jar" />
 
@@ -526,11 +528,11 @@
 
           <property name="libs.jpa20-persistence.maven-pom" value="" />
 
-          <property name="build.sysclasspath" value="ignore" />
-
           <property name="os.name" value="Linux" />
 
           <property name="libs.CopyLibs.maven-pom" value="" />
+
+          <property name="build.sysclasspath" value="ignore" />
 
           <property name="libs.jakartaee-api-8.0.maven-pom" value="" />
 
@@ -582,9 +584,9 @@
 
           <property name="libs.jaxws21.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/java/docs/jaxws-api-doc.zip" />
 
-          <property name="libs.javaee-endorsed-api-6.0.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/docs/javaee-doc-api.jar" />
-
           <property name="libs.spring-framework400.maven-pom" value="" />
+
+          <property name="libs.javaee-endorsed-api-6.0.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/docs/javaee-doc-api.jar" />
 
           <property name="ap.processors.internal" value="" />
 
@@ -596,9 +598,9 @@
 
           <property name="ant.file.shapes-impl" value="/home/leonardozanotti/Desktop/projetos-linux/java-files/shapes/nbproject/build-impl.xml" />
 
-          <property name="libs.hamcrest.javadoc" value="" />
-
           <property name="libs.spring-framework400.javadoc" value="" />
+
+          <property name="libs.hamcrest.javadoc" value="" />
 
           <property name="java.vm.info" value="mixed mode, sharing" />
 
@@ -616,19 +618,19 @@
 
           <property name="src.dir" value="src" />
 
-          <property name="debug.classpath" value=":build/classes" />
-
           <property name="ant.project.default-target" value="default" />
+
+          <property name="debug.classpath" value=":build/classes" />
 
           <property name="excludes" value="" />
 
           <property name="libs.javaee-api-7.0.src" value="" />
 
-          <property name="sun.jnu.encoding" value="UTF-8" />
+          <property name="libs.junit_4.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/docs/junit-4.13.2-javadoc.jar" />
 
           <property name="run.test.jvmargs" value="" />
 
-          <property name="libs.junit_4.javadoc" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/docs/junit-4.13.2-javadoc.jar" />
+          <property name="sun.jnu.encoding" value="UTF-8" />
 
           <property name="libs.spring-webmvc4.0.src" value="" />
 
@@ -656,9 +658,9 @@
 
           <property name="libs.spring-webmvc5.0.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/java/modules/ext/spring-5/spring-webmvc-5.2.9.RELEASE.jar" />
 
-          <property name="libs.restlib.maven-pom" value="" />
-
           <property name="javac.debug" value="true" />
+
+          <property name="libs.restlib.maven-pom" value="" />
 
           <property name="libs.testng.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/modules/ext/testng-6.14.3.jar:/home/leonardozanotti/netbeans-12.5/netbeans/platform/modules/ext/jcommander-1.78.jar" />
 
@@ -670,9 +672,9 @@
 
           <property name="securerandom.source" value="file:/dev/./urandom" />
 
-          <property name="nb.junit.single" value="false" />
-
           <property name="javadoc.windowtitle" value="" />
+
+          <property name="nb.junit.single" value="false" />
 
           <property name="nb.internal.action.name" value="test" />
 
@@ -714,9 +716,9 @@
 
           <property name="java.failonerror" value="true" />
 
-          <property name="libs.spring-framework500.src" value="" />
-
           <property name="javac.modulepath" value="" />
+
+          <property name="libs.spring-framework500.src" value="" />
 
           <property name="user.properties.file" value="/home/leonardozanotti/.netbeans/12.5/build.properties" />
 
@@ -746,17 +748,17 @@
 
           <property name="sun.cpu.endian" value="little" />
 
-          <property name="libs.jakartaee-api-9.0.src" value="" />
-
           <property name="libs.junit_4.src" value="/home/leonardozanotti/netbeans-12.5/netbeans/platform/docs/junit-4.13.2-sources.jar" />
+
+          <property name="libs.jakartaee-api-9.0.src" value="" />
 
           <property name="user.language" value="en" />
 
           <property name="copylibs.rebase" value="true" />
 
-          <property name="libs.javaee-web-api-6.0.src" value="" />
-
           <property name="maven.defaultProjectBuilder.disableGlobalModelCache" value="true" />
+
+          <property name="libs.javaee-web-api-6.0.src" value="" />
 
           <property name="javadoc.nonavbar" value="false" />
 
@@ -798,9 +800,9 @@
 
           <property name="libs.jstl.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/jstl-impl.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/jstl-api.jar" />
 
-          <property name="jna.platform.library.path" value="/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/lib64:/usr/lib:/lib:/usr/lib32:/lib/i386-linux-gnu:/lib32:/usr/lib/i386-linux-gnu:/usr/lib/x86_64-linux-gnu/libfakeroot" />
-
           <property name="ap.cmd.line.internal" value="" />
+
+          <property name="jna.platform.library.path" value="/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/lib64:/usr/lib:/lib:/usr/lib32:/lib/i386-linux-gnu:/lib32:/usr/lib/i386-linux-gnu:/usr/lib/x86_64-linux-gnu/libfakeroot" />
 
           <property name="libs.PostgreSQLDriver.src" value="" />
 
@@ -834,11 +836,11 @@
 
           <property name="junit.forkmode" value="perTest" />
 
+          <property name="annotation.processing.run.all.processors" value="true" />
+
           <property name="libs.jsp-compiler.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/ant/extra/jspcompile.jar" />
 
           <property name="libs.jakartaee-api-8.0.src" value="" />
-
-          <property name="annotation.processing.run.all.processors" value="true" />
 
           <property name="libs.javaee-endorsed-api-6.0.classpath" value="/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/javaee6-endorsed/javax.annotation.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/javaee6-endorsed/jaxb-api-osgi.jar:/home/leonardozanotti/netbeans-12.5/netbeans/enterprise/modules/ext/javaee6-endorsed/webservices-api-osgi.jar" />
 
@@ -846,9 +848,13 @@
 
       <testcase classname="shapes.ShapesTest" name="testCalculaAreaCircunferencia1" time="0.002" />
 
-      <testcase classname="shapes.ShapesTest" name="testCalculaAreaCircunferencia2" time="0.001" />
+      <testcase classname="shapes.ShapesTest" name="testCalculaAreaCircunferencia2" time="0.0" />
 
-      <testcase classname="shapes.ShapesTest" name="testMain" time="0.0" />
+      <testcase classname="shapes.ShapesTest" name="testMain1" time="0.008" />
+
+      <testcase classname="shapes.ShapesTest" name="testMain2" time="0.004" />
+
+      <testcase classname="shapes.ShapesTest" name="testMain3" time="0.003" />
 
       <testcase classname="shapes.ShapesTest" name="testCalculaAreaTriangulo1" time="0.0" />
 
@@ -861,6 +867,28 @@
       <system-out><![CDATA[calculaAreaCircunferencia
 calculaAreaCircunferencia
 main
+Qual a forma? 
+ [1] - Retângulo 
+ [2] - Círculo 
+ [3] - Triângulo
+Informe o lado1
+Informe o lado2
+Área: 125.00
+main
+Qual a forma? 
+ [1] - Retângulo 
+ [2] - Círculo 
+ [3] - Triângulo
+Informe o raio
+Área: 201.06
+main
+Qual a forma? 
+ [1] - Retângulo 
+ [2] - Círculo 
+ [3] - Triângulo
+Informe a base
+Informe a altura
+Área: 300.00
 calculaAreaTriangulo
 calculaAreaTriangulo
 calculaAreaRetangulo

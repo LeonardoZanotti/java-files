@@ -42,10 +42,22 @@ public class SalaryTest {
      * Test of main method, of class Salary.
      */
     @Test
-    public void testMain() {
+    public void testMain1() {
         System.out.println("main");
         String[] args = null;
         ByteArrayInputStream in = new ByteArrayInputStream("17.02\n80\n0.05\n ".getBytes());
+        System.setIn(in);
+        Salary.main(args);
+    }
+    
+    /**
+     * Test of main method, of class Salary.
+     */
+    @Test
+    public void testMain2() {
+        System.out.println("main");
+        String[] args = null;
+        ByteArrayInputStream in = new ByteArrayInputStream("10.2\n140.5\n0.15\n ".getBytes());
         System.setIn(in);
         Salary.main(args);
     }
