@@ -38,7 +38,7 @@ public class Shapes {
             throw new RuntimeException("Valores devem ser maiores que 0");
         }
         
-        return base * altura;
+        return base * altura / 2;
     }
     
 }
