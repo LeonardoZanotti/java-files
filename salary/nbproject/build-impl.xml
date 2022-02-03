@@ -20,6 +20,7 @@ is divided into following sections:
 
         -->
 <project xmlns:if="ant:if" xmlns:j2seproject1="http://www.netbeans.org/ns/j2se-project/1" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3" xmlns:jaxrpc="http://www.netbeans.org/ns/j2se-project/jax-rpc" xmlns:unless="ant:unless" basedir=".." default="default" name="salary-impl">
+	<import file="/home/leonardozanotti/Desktop/projetos-linux/java-files/junitpdfreport_essentials_1_0/build-junitpdfreport.xml"/>
     <fail message="Please build using Ant 1.8.0 or higher.">
         <condition>
             <not>
@@ -533,12 +534,20 @@ is divided into following sections:
                     <jvmarg line="${run.test.jvmargs}"/>
                     <customizePrototype/>
                 </junit>
-                <junitreport todir="${test.src.dir}">
-                    <fileset dir="${build.test.results.dir}">
-                        <include name="TEST-*.xml"/>
-                    </fileset>
-                    <report todir="${test.src.dir}/html"/>
-                </junitreport>        
+                <!-- PDF report -->
+				<junitpdfreport todir="${test.src.dir}" styledir="default">
+					<fileset dir="${build.test.results.dir}"> 
+					<include name="TEST-*.xml"/> 
+					</fileset> 
+				</junitpdfreport>
+
+				<!-- HTML report -->
+				<junitreport todir="${test.src.dir}">
+					<fileset dir="${build.test.results.dir}">
+						<include name="TEST-*.xml"/>
+					</fileset>
+					<report todir="${test.src.dir}/html"/>
+				</junitreport>
             </sequential>
         </macrodef>
     </target>
