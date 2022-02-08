@@ -47,6 +47,11 @@ public class StandardDeviation {
                     }
                 }
 
+                // (x - xm)²
+                // x² -2 * x * xm + xm²
+                // (-2 * x1 * xm) + (-2 * x2 * xm) + ...
+                // (-2 * xm) * (x1 + x2 + x3 ...)
+                // -2 * xm * sum
                 sum += doubleInput;
                 sumSquared += Math.pow(doubleInput, 2);
                 count++;
