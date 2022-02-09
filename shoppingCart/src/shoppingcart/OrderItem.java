@@ -37,7 +37,7 @@ public class OrderItem {
         return price;
     }
 
-    public void setName(Double price) {
+    public void setPrice(Double price) {
         if (price < 0.0) {
             throw new RuntimeException("Invalid order item price!");
         }
