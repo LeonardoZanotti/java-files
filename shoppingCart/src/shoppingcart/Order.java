@@ -4,6 +4,7 @@
  */
 package shoppingcart;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class Order {
     private String client;
-    private List<OrderItem> items;
+    private List<OrderItem> items = new ArrayList<>();
     private double priceLimit;
     
     public Order(String client, double priceLimit) {
@@ -53,16 +54,20 @@ public class Order {
         }
     }
     
-    public void removeItem(OrderItem item) {
-        if (Arrays.asList(items).contains(item)) {
-            for (OrderItem i : items) {
-                if (i.getName().equals(item.getName())) {
-                    items.remove(item);
-                }
+    public void removeItem(String itemName) {
+        Boolean found = false;
+        OrderItem itemToRemove = null;
+        
+        for (OrderItem i : items) {
+            if (i.getName().equals(itemName)) {
+                itemToRemove = i;
+                found = true;
             }
-        } else {
-            throw new RuntimeException("Item não encontrado!");
         }
+        if (!found)
+            throw new RuntimeException("Item não encontrado!");
+
+        items.remove(itemToRemove);
     }
     
     public double getTotal() {
@@ -77,8 +82,8 @@ public class Order {
         String output = "";
         output += "Nome do cliente: " + client + "\n";
         output += "Total do pedido: " + getTotal() + "\n";
-        output += "Item                          | Preço";
-        output = items.stream().map(i -> i.getName() + " | R$" + i.getPrice()).reduce(output, String::concat);
+        output += "Item                          | Preço\n";
+        output = items.stream().map(i -> i.getName() + " | R$" + i.getPrice() + "\n").reduce(output, String::concat);
         return output;
     }
 }
