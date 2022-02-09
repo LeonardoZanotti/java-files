@@ -4,6 +4,7 @@
  */
 package shapes2;
 
+import java.io.ByteArrayInputStream;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -36,6 +37,18 @@ public class Shapes2Test {
     public void tearDown() {
     }
 
+    /**
+     * Test of main method, of class Shapes.
+     */
+    @Test
+    public void testMain1() {
+        System.out.println("main");
+        String[] args = null;
+        ByteArrayInputStream in = new ByteArrayInputStream("1\n10\n12.5\ns\n".getBytes());
+        System.setIn(in);
+        Shapes2.main(args);
+    }
+    
     @Test
     public void testCircleArea1() {
         System.out.println("Circle area test 1");
