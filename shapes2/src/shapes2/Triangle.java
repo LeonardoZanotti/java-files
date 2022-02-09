@@ -13,7 +13,14 @@ public class Triangle {
     private double base;
     
     public Triangle(double height, double base) {
+        if (height < 0.0 || base < 0.0) {
+            throw new RuntimeException("Invalid height or base!");
+        }
         this.height = height;
         this.base = base;
+    }
+    
+    public static double area(double height, double base) {
+        return height * base / 2;
     }
 }

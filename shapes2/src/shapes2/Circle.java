@@ -12,6 +12,13 @@ public class Circle {
     private double radius;
     
     public Circle(double radius) {
+        if (radius < 0.0) {
+            throw new RuntimeException("Invalid radius!");
+        }
         this.radius = radius;
+    }
+    
+    public static double area(double radius) {
+        return Math.PI * Math.pow(radius, 2);
     }
 }
