@@ -51,7 +51,7 @@ public class exc1servlet extends HttpServlet {
             out.println("<h1>Setor de Educação Profissional e Tecnológica</h1>");
             out.println("<h5>Rua Dr. Alcides Vieira Arcoverde, 1225\nCEP: 81520-260 - Jardim das Américas - Curitiba (PR) - Brasi</h5>");
             out.println("<table>"
-                    + "<tr><th>Curso</td><td>Página</th></tr>"
+                    + "<tr><th>Curso</th><th>Página</th></tr>"
                     + "<tr><td>TADS</td><td><a href='http://www.sept.ufpr.br/portal/analisesistemas/'>http://www.sept.ufpr.br/portal/analisesistemas/</a></td></tr>"
                     + "<tr><td>TGP</td><td><a href='http://www.sept.ufpr.br/portal/gestaopublica/sobre-o-curso/'>http://www.sept.ufpr.br/portal/gestaopublica/sobre-o-curso/</a></td></tr>"
                     + "<tr><td>TS</td><td><a href='http://www.sept.ufpr.br/portal/secretariado/sobre-o-curso/'>http://www.sept.ufpr.br/portal/secretariado/sobre-o-curso/</a></td></tr>"
@@ -63,6 +63,7 @@ public class exc1servlet extends HttpServlet {
                     + "<tr><td>TPC</td><td><a href='http://www.sept.ufpr.br/portal/producaocenica/'>http://www.sept.ufpr.br/portal/producaocenica/</a></td></tr>"
                     + "<tr><td>TACS</td><td><a href='http://www.sept.ufpr.br/portal/agentesaude/sobre-o-curso/'>http://www.sept.ufpr.br/portal/agentesaude/sobre-o-curso/</a></td></tr>"
                     + "</table>");
+            out.println("<br><a href='./meutads.jsp'>Meu TADS</a>");
             out.println("</body>");
             out.println("</html>");
         }
