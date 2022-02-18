@@ -9,6 +9,9 @@ import java.io.PrintWriter;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import java.util.ArrayList;
+import java.util.List;
+import models.Usuario;
 
 /**
  *
@@ -16,6 +19,7 @@ import jakarta.servlet.http.*;
  */
 @WebServlet(name = "PortalServlet", urlPatterns = {"/PortalServlet"})
 public class PortalServlet extends HttpServlet {
+    public List<Usuario> usuarios = new ArrayList<Usuario>();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,6 +53,20 @@ public class PortalServlet extends HttpServlet {
             out.println("</form>");
             out.println("<br>");
             out.println("<br>");
+            
+            if (!usuarios.isEmpty()) {
+                out.println("<table>");
+                out.println("<tr><th>Name</th><th>Login</th><th>Senha</th></tr>");
+                for (Usuario usuario : usuarios) {
+                    out.println("<tr>");
+                    out.println("<td>" + usuario.getName()+ "</td>");
+                    out.println("<td>" + usuario.getLogin()+ "</td>");
+                    out.println("<td>" + usuario.getPassword()+ "</td>");
+                    out.println("</tr>");
+                }
+                out.println("</table>");
+            }
+            
             out.println("<a href=\"LogoutServlet\">Logout</a>");
             out.println("</body>");
             out.println("</html>");

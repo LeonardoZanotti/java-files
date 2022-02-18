@@ -30,6 +30,10 @@ public class CadastrarUsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
+            String name = request.getParameter("name");
+            String login = request.getParameter("login");
+            String password = request.getParameter("senha");
+            
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -37,7 +41,8 @@ public class CadastrarUsuarioServlet extends HttpServlet {
             out.println("<title>Servlet CadastrarUsuarioServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CadastrarUsuarioServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Usuário cadastrado com sucesso!</h1>");
+            out.println("<a href=\"PortalServlet\">PortalServlet</a>");
             out.println("</body>");
             out.println("</html>");
         }
