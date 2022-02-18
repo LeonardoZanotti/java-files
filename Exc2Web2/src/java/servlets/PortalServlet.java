@@ -38,7 +38,8 @@ public class PortalServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet testservlet</title>");            
+            out.println("<title>Servlet testservlet</title>");  
+            out.println("<style>table, tr, th, td { border: 1px solid black }</style>");
             out.println("</head>");
             out.println("<body>");
             out.println("<form method=\"POST\" action=\"CadastrarUsuarioServlet\">");
@@ -49,10 +50,17 @@ public class PortalServlet extends HttpServlet {
             out.println("<input type=\"text\" placeholder=\"Senha\" name=\"senha\" value=\"\"/>");
             out.println("<br>");
             out.println("<br>");
-            out.println("<button type=\"submit\">enviar</button>");
+            out.println("<button type=\"submit\">Salvar</button>");
             out.println("</form>");
             out.println("<br>");
             out.println("<br>");
+            
+            if (request.getSession().getAttribute("newUser") != null) {
+                Usuario newUser = (Usuario) request.getSession().getAttribute("newUser");
+                usuarios.add(newUser);
+                System.out.println(newUser);
+                request.getSession().removeAttribute("newUser");
+            }
             
             if (!usuarios.isEmpty()) {
                 out.println("<table>");
@@ -67,6 +75,7 @@ public class PortalServlet extends HttpServlet {
                 out.println("</table>");
             }
             
+            out.println("<br>");
             out.println("<a href=\"LogoutServlet\">Logout</a>");
             out.println("</body>");
             out.println("</html>");

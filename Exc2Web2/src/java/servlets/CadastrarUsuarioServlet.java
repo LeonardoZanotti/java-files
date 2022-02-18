@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import models.Usuario;
 
 /**
  *
@@ -30,9 +31,12 @@ public class CadastrarUsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            String name = request.getParameter("name");
+            String name = request.getParameter("nome");
             String login = request.getParameter("login");
             String password = request.getParameter("senha");
+            
+            Usuario user = new Usuario(name, login, password);
+            request.getSession().setAttribute("newUser", user);
             
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
