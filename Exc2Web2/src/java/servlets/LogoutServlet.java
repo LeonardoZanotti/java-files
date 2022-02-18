@@ -14,8 +14,8 @@ import jakarta.servlet.http.*;
  *
  * @author leonardozanotti
  */
-@WebServlet(name = "PortalServlet", urlPatterns = {"/PortalServlet"})
-public class PortalServlet extends HttpServlet {
+@WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,22 +34,11 @@ public class PortalServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet testservlet</title>");            
+            out.println("<title>Servlet LogoutServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<form method=\"POST\" action=\"CadastrarUsuarioServlet\">");
-            out.println("<input type=\"text\" placeholder=\"Nome\" name=\"nome\" value=\"\"/>");
-            out.println("<br>");
-            out.println("<input type=\"text\" placeholder=\"Login\" name=\"login\" value=\"\"/>");
-            out.println("<br>");
-            out.println("<input type=\"text\" placeholder=\"Senha\" name=\"senha\" value=\"\"/>");
-            out.println("<br>");
-            out.println("<br>");
-            out.println("<button type=\"submit\">enviar</button>");
-            out.println("</form>");
-            out.println("<br>");
-            out.println("<br>");
-            out.println("<a href=\"LogoutServlet\">Logout</a>");
+            out.println("<h1>Usuário deslogado!</h1>");
+            out.println("<a href=\"./\">Login</a>");
             out.println("</body>");
             out.println("</html>");
         }
