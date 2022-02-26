@@ -11,10 +11,6 @@ import java.io.PrintWriter;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +39,7 @@ public class PortalServlet extends HttpServlet {
         if (logado == null) {
             request.setAttribute("msg", "Faça login para continuar");
             request.setAttribute("page", "./");
+            request.setAttribute("pageName", "Login");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/ErroServlet");
             rd.forward(request, response);
         }
@@ -68,13 +65,6 @@ public class PortalServlet extends HttpServlet {
             out.println("</form>");
             out.println("<br>");
             out.println("<br>");
-        
-//            if (request.getSession().getAttribute("newUser") != null) {
-//                Usuario newUser = (Usuario) request.getSession().getAttribute("newUser");
-//                usuarios.add(newUser);
-//                System.out.println(newUser);
-//                request.getSession().removeAttribute("newUser");
-//            }
             
             ConnectionFactory factory = new ConnectionFactory();
             UsuarioDAO dao = new UsuarioDAO(factory.getConnection());

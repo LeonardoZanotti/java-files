@@ -56,6 +56,7 @@ public class LoginServlet extends HttpServlet {
             } else {
                 request.setAttribute("msg", "Falha no login");
                 request.setAttribute("page", "./");
+                request.setAttribute("pageName", "Login");
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/ErroServlet");
                 rd.forward(request, response);
             }

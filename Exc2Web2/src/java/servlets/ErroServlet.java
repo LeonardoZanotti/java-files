@@ -6,8 +6,6 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -35,7 +33,7 @@ public class ErroServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String msg = (String) request.getAttribute("msg");
             String page = (String) request.getAttribute("page");
-            System.out.println(msg);
+            String pageName = (String) request.getAttribute("pageName");
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -43,7 +41,7 @@ public class ErroServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>" + msg + "</h1>");
-            out.println("<a href=\"" + page + "\">Login</a>");
+            out.println("<a href=\"" + page + "\">" + pageName + "</a>");
             out.println("</body>");
             out.println("</html>");
         }

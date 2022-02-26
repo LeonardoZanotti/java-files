@@ -4,12 +4,17 @@
  */
 package servlets;
 
+import database.ConnectionFactory;
+import database.DAOException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Usuario;
+import models.UsuarioDAO;
 
 /**
  *
@@ -28,27 +33,31 @@ public class CadastrarUsuarioServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, DAOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setAttribute("page", "PortalServlet");
+        request.setAttribute("pageName", "PortalServlet");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/ErroServlet");
         try ( PrintWriter out = response.getWriter()) {
             String name = request.getParameter("nome");
             String login = request.getParameter("login");
             String password = request.getParameter("senha");
             
             Usuario user = new Usuario(name, login, password);
-            request.getSession().setAttribute("newUser", user);
+            ConnectionFactory factory = new ConnectionFactory();
+            UsuarioDAO dao = new UsuarioDAO(factory.getConnection());
             
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CadastrarUsuarioServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Usuário cadastrado com sucesso!</h1>");
-            out.println("<a href=\"PortalServlet\">PortalServlet</a>");
-            out.println("</body>");
-            out.println("</html>");
+            try {
+                dao.inserir(user);            
+            } catch (DAOException e) {
+                request.setAttribute("msg", "Falha cadastrando usuário");
+                rd.forward(request, response);
+                return;
+            }
+            
+            request.setAttribute("msg", "Usuário cadastrado com sucesso");
+            rd.forward(request, response);
+            return;
         }
     }
 
@@ -64,7 +73,11 @@ public class CadastrarUsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DAOException ex) {
+            Logger.getLogger(CadastrarUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -78,7 +91,11 @@ public class CadastrarUsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DAOException ex) {
+            Logger.getLogger(CadastrarUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

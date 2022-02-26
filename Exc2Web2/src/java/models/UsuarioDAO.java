@@ -54,17 +54,24 @@ public class UsuarioDAO implements DAO<Usuario> {
     }
 
     @Override
-    public void inserir(Usuario t) throws DAOException {
+    public void inserir(Usuario u) throws DAOException {
+        try (PreparedStatement st = con.prepareStatement(this.QUERY_INSERIR)) {
+            st.setString(1, u.getName());
+            st.setString(2, u.getLogin());
+            st.setString(3, u.getPassword());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erro inserindo usuário: " + this.QUERY_INSERIR + "/ " + u.toString(), e);
+        }
+    }
+
+    @Override
+    public void atualizar(Usuario u) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void atualizar(Usuario t) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void remover(Usuario t) throws DAOException {
+    public void remover(Usuario u) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
