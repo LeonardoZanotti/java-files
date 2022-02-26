@@ -14,9 +14,9 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory implements AutoCloseable {
     private static String DRIVER = "org.postgresql.Driver";
-    private static String URL = "jdbc:postgresql://localhost:5432";
-    private static String LOGIN = "postgres";
-    private static String SENHA = "postgres";
+    private static String URL = "jdbc:postgresql://localhost:5432/web2";
+    private static String LOGIN = "leonardozanotti";
+    private static String SENHA = "leo123";
     
     private Connection con = null;
     

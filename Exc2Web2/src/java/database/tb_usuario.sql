@@ -16,15 +16,15 @@ CREATE DATABASE web2;
 CREATE TABLE tb_usuario (
     id_usuario serial PRIMARY KEY,
     login_usuario VARCHAR(50) NOT NULL,
-    password_usuario VARCHAR(50) NOT NULL,
+    senha_usuario VARCHAR(50) NOT NULL,
     nome_usuario VARCHAR(100) NOT NULL
 );
 
-INSERT INTO tb_usuario(login_usuario, password_usuario, nome_usuario)
+INSERT INTO tb_usuario(login_usuario, senha_usuario, nome_usuario)
 VALUES ('leozanotti', 'leo123', 'leonardo zanotti');
 
-INSERT INTO tb_usuario(login_usuario, password_usuario, nome_usuario)
+INSERT INTO tb_usuario(login_usuario, senha_usuario, nome_usuario)
 VALUES ('joaquim', 'joaquimsenha', 'joaquim alfredo');
 
-INSERT INTO tb_usuario(login_usuario, password_usuario, nome_usuario)
+INSERT INTO tb_usuario(login_usuario, senha_usuario, nome_usuario)
 VALUES ('novousuario', 'senha.forte', 'novo usuário');
