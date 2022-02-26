@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class UsuarioDAO implements DAO<Usuario> {
     private static final String QUERY_INSERIR = "INSERT INTO tb_usuario (login_usuario, senha_usuario, nome_usuario) VALUES (?, ?, ?)";
-    private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM tb_usuario";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario";
     
     private Connection con = null;
     
@@ -44,12 +44,12 @@ public class UsuarioDAO implements DAO<Usuario> {
                 user.setId(rs.getInt("id_usuario"));
                 user.setName(rs.getString("nome_usuario"));
                 user.setLogin(rs.getString("login_usuario"));
-                user.setPassword(rs.getString("password_usuario"));
+                user.setPassword(rs.getString("senha_usuario"));
                 usuarios.add(user);
             }
             return usuarios;
         } catch (SQLException e) {
-            throw new DAOException("Erro buscando todas os usuários: " + this.QUERY_BUSCAR_TODOS, e);
+            throw new DAOException("Erro buscando todos os usuários: " + this.QUERY_BUSCAR_TODOS, e);
         }
     }
 
