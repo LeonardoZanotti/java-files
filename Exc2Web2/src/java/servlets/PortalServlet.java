@@ -4,14 +4,22 @@
  */
 package servlets;
 
+import database.ConnectionFactory;
+import database.DAOException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Usuario;
+import models.UsuarioDAO;
 
 /**
  *
@@ -19,8 +27,6 @@ import models.Usuario;
  */
 @WebServlet(name = "PortalServlet", urlPatterns = {"/PortalServlet"})
 public class PortalServlet extends HttpServlet {
-    public List<Usuario> usuarios = new ArrayList<Usuario>();
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,7 +37,15 @@ public class PortalServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, DAOException {
+        HttpSession session = request.getSession();
+        String logado = (String) session.getAttribute("logado");
+        if (logado == null) {
+            request.setAttribute("msg", "Faça login para continuar");
+            request.setAttribute("page", "./");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/ErroServlet");
+            rd.forward(request, response);
+        }
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -54,13 +68,17 @@ public class PortalServlet extends HttpServlet {
             out.println("</form>");
             out.println("<br>");
             out.println("<br>");
+        
+//            if (request.getSession().getAttribute("newUser") != null) {
+//                Usuario newUser = (Usuario) request.getSession().getAttribute("newUser");
+//                usuarios.add(newUser);
+//                System.out.println(newUser);
+//                request.getSession().removeAttribute("newUser");
+//            }
             
-            if (request.getSession().getAttribute("newUser") != null) {
-                Usuario newUser = (Usuario) request.getSession().getAttribute("newUser");
-                usuarios.add(newUser);
-                System.out.println(newUser);
-                request.getSession().removeAttribute("newUser");
-            }
+            ConnectionFactory factory = new ConnectionFactory();
+            UsuarioDAO dao = new UsuarioDAO(factory.getConnection());
+            List<Usuario> usuarios = dao.buscarTodos();
             
             if (!usuarios.isEmpty()) {
                 out.println("<table>");
@@ -94,7 +112,11 @@ public class PortalServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DAOException ex) {
+            Logger.getLogger(PortalServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -108,7 +130,11 @@ public class PortalServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DAOException ex) {
+            Logger.getLogger(PortalServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
