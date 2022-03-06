@@ -11,14 +11,15 @@ import java.io.Serializable;
  * @author leonardozanotti
  */
 public class LoginBean implements Serializable {
-    private String email, password;
+    private String email, password, name;
     
     public LoginBean() {
     }
 
-    public LoginBean(String email, String password) {
+    public LoginBean(String email, String password, String name) {
         this.email = email;
         this.password = email;
+        this.name = name;
     }
 
     public String getEmail() {
@@ -35,5 +36,13 @@ public class LoginBean implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -20,7 +20,8 @@ import java.util.ArrayList;
 public class UsuarioDAO implements DAO<Usuario> {
     private static final String QUERY_INSERIR = "INSERT INTO tb_usuario (login_usuario, senha_usuario, nome_usuario) VALUES (?, ?, ?)";
     private static final String QUERY_BUSCAR_TODOS = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario";
-    
+        private static final String QUERY_BUSCAR_NOME_PELO_EMAIL = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario WHERE login_usuario = (?)";
+
     private Connection con = null;
     
     public UsuarioDAO(Connection con) throws DAOException {
@@ -50,6 +51,22 @@ public class UsuarioDAO implements DAO<Usuario> {
             return usuarios;
         } catch (SQLException e) {
             throw new DAOException("Erro buscando todos os usuários: " + this.QUERY_BUSCAR_TODOS, e);
+        }
+    }
+    
+    public Usuario buscarPeloEmail(String email) throws DAOException {
+        try (PreparedStatement st = this.con.prepareStatement(this.QUERY_BUSCAR_NOME_PELO_EMAIL)) {
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            Usuario user = new Usuario();
+            user.setId(rs.getInt("id_usuario"));
+            user.setName(rs.getString("nome_usuario"));
+            user.setLogin(rs.getString("login_usuario"));
+            user.setPassword(rs.getString("senha_usuario"));
+            return user;
+        } catch (SQLException e) {
+            throw new DAOException("Erro buscando usuário pelo email: " + this.QUERY_BUSCAR_NOME_PELO_EMAIL, e);
         }
     }
 

@@ -51,9 +51,9 @@ public class LoginServlet extends HttpServlet {
             
             if (validLogin(login, password)) {
                 HttpSession session = request.getSession();
-                LoginBean loginBean = new LoginBean(login, password);
+                LoginBean loginBean = new LoginBean(login, password, getUserByLogin(login).getName());
                 session.setAttribute("loginBean", loginBean);
-                response.sendRedirect("PortalServlet");
+                response.sendRedirect("./jsp/portal.jsp");
             } else {
                 request.setAttribute("msg", "Falha no login");
                 request.setAttribute("page", "./");
@@ -72,6 +72,13 @@ public class LoginServlet extends HttpServlet {
         UsuarioDAO dao = new UsuarioDAO(factory.getConnection());
         List<Usuario> usuarios = dao.buscarTodos();
         return usuarios.stream().anyMatch(user -> user.getLogin().equals(login) && user.getPassword().equals(password));
+    }
+    
+    protected Usuario getUserByLogin(String login) throws DAOException {
+        ConnectionFactory factory = new ConnectionFactory();
+        UsuarioDAO dao = new UsuarioDAO(factory.getConnection());
+        Usuario usuario = dao.buscarPeloEmail(login);
+        return usuario;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -42,7 +42,7 @@ public class LogoutServlet extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
             HttpSession session = request.getSession();
-            session.setAttribute("logado", null);
+            session.setAttribute("loginBean", null);
         }
     }
 
