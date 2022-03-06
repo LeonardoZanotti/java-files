@@ -51,7 +51,8 @@ public class LoginServlet extends HttpServlet {
             
             if (validLogin(login, password)) {
                 HttpSession session = request.getSession();
-                LoginBean loginBean = new LoginBean(login, password, getUserByLogin(login).getName());
+                Usuario user = getUserByLogin(login);
+                LoginBean loginBean = new LoginBean(user.getId(), user.getName());
                 session.setAttribute("loginBean", loginBean);
                 response.sendRedirect("./jsp/portal.jsp");
             } else {

@@ -4,6 +4,7 @@
  */
 package servlets;
 
+import beans.LoginBean;
 import database.ConnectionFactory;
 import database.DAOException;
 import java.io.IOException;
@@ -35,8 +36,18 @@ public class CadastrarUsuarioServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, DAOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setAttribute("page", "PortalServlet");
-        request.setAttribute("pageName", "PortalServlet");
+        HttpSession session = request.getSession();
+        LoginBean loginBean = (LoginBean) session.getAttribute("loginBean");
+        if (loginBean == null) {
+            request.setAttribute("msg", "Faça login para continuar");
+            request.setAttribute("page", "./");
+            request.setAttribute("pageName", "Login");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/ErroServlet");
+            rd.forward(request, response);
+            return;
+        }
+        request.setAttribute("page", "./jsp/portal.jsp");
+        request.setAttribute("pageName", "Portal");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/ErroServlet");
         try ( PrintWriter out = response.getWriter()) {
             String name = request.getParameter("nome");

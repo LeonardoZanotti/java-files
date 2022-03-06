@@ -21,5 +21,7 @@
         <h1><%= msg %></h1>
         <br>
         <a href=<%= redirect %>><%= pageName %></a>
+        <jsp:useBean id="configuracao" class="beans.ConfigBean" scope="application" />
+        <footer style="position: absolute; bottom: 0; height: 50px;">Em caso de problemas, contacte o administrador: <jsp:getProperty name="configuracao" property="email" /></footer>
     </body>
 </html>
