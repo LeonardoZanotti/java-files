@@ -4,6 +4,7 @@
  */
 package servlets;
 
+import beans.LoginBean;
 import database.ConnectionFactory;
 import database.DAOException;
 import java.io.IOException;
@@ -35,8 +36,8 @@ public class PortalServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, DAOException {
         HttpSession session = request.getSession();
-        String logado = (String) session.getAttribute("logado");
-        if (logado == null) {
+        LoginBean loginBean = (LoginBean) session.getAttribute("loginBean");
+        if (loginBean == null) {
             request.setAttribute("msg", "Faça login para continuar");
             request.setAttribute("page", "./");
             request.setAttribute("pageName", "Login");

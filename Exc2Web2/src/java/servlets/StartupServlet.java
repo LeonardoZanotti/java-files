@@ -4,26 +4,19 @@
  */
 package servlets;
 
-import beans.LoginBean;
-import database.ConnectionFactory;
-import database.DAOException;
+import beans.ConfigBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import models.Usuario;
-import models.UsuarioDAO;
 
 /**
  *
  * @author leonardozanotti
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "StartupServlet", urlPatterns = {"/StartupServlet"}, loadOnStartup = 1)
+public class StartupServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,44 +27,29 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    public void init(ServletConfig config) throws ServletException {
+        ConfigBean conf = new ConfigBean();
+        conf.setEmail("leonardojosezanotti@gmail.com");
+        ServletContext ctx= config.getServletContext();
+        ctx.setAttribute("configuracao", conf);
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String login = request.getParameter("login");
-            String password = request.getParameter("senha");
-            
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Login feito</title>");            
+            out.println("<title>Servlet StartupServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            
-            if (validLogin(login, password)) {
-                HttpSession session = request.getSession();
-                LoginBean loginBean = new LoginBean(login, password);
-                session.setAttribute("loginBean", loginBean);
-                response.sendRedirect("PortalServlet");
-            } else {
-                request.setAttribute("msg", "Falha no login");
-                request.setAttribute("page", "./");
-                request.setAttribute("pageName", "Login");
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/erro.jsp");
-                rd.forward(request, response);
-            }
-            
+            out.println("<h1>Servlet StartupServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
-    
-    protected boolean validLogin(String login, String password) throws DAOException {
-        ConnectionFactory factory = new ConnectionFactory();
-        UsuarioDAO dao = new UsuarioDAO(factory.getConnection());
-        List<Usuario> usuarios = dao.buscarTodos();
-        return usuarios.stream().anyMatch(user -> user.getLogin().equals(login) && user.getPassword().equals(password));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -86,11 +64,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -104,11 +78,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
