@@ -14,11 +14,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.sql.Connection;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
 /**
  *
  * @author leonardozanotti
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ContatoDAOTest {
     Connection con;
     
@@ -44,21 +47,10 @@ public class ContatoDAOTest {
     }
 
     /**
-     * Test of lista method, of class ContatoDAO.
-     */
-    @Test
-    public void testLista() throws Exception {
-        System.out.println("lista");
-        ContatoDAO instance = new ContatoDAO(this.con);
-        List<Contato> result = instance.lista();
-        assertEquals(true, result.get(0) instanceof Contato);
-    }
-
-    /**
      * Test of insere method, of class ContatoDAO.
      */
     @Test
-    public void testInsere() throws Exception {
+    public void test1Insere() throws Exception {
         System.out.println("insere");
         Contato c = new Contato("teste login", "teste name", "teste password");
         ContatoDAO instance = new ContatoDAO(this.con);
@@ -68,15 +60,29 @@ public class ContatoDAOTest {
     }
 
     /**
+     * Test of lista method, of class ContatoDAO.
+     */
+    @Test
+    public void test2Lista() throws Exception {
+        System.out.println("lista");
+        ContatoDAO instance = new ContatoDAO(this.con);
+        List<Contato> result = instance.lista();
+        assertEquals(true, result.get(0) instanceof Contato);
+    }
+
+    /**
      * Test of altera method, of class ContatoDAO.
      */
     @Test
-    public void testAltera() throws Exception {
+    public void test3Altera() throws Exception {
         System.out.println("altera");
-        Contato c = new Contato(4, "teste login 2", "teste name 2", "teste password 2");
         ContatoDAO instance = new ContatoDAO(this.con);
-        instance.altera(c);
         List<Contato> result = instance.lista();
+        Contato c = result.get(result.size() - 1);
+        c.setName("novo nome");
+        c.setLogin("novo email");
+        c.setPassword("nova senha");
+        instance.altera(c);
         assertEquals(true, result.stream().anyMatch(contact ->
                 contact.getLogin().equals(c.getLogin()) &&
                 contact.getName().equals(c.getName()) &&
@@ -88,12 +94,13 @@ public class ContatoDAOTest {
      * Test of remove method, of class ContatoDAO.
      */
     @Test
-    public void testRemove() throws Exception {
+    public void test4Remove() throws Exception {
         System.out.println("remove");
-        Contato c = new Contato(4, "teste login 2", "teste name 2", "teste password 2");;
         ContatoDAO instance = new ContatoDAO(this.con);
-        instance.remove(c);
         List<Contato> result = instance.lista();
+        Contato c = result.get(result.size() - 1);
+        instance.remove(c);
+        result = instance.lista();
         assertEquals(false, result.stream().anyMatch(contact -> contact.getLogin().equals(c.getLogin())));
     }
     
