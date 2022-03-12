@@ -153,6 +153,12 @@ public class MainLivroAutor {
     }
 
     private void listarAutoresDoLivro() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.print("Digite o id do livro:");
+        Scanner sc = new Scanner(System.in,"ISO-8859-1");
+        int id = sc.nextInt();
+        System.out.println("Autores deste livro:");
+        for (String autor : livroAutorDAO.consultarAutores(id)) {
+            System.out.println(autor);
+        }
     }
 }
