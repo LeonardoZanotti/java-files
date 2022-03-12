@@ -19,8 +19,8 @@ import java.util.ArrayList;
  */
 public class ContatoDAO implements DAO<Contato> {
     private static final String QUERY_INSERE = "INSERT INTO tb_contato (login_contato, senha_contato, nome_contato) VALUES (?, ?, ?)";
-    private static final String QUERY_ALTERA = "UPDATE tb_contato SET login_contato = (?), senha_contato = (?), nome_contato = (?) WHERE ID = (?)";
-    private static final String QUERY_REMOVE = "DELETE FROM tb_contato WHERE ID = (?)";
+    private static final String QUERY_ALTERA = "UPDATE tb_contato SET login_contato = (?), senha_contato = (?), nome_contato = (?) WHERE id_contato = (?)";
+    private static final String QUERY_REMOVE = "DELETE FROM tb_contato WHERE id_contato = (?)";
     private static final String QUERY_LISTA = "SELECT id_contato, login_contato, senha_contato, nome_contato FROM tb_contato";
 
     private Connection con = null;
@@ -53,9 +53,9 @@ public class ContatoDAO implements DAO<Contato> {
     @Override
     public void insere(Contato c) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(this.QUERY_INSERE)) {
-            st.setString(1, c.getName());
-            st.setString(2, c.getLogin());
-            st.setString(3, c.getPassword());
+            st.setString(1, c.getLogin());
+            st.setString(2, c.getPassword());
+            st.setString(3, c.getName());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro inserindo contato: " + this.QUERY_INSERE + "/ " + c.toString(), e);
@@ -65,10 +65,10 @@ public class ContatoDAO implements DAO<Contato> {
     @Override
     public void altera(Contato c) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(this.QUERY_ALTERA)) {
-            st.setString(1, c.getName());
-            st.setString(2, c.getLogin());
-            st.setString(3, c.getPassword());
-            st.setString(4, Integer.toString(c.getId()));
+            st.setString(1, c.getLogin());
+            st.setString(2, c.getPassword());
+            st.setString(3, c.getName());
+            st.setInt(4, c.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro atualizando contato: " + this.QUERY_ALTERA + "/ " + c.toString(), e);
@@ -78,7 +78,7 @@ public class ContatoDAO implements DAO<Contato> {
     @Override
     public void remove(Contato c) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(this.QUERY_REMOVE)) {
-            st.setString(1, Integer.toString(c.getId()));
+            st.setInt(1, c.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro removendo contato: " + this.QUERY_REMOVE + "/ " + c.toString(), e);

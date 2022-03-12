@@ -4,6 +4,8 @@
  */
 package models;
 
+import database.ConnectionFactory;
+import database.DAOException;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,14 +13,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.sql.Connection;
 
 /**
  *
  * @author leonardozanotti
  */
 public class ContatoDAOTest {
+    Connection con;
     
-    public ContatoDAOTest() {
+    public ContatoDAOTest() throws DAOException {
+        ConnectionFactory factory = new ConnectionFactory();
+        this.con = factory.getConnection();
     }
     
     @BeforeClass
@@ -43,12 +49,9 @@ public class ContatoDAOTest {
     @Test
     public void testLista() throws Exception {
         System.out.println("lista");
-        ContatoDAO instance = null;
-        List<Contato> expResult = null;
+        ContatoDAO instance = new ContatoDAO(this.con);
         List<Contato> result = instance.lista();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(true, result.get(0) instanceof Contato);
     }
 
     /**
@@ -57,11 +60,11 @@ public class ContatoDAOTest {
     @Test
     public void testInsere() throws Exception {
         System.out.println("insere");
-        Contato c = null;
-        ContatoDAO instance = null;
+        Contato c = new Contato("teste login", "teste name", "teste password");
+        ContatoDAO instance = new ContatoDAO(this.con);
         instance.insere(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        List<Contato> result = instance.lista();
+        assertEquals(true, result.stream().anyMatch(contact -> contact.getLogin().equals(c.getLogin())));
     }
 
     /**
@@ -70,11 +73,15 @@ public class ContatoDAOTest {
     @Test
     public void testAltera() throws Exception {
         System.out.println("altera");
-        Contato c = null;
-        ContatoDAO instance = null;
+        Contato c = new Contato(4, "teste login 2", "teste name 2", "teste password 2");
+        ContatoDAO instance = new ContatoDAO(this.con);
         instance.altera(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        List<Contato> result = instance.lista();
+        assertEquals(true, result.stream().anyMatch(contact ->
+                contact.getLogin().equals(c.getLogin()) &&
+                contact.getName().equals(c.getName()) &&
+                contact.getPassword().equals(c.getPassword())
+            ));
     }
 
     /**
@@ -83,11 +90,11 @@ public class ContatoDAOTest {
     @Test
     public void testRemove() throws Exception {
         System.out.println("remove");
-        Contato c = null;
-        ContatoDAO instance = null;
+        Contato c = new Contato(4, "teste login 2", "teste name 2", "teste password 2");;
+        ContatoDAO instance = new ContatoDAO(this.con);
         instance.remove(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        List<Contato> result = instance.lista();
+        assertEquals(false, result.stream().anyMatch(contact -> contact.getLogin().equals(c.getLogin())));
     }
     
 }
