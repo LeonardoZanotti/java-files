@@ -534,11 +534,19 @@ is divided into following sections:
                     <jvmarg line="${run.test.jvmargs}"/>
                     <customizePrototype/>
                 </junit>
+                <!-- PDF report -->
+                <junitpdfreport todir="${test.src.dir}" styledir="default">
+                	<fileset dir="${build.test.results.dir}">
+                	<include name="TEST-*.xml"/>
+                	</fileset>
+                </junitpdfreport>
+
+                <!-- HTML report -->
                 <junitreport todir="${test.src.dir}">
-                  	<fileset dir="${build.test.results.dir}">
-                  		<include name="TEST-*.xml"/>
-                  	</fileset>
-                  	<report todir="${test.src.dir}/html"/>
+                	<fileset dir="${build.test.results.dir}">
+                		<include name="TEST-*.xml"/>
+                	</fileset>
+                	<report todir="${test.src.dir}/html"/>
                 </junitreport>
             </sequential>
         </macrodef>
