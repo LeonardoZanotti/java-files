@@ -37,11 +37,12 @@ public class AutorDAO {
         PreparedStatement stmt = null;
         try{
             con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(stmtInserir,PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, autor.getNome());
-            stmt.executeUpdate();
-            autor.setId(lerIdAutor(stmt));
-            this.gravarLivros(con, autor, ids);
+            stmt = con.prepareStatement(stmtInserirLA,PreparedStatement.RETURN_GENERATED_KEYS);
+            for (Integer id : ids) {
+                stmt.setInt(1, id);
+                stmt.setInt(2, autor.getId());
+                stmt.executeUpdate();
+            }
         } catch (SQLException ex) {
             throw new RuntimeException("Erro ao inserir um autor no banco de dados. Origem="+ex.getMessage());
         } finally{

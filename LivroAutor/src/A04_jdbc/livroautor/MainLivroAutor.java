@@ -10,10 +10,12 @@ public class MainLivroAutor {
     
     private AutorDAO autorDAO;
     private LivroDAO livroDAO;
+    private LivroAutorDAO livroAutorDAO;
 
     public MainLivroAutor() throws Exception{
         autorDAO = new AutorDAO();
         livroDAO = new LivroDAO();
+        livroAutorDAO = new LivroAutorDAO();
     }
 
     public static void main(String args[]) throws Exception{
@@ -45,10 +47,10 @@ public class MainLivroAutor {
                     main.listarLivroComAutores();
                     break;
                 case "5":
-                    System.out.println("Opção não implementada.");
+                    main.listarAutoresDoLivro();
                     break;
                 case "6":
-                    System.out.println("Opção não implementada.");
+                    main.listarLivrosDoAutor();
                     break;
                 default:
                     System.out.println("Opção inválida.");
@@ -113,23 +115,7 @@ public class MainLivroAutor {
 
     public void listarAutores() throws Exception{
         List<Autor> listaAutores = autorDAO.listarAutores();
-        Collections.sort(listaAutores, new Comparator<Autor>() {
-           @Override
-           public int compare(Autor arg0, Autor arg1) {
-               String nomeAutor1 = arg0.getNome();
-               String nomeAutor2 = arg1.getNome();
-               int retorno = nomeAutor1.compareToIgnoreCase(nomeAutor2);
-               return retorno;
-               /*int idAutor1 = arg0.getId();
-               int idAutor2 = arg1.getId();
-               if(idAutor1 > idAutor2)
-                   return 1;
-               else if(idAutor1 == idAutor2)
-                   return 0;
-               else
-                   return -1;*/
-             }
-        });
+        Collections.sort(listaAutores);
         System.out.println("ID\tNOME");
         for(Autor autor:listaAutores){
             System.out.println(autor.getId()+" \t"+autor.getNome());
@@ -154,5 +140,19 @@ public class MainLivroAutor {
             System.out.print("\n");
         }
 
+    }
+
+    private void listarLivrosDoAutor() {
+        System.out.print("Digite o id do autor:");
+        Scanner sc = new Scanner(System.in,"ISO-8859-1");
+        int id = sc.nextInt();
+        System.out.println("Livros deste autor:");
+        for (String livro : livroAutorDAO.consultarLivros(id)) {
+            System.out.println(livro);
+        }
+    }
+
+    private void listarAutoresDoLivro() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

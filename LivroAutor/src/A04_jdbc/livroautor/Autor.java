@@ -2,7 +2,7 @@ package A04_jdbc.livroautor;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Autor {
+public final class Autor implements Comparable {
 
     private int id;
     private String nome;
@@ -81,5 +81,11 @@ public final class Autor {
             return false;
 
         return true;
+    }
+
+    @Override
+    public int compareTo(Object autor) {
+        Autor a = (Autor) autor;
+        return this.getNome().compareTo(a.getNome());
     }
 }
