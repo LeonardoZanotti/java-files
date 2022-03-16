@@ -11,8 +11,21 @@ import java.lang.reflect.Array;
  * @author leonardozanotti
  */
 public class Pilha<T> {
-    private T[] items;
+    private Element firstElement;
     private int length = 0;
+    private class Element<T> {
+        public T data;
+        public Element nextElement;
+        
+        public Element(T data) {
+            this.data = data;
+        }
+        
+        public Element(T data, Element e) {
+            this.data = data;
+            this.nextElement = e;
+        }
+    }
     
     public Pilha() {
     }
@@ -24,21 +37,29 @@ public class Pilha<T> {
     }
     
     public void empilha(T item) {
-        if (this.length == 0)
-            this.items = (T[]) Array.newInstance(item.getClass(), 10);
-        this.items[this.length++] = item;
+        if (this.firstElement == null)
+            this.firstElement = new Element<>(item);
+        else {
+            Element e = new Element<>(item, this.firstElement);
+            this.firstElement = e;
+        }
+        this.length++;
     }
     
     public void desempilha() {
-        if (this.length != 0)
+        if (this.length != 0) {
+            this.firstElement = this.firstElement.nextElement;
             this.length--;
+        }
     }
     
     public String toString() {
         String output = "[";
-        for (int i = this.length - 1; i >= 0; i--) {
-            output += this.items[i];
-            if (i > 0) output += ", ";
+        Element e = this.firstElement;
+        for (int i = 0; i < this.length; i++) {
+            output += e.data;
+            e = e.nextElement;
+            if (e != null) output += ", ";
         }
         output += "]";
         return output;
