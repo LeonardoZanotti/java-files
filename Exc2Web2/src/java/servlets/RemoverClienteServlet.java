@@ -32,7 +32,7 @@ public class RemoverClienteServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, DAOException {
+            throws ServletException, IOException, DAOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         if (session.getAttribute("loginBean") == null) {
@@ -41,12 +41,13 @@ public class RemoverClienteServlet extends HttpServlet {
             rd.forward(request, response);
         }
         int id = Integer.parseInt(request.getParameter("id"));
-        ConnectionFactory factory = new ConnectionFactory();
-        ClienteDAO dao = new ClienteDAO(factory.getConnection());
-        Cliente cliente = dao.buscar(id);
-        dao.remover(cliente);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/ClientesServlet");
-        rd.forward(request, response);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO dao = new ClienteDAO(factory.getConnection());
+            Cliente cliente = dao.buscar(id);
+            dao.remover(cliente);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/ClientesServlet");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -65,6 +66,8 @@ public class RemoverClienteServlet extends HttpServlet {
             processRequest(request, response);
         } catch (DAOException ex) {
             Logger.getLogger(RemoverClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(RemoverClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -82,6 +85,8 @@ public class RemoverClienteServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (DAOException ex) {
+            Logger.getLogger(RemoverClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(RemoverClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -35,7 +35,7 @@ public class NovoClienteServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, DAOException, ParseException {
+            throws ServletException, IOException, DAOException, ParseException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         if (session.getAttribute("loginBean") == null) {
@@ -43,23 +43,24 @@ public class NovoClienteServlet extends HttpServlet {
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         }
-        ConnectionFactory factory = new ConnectionFactory();
-        ClienteDAO dao = new ClienteDAO(factory.getConnection());
-        Date dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
-        Cliente cliente = new Cliente(
-            request.getParameter("cpf"),
-            request.getParameter("email"),
-            request.getParameter("nome"),
-            new java.sql.Date(dt.getTime()),
-            request.getParameter("rua"),
-            Integer.parseInt(request.getParameter("numero")),
-            request.getParameter("cep"),
-            request.getParameter("cidade"),
-            request.getParameter("uf")
-        );
-        dao.inserir(cliente);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/ClientesServlet");
-        rd.forward(request, response);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO dao = new ClienteDAO(factory.getConnection());
+            Date dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
+            Cliente cliente = new Cliente(
+                request.getParameter("cpf"),
+                request.getParameter("email"),
+                request.getParameter("nome"),
+                new java.sql.Date(dt.getTime()),
+                request.getParameter("rua"),
+                Integer.parseInt(request.getParameter("numero")),
+                request.getParameter("cep"),
+                request.getParameter("cidade"),
+                request.getParameter("uf")
+            );
+            dao.inserir(cliente);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/ClientesServlet");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,6 +81,8 @@ public class NovoClienteServlet extends HttpServlet {
             Logger.getLogger(NovoClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(NovoClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(NovoClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -99,6 +102,8 @@ public class NovoClienteServlet extends HttpServlet {
         } catch (DAOException ex) {
             Logger.getLogger(NovoClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
+            Logger.getLogger(NovoClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(NovoClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

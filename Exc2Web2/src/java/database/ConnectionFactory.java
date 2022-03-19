@@ -42,6 +42,7 @@ public class ConnectionFactory implements AutoCloseable {
             try {
                 this.con.close();
                 this.con = null;
+                System.out.println("Closed connection.");
             }
             catch (Exception e) {
                 System.out.println("Erro fechando a conexão.");

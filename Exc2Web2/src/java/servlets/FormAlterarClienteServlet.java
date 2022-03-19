@@ -30,9 +30,10 @@ public class FormAlterarClienteServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws database.DAOException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, DAOException {
+            throws ServletException, IOException, DAOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         if (session.getAttribute("loginBean") == null) {
@@ -41,12 +42,13 @@ public class FormAlterarClienteServlet extends HttpServlet {
             rd.forward(request, response);
         }
         int id = Integer.parseInt(request.getParameter("id"));
-        ConnectionFactory factory = new ConnectionFactory();
-        ClienteDAO dao = new ClienteDAO(factory.getConnection());
-        Cliente cliente = dao.buscar(id);
-        request.setAttribute("cliente", cliente);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/clientesAlterar.jsp");
-        rd.forward(request, response);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO dao = new ClienteDAO(factory.getConnection());
+            Cliente cliente = dao.buscar(id);
+            request.setAttribute("cliente", cliente);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/clientesAlterar.jsp");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -65,6 +67,8 @@ public class FormAlterarClienteServlet extends HttpServlet {
             processRequest(request, response);
         } catch (DAOException ex) {
             Logger.getLogger(FormAlterarClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(FormAlterarClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -82,6 +86,8 @@ public class FormAlterarClienteServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (DAOException ex) {
+            Logger.getLogger(FormAlterarClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(FormAlterarClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

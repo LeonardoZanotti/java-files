@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter(); ConnectionFactory factory = new ConnectionFactory();) {
             String login = request.getParameter("login");
             String password = request.getParameter("senha");
             
@@ -49,9 +49,9 @@ public class LoginServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             
-            if (validLogin(login, password)) {
+            if (validLogin(login, password, factory)) {
                 HttpSession session = request.getSession();
-                Usuario user = getUserByLogin(login);
+                Usuario user = getUserByLogin(login, factory);
                 LoginBean loginBean = new LoginBean(user.getId(), user.getName());
                 session.setAttribute("loginBean", loginBean);
                 response.sendRedirect("./jsp/portal.jsp");
@@ -66,15 +66,13 @@ public class LoginServlet extends HttpServlet {
         }
     }
     
-    protected boolean validLogin(String login, String password) throws DAOException {
-        ConnectionFactory factory = new ConnectionFactory();
+    protected boolean validLogin(String login, String password, ConnectionFactory factory) throws DAOException {
         UsuarioDAO dao = new UsuarioDAO(factory.getConnection());
         List<Usuario> usuarios = dao.buscarTodos();
         return usuarios.stream().anyMatch(user -> user.getLogin().equals(login) && user.getPassword().equals(password));
     }
     
-    protected Usuario getUserByLogin(String login) throws DAOException {
-        ConnectionFactory factory = new ConnectionFactory();
+    protected Usuario getUserByLogin(String login, ConnectionFactory factory) throws DAOException {
         UsuarioDAO dao = new UsuarioDAO(factory.getConnection());
         Usuario usuario = dao.buscarPeloEmail(login);
         return usuario;

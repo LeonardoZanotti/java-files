@@ -34,7 +34,7 @@ public class ClientesServlet extends HttpServlet {
      * @throws database.DAOException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, DAOException {
+            throws ServletException, IOException, DAOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         if (session.getAttribute("loginBean") == null) {
@@ -43,12 +43,13 @@ public class ClientesServlet extends HttpServlet {
             rd.forward(request, response);
         }
         
-        ConnectionFactory factory = new ConnectionFactory();
-        ClienteDAO dao = new ClienteDAO(factory.getConnection());
-        List<Cliente> clientes = dao.buscarTodos();
-        request.setAttribute("clientes", clientes);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
-        rd.forward(request, response);
+        try (ConnectionFactory factory = new ConnectionFactory()) {
+            ClienteDAO dao = new ClienteDAO(factory.getConnection());
+            List<Cliente> clientes = dao.buscarTodos();
+            request.setAttribute("clientes", clientes);
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -67,6 +68,8 @@ public class ClientesServlet extends HttpServlet {
             processRequest(request, response);
         } catch (DAOException ex) {
             Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -84,6 +87,8 @@ public class ClientesServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (DAOException ex) {
+            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

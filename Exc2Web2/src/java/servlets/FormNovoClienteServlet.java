@@ -4,7 +4,6 @@
  */
 package servlets;
 
-import database.ConnectionFactory;
 import java.io.IOException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
