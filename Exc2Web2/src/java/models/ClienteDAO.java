@@ -7,6 +7,11 @@ package models;
 import database.DAO;
 import database.DAOException;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,9 +19,8 @@ import java.util.List;
  * @author leonardozanotti
  */
 public class ClienteDAO implements DAO<Cliente> {
-    private static final String QUERY_INSERIR = "INSERT INTO tb_usuario (login_usuario, senha_usuario, nome_usuario) VALUES (?, ?, ?)";
-    private static final String QUERY_BUSCAR_TODOS = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario";
-        private static final String QUERY_BUSCAR_NOME_PELO_EMAIL = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario WHERE login_usuario = (?)";
+    private static final String QUERY_INSERIR = "INSERT INTO tb_cliente (cpf_cliente, email_cliente, nome_cliente, data_cliente, rua_cliente, nr_cliente, cep_cliente, cidade_cliente, uf_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM tb_cliente";
 
     private Connection con = null;
 
@@ -34,21 +38,54 @@ public class ClienteDAO implements DAO<Cliente> {
 
     @Override
     public List<Cliente> buscarTodos() throws DAOException {
+        List<Cliente> clientes = new ArrayList<>();
+        try (PreparedStatement st = this.con.prepareStatement(this.QUERY_BUSCAR_TODOS); ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Cliente client = new Cliente(
+                    rs.getInt("id_cliente"),
+                    rs.getString("cpf_cliente"),
+                    rs.getString("email_cliente"),
+                    rs.getString("nome_cliente"),
+                    rs.getDate("data_cliente"),
+                    rs.getString("rua_cliente"),
+                    rs.getInt("nr_cliente"),
+                    rs.getString("cep_cliente"),
+                    rs.getString("cidade_cliente"),
+                    rs.getString("uf_cliente")
+                );
+                clientes.add(client);
+            }
+            return clientes;
+        } catch (SQLException e) {
+            throw new DAOException("Erro buscando todos os clientes: " + this.QUERY_BUSCAR_TODOS, e);
+        }
+    }
+
+    @Override
+    public void inserir(Cliente c) throws DAOException {
+        try (PreparedStatement st = con.prepareStatement(this.QUERY_INSERIR)) {
+            st.setString(1, c.getCpf());
+            st.setString(1, c.getEmail());
+            st.setString(1, c.getNome());
+            st.setDate(1, (Date) c.getData());
+            st.setString(1, c.getRua());
+            st.setInt(1, c.getNumero());
+            st.setString(1, c.getCep());
+            st.setString(1, c.getCidade());
+            st.setString(1, c.getUf());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erro inserindo cliente: " + this.QUERY_INSERIR + "/ " + c.toString(), e);
+        }
+    }
+
+    @Override
+    public void atualizar(Cliente c) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void inserir(Cliente t) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void atualizar(Cliente t) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void remover(Cliente t) throws DAOException {
+    public void remover(Cliente c) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
