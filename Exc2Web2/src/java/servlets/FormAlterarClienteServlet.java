@@ -19,8 +19,8 @@ import models.ClienteDAO;
  *
  * @author leonardozanotti
  */
-@WebServlet(name = "VisualizarClienteServlet", urlPatterns = {"/VisualizarClienteServlet"})
-public class VisualizarClienteServlet extends HttpServlet {
+@WebServlet(name = "FormAlterarClienteServlet", urlPatterns = {"/FormAlterarClienteServlet"})
+public class FormAlterarClienteServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,7 +45,7 @@ public class VisualizarClienteServlet extends HttpServlet {
         ClienteDAO dao = new ClienteDAO(factory.getConnection());
         Cliente cliente = dao.buscar(id);
         request.setAttribute("cliente", cliente);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/clientesVisualizar.jsp");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/clientesAlterar.jsp");
         rd.forward(request, response);
     }
 
@@ -64,7 +64,7 @@ public class VisualizarClienteServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (DAOException ex) {
-            Logger.getLogger(VisualizarClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormAlterarClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -82,7 +82,7 @@ public class VisualizarClienteServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (DAOException ex) {
-            Logger.getLogger(VisualizarClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormAlterarClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
