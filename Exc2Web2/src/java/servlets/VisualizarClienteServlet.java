@@ -7,6 +7,7 @@ package servlets;
 import database.ConnectionFactory;
 import database.DAOException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -20,8 +21,8 @@ import models.ClienteDAO;
  *
  * @author leonardozanotti
  */
-@WebServlet(name = "ClientesServlet", urlPatterns = {"/ClientesServlet"})
-public class ClientesServlet extends HttpServlet {
+@WebServlet(name = "VisualizarClienteServlet", urlPatterns = {"/VisualizarClienteServlet"})
+public class VisualizarClienteServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,7 +32,6 @@ public class ClientesServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws database.DAOException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, DAOException {
@@ -42,12 +42,12 @@ public class ClientesServlet extends HttpServlet {
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         }
-        
+        int id = Integer.parseInt(request.getParameter("id"));
         ConnectionFactory factory = new ConnectionFactory();
         ClienteDAO dao = new ClienteDAO(factory.getConnection());
-        List<Cliente> clientes = dao.buscarTodos();
-        request.setAttribute("clientes", clientes);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
+        Cliente cliente = dao.buscar(id);
+        request.setAttribute("cliente", cliente);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/clientesVisualizar.jsp");
         rd.forward(request, response);
     }
 
@@ -66,7 +66,7 @@ public class ClientesServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (DAOException ex) {
-            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisualizarClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -84,7 +84,7 @@ public class ClientesServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (DAOException ex) {
-            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisualizarClienteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

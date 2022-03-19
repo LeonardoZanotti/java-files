@@ -20,6 +20,7 @@ import java.util.List;
  */
 public class ClienteDAO implements DAO<Cliente> {
     private static final String QUERY_INSERIR = "INSERT INTO tb_cliente (cpf_cliente, email_cliente, nome_cliente, data_cliente, rua_cliente, nr_cliente, cep_cliente, cidade_cliente, uf_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String QUERY_BUSCAR = "SELECT * FROM tb_cliente WHERE id_cliente = (?)";
     private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM tb_cliente";
     private static final String QUERY_ALTERAR = "UPDATE tb_cliente SET cpf_cliente = (?), email_cliente = (?), nome_cliente = (?), data_cliente = (?), rua_cliente = (?), nr_cliente = (?), cep_cliente = (?), cidade_cliente = (?), uf_cliente = (?) WHERE id_cliente = (?)";
     private static final String QUERY_REMOVER = "DELETE FROM tb_cliente WHERE id_cliente = (?)";
@@ -35,7 +36,26 @@ public class ClienteDAO implements DAO<Cliente> {
     
     @Override
     public Cliente buscar(long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (PreparedStatement st = con.prepareStatement(this.QUERY_BUSCAR)) {
+            st.setLong(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next())
+                return new Cliente(
+                    rs.getInt("id_cliente"),
+                    rs.getString("cpf_cliente"),
+                    rs.getString("email_cliente"),
+                    rs.getString("nome_cliente"),
+                    rs.getDate("data_cliente"),
+                    rs.getString("rua_cliente"),
+                    rs.getInt("nr_cliente"),
+                    rs.getString("cep_cliente"),
+                    rs.getString("cidade_cliente"),
+                    rs.getString("uf_cliente")
+                );
+            return null;
+        } catch (SQLException e) {
+            throw new DAOException("Erro buscando cliente: " + this.QUERY_BUSCAR, e);
+        }
     }
 
     @Override
