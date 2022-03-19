@@ -57,8 +57,6 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("./jsp/portal.jsp");
             } else {
                 request.setAttribute("msg", "Usuário/Senha inválidos.");
-                request.setAttribute("page", "./");
-                request.setAttribute("pageName", "Login");
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
             }

@@ -19,8 +19,6 @@
     <%
         if (session.getAttribute("loginBean") == null) {
             request.setAttribute("msg", "Usuário deve se autenticar para acessar o sistema.");
-            request.setAttribute("page", "../");
-            request.setAttribute("pageName", "Login");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         }
