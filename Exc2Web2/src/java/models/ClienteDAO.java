@@ -29,7 +29,7 @@ public class ClienteDAO implements DAO<Cliente> {
 
     public ClienteDAO(Connection con) throws DAOException {
         if (con == null) {
-            throw new DAOException("Conexão nula ao criar UsuarioDAO.");
+            throw new DAOException("Conexão nula ao criar ClienteDAO.");
         }
         this.con = con;
     }
