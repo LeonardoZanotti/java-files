@@ -56,10 +56,10 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("loginBean", loginBean);
                 response.sendRedirect("./jsp/portal.jsp");
             } else {
-                request.setAttribute("msg", "Falha no login");
+                request.setAttribute("msg", "Usuário/Senha inválidos.");
                 request.setAttribute("page", "./");
                 request.setAttribute("pageName", "Login");
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/erro.jsp");
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
                 rd.forward(request, response);
             }
             
