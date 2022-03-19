@@ -43,21 +43,20 @@
             </thead>
             <tbody>
             <%
-                int index = 1;
                 for (Cliente c : clientes) {
                     out.println("<tr>");
                     out.println("<td>" + c.getCpf() + "</td>");
                     out.println("<td>" + c.getNome() + "</td>");
                     out.println("<td>" + c.getEmail() + "</td>");
-                    out.println("<td><a href=\"VisualizarClienteServlet?id=" + index + "\"><img height=40 src=\"https://icon-library.com/images/white-eye-icon/white-eye-icon-15.jpg\" /></a></td>");
-                    out.println("<td><a href=\"FormAlterarClienteServlet?id=" + index + "\"><img height=40 src=\"https://www.pngitem.com/pimgs/m/31-313330_free-png-icons-pen-transparent-png.png\" /></a></td>");
-                    out.println("<td><a href=\"RemoverClienteServlet?id=" + index + "\"><img height=40 src=\"https://www.kindpng.com/picc/m/220-2200770_font-trash-fa-trash-icon-png-transparent-png.png\" /></a></td>");
+                    out.println("<td><a href=\"VisualizarClienteServlet?id=" + c.getId() + "\"><img height=40 src=\"https://icon-library.com/images/white-eye-icon/white-eye-icon-15.jpg\" /></a></td>");
+                    out.println("<td><a href=\"FormAlterarClienteServlet?id=" + c.getId() + "\"><img height=40 src=\"https://www.pngitem.com/pimgs/m/31-313330_free-png-icons-pen-transparent-png.png\" /></a></td>");
+                    out.println("<td><a href=\"RemoverClienteServlet?id=" + c.getId() + "\"><img height=40 src=\"https://www.kindpng.com/picc/m/220-2200770_font-trash-fa-trash-icon-png-transparent-png.png\" /></a></td>");
                     out.println("</tr>");
-                    index++;
                 }
             %>
             </tbody>
         </table>
         <div><a href="FormNovoClienteServlet" class="m-2 btn btn-primary">Novo cliente</a></div>
+        <div><a href="./jsp/portal.jsp" class="m-2 btn btn-light">Voltar</a></div>
     </body>
 </html>
