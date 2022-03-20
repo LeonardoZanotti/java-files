@@ -9,11 +9,12 @@ package superficie;
  * @author leonardozanotti
  * @param <T>
  */
-public class SomaArea<T extends Superficie> {
-    public double calculaArea(T[] array) {
+public class SomaArea {
+    public <T extends Superficie> double calculaArea(T[] shapes) {
         double area = 0.0;
-        for (int i = 0; i < array.length; i++)
-            area += array[i].area();
+        for (T shape : shapes) {
+            area += shape.area();
+        }
         return area;
     }
 }
