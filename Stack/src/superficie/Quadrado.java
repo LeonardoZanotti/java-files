@@ -9,7 +9,7 @@ package superficie;
  * @author leonardozanotti
  */
 public class Quadrado implements Superficie {
-    private double side;
+    private final double side;
     
     public Quadrado (double side) {
         this.side = side;

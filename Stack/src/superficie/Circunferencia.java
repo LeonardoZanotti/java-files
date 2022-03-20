@@ -9,7 +9,7 @@ package superficie;
  * @author leonardozanotti
  */
 public class Circunferencia implements Superficie {
-    private double radius;
+    private final double radius;
     
     public Circunferencia (double radius) {
         this.radius = radius;
@@ -17,6 +17,6 @@ public class Circunferencia implements Superficie {
     
     @Override
     public double area() {
-        return Math.PI * this.radius * this.radius;
+        return Math.PI * Math.pow(this.radius, 2);
     }
 }

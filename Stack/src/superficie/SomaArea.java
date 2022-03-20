@@ -7,6 +7,7 @@ package superficie;
 /**
  *
  * @author leonardozanotti
+ * @param <T>
  */
 public class SomaArea<T extends Superficie> {
     public double calculaArea(T[] array) {
