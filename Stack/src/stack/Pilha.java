@@ -4,8 +4,6 @@
  */
 package stack;
 
-import java.lang.reflect.Array;
-
 /**
  *
  * @author leonardozanotti
@@ -13,6 +11,7 @@ import java.lang.reflect.Array;
 public class Pilha<T> {
     private Element firstElement;
     private int length = 0;
+    
     private class Element<T> {
         public T data;
         public Element nextElement;
