@@ -11,7 +11,7 @@ package stack;
 public class Pilha<T> {
     private Element firstElement;
     private int length = 0;
-    
+
     private class Element<T> {
         public T data;
         public Element nextElement;

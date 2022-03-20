@@ -39,7 +39,7 @@ public class UsuarioDAO implements DAO<Usuario> {
     @Override
     public List<Usuario> buscarTodos() throws DAOException {
         List<Usuario> usuarios = new ArrayList<>();
-        try (PreparedStatement st = this.con.prepareStatement(this.QUERY_BUSCAR_TODOS); ResultSet rs = st.executeQuery()) {
+        try (PreparedStatement st = this.con.prepareStatement(UsuarioDAO.QUERY_BUSCAR_TODOS); ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
                 Usuario user = new Usuario();
                 user.setId(rs.getInt("id_usuario"));
@@ -50,35 +50,37 @@ public class UsuarioDAO implements DAO<Usuario> {
             }
             return usuarios;
         } catch (SQLException e) {
-            throw new DAOException("Erro buscando todos os usuários: " + this.QUERY_BUSCAR_TODOS, e);
+            throw new DAOException("Erro buscando todos os usuários: " + UsuarioDAO.QUERY_BUSCAR_TODOS, e);
         }
     }
     
     public Usuario buscarPeloEmail(String email) throws DAOException {
-        try (PreparedStatement st = this.con.prepareStatement(this.QUERY_BUSCAR_NOME_PELO_EMAIL)) {
+        try (PreparedStatement st = this.con.prepareStatement(UsuarioDAO.QUERY_BUSCAR_NOME_PELO_EMAIL)) {
             st.setString(1, email);
-            ResultSet rs = st.executeQuery();
-            rs.next();
-            Usuario user = new Usuario();
-            user.setId(rs.getInt("id_usuario"));
-            user.setName(rs.getString("nome_usuario"));
-            user.setLogin(rs.getString("login_usuario"));
-            user.setPassword(rs.getString("senha_usuario"));
+            Usuario user;
+            try (ResultSet rs = st.executeQuery()) {
+                rs.next();
+                user = new Usuario();
+                user.setId(rs.getInt("id_usuario"));
+                user.setName(rs.getString("nome_usuario"));
+                user.setLogin(rs.getString("login_usuario"));
+                user.setPassword(rs.getString("senha_usuario"));
+            }
             return user;
         } catch (SQLException e) {
-            throw new DAOException("Erro buscando usuário pelo email: " + this.QUERY_BUSCAR_NOME_PELO_EMAIL, e);
+            throw new DAOException("Erro buscando usuário pelo email: " + UsuarioDAO.QUERY_BUSCAR_NOME_PELO_EMAIL, e);
         }
     }
 
     @Override
     public void inserir(Usuario u) throws DAOException {
-        try (PreparedStatement st = con.prepareStatement(this.QUERY_INSERIR)) {
+        try (PreparedStatement st = con.prepareStatement(UsuarioDAO.QUERY_INSERIR)) {
             st.setString(1, u.getName());
             st.setString(2, u.getLogin());
             st.setString(3, u.getPassword());
             st.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Erro inserindo usuário: " + this.QUERY_INSERIR + "/ " + u.toString(), e);
+            throw new DAOException("Erro inserindo usuário: " + UsuarioDAO.QUERY_INSERIR + "/ " + u.toString(), e);
         }
     }
 
