@@ -20,7 +20,9 @@
     </head>
     <body>
         <h1 class="text-center text-danger">${msg}</h1>
-        <h1 class="text-center text-danger">${exception.message}</h1>
+        <h1 class="text-center text-danger">${pageContext.exception.message}</h1>
+        <h3 class="text-center text-danger">${pageContext.out.flush()}</h3>
+        <h3 class="text-center text-danger">${pageContext.exception.printStackTrace(pageContext.response.writer)}</h3>
         <br>
         <a href="${redirect}">${pageName}</a>
         <%@ include file="footer.jsp" %>
