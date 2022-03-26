@@ -4,7 +4,6 @@
  */
 package servlets;
 
-import database.ConnectionFactory;
 import database.DAOException;
 import facade.ClientesFacade;
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Cliente;
-import models.ClienteDAO;
 
 /**
  *
@@ -44,6 +42,7 @@ public class ClientesServlet extends HttpServlet {
             request.setAttribute("msg", "Usuário deve se autenticar para acessar o sistema.");
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
+            return;
         }
         
         String action = (String) request.getParameter("action");
@@ -52,7 +51,16 @@ public class ClientesServlet extends HttpServlet {
         Date dt;
         Cliente cliente;
         
+        if (action == null) {
+            List<Cliente> clientes = ClientesFacade.buscarTodos();
+            request.setAttribute("clientes", clientes);
+            rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
+            rd.forward(request, response);
+            return;
+        }
+        
         switch (action) {
+            default:
             case "list":
                 List<Cliente> clientes = ClientesFacade.buscarTodos();
                 request.setAttribute("clientes", clientes);
@@ -77,7 +85,7 @@ public class ClientesServlet extends HttpServlet {
                 id = Integer.parseInt(request.getParameter("id"));
                 cliente = ClientesFacade.buscar(id);
                 ClientesFacade.remover(cliente);
-                rd = getServletContext().getRequestDispatcher("/ClientesServlet");
+                rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
                 rd.forward(request, response);
                 break;
             case "update":
@@ -97,7 +105,7 @@ public class ClientesServlet extends HttpServlet {
                     request.getParameter("uf")
                 );
                 ClientesFacade.alterar(cliente);
-                rd = getServletContext().getRequestDispatcher("/ClientesServlet");
+                rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
                 rd.forward(request, response);
                 break;
             case "formNew":
@@ -118,10 +126,8 @@ public class ClientesServlet extends HttpServlet {
                     request.getParameter("uf")
                 );
                 ClientesFacade.inserir(cliente);
-                rd = getServletContext().getRequestDispatcher("/ClientesServlet");
+                rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
                 rd.forward(request, response);
-                break;
-            default:
                 break;
         }
     }

@@ -27,42 +27,42 @@
     
     <body>
         <form action="ClientesServlet?action=update" method="POST" class="m-3">
-            <input type="hidden" name="id" class="form-control" id="id" value="${c.getId()}">
+            <input type="hidden" name="id" class="form-control" id="id" value="${cliente.getId()}">
             <div class="form-group">
               <label for="cpf">CPF</label>
-              <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" value="${c.getCpf()}">
+              <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" value="${cliente.getCpf()}">
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Email" value="${c.getEmail()}">
+              <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Email" value="${cliente.getEmail()}">
             </div>
             <div class="form-group">
               <label for="nome">Nome</label>
-              <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" value="${c.getNome()}">
+              <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" value="${cliente.getNome()}">
             </div>
             <div class="form-group">
               <label for="data">Data de nascimento</label>
-              <input type="date" class="form-control" name="data" id="data" placeholder="Data de nascimento" value="${c.getData()}">
+              <input type="date" class="form-control" name="data" id="data" placeholder="Data de nascimento" value="${cliente.getData()}">
             </div>
             <div class="form-group">
               <label for="rua">Rua</label>
-              <input type="text" class="form-control" name="rua" id="rua" placeholder="Rua" value="${c.getRua()}">
+              <input type="text" class="form-control" name="rua" id="rua" placeholder="Rua" value="${cliente.getRua()}">
             </div>
             <div class="form-group">
               <label for="numero">Número</label>
-              <input type="number" class="form-control" name="numero" id="numero" placeholder="Número" value="${c.getNumero()}">
+              <input type="number" class="form-control" name="numero" id="numero" placeholder="Número" value="${cliente.getNumero()}">
             </div>
             <div class="form-group">
               <label for="cep">CEP</label>
-              <input type="text" class="form-control" name="cep" id="cep" placeholder="CEP" value="${c.getCep()}">
+              <input type="text" class="form-control" name="cep" id="cep" placeholder="CEP" value="${cliente.getCep()}">
             </div>
             <div class="form-group">
               <label for="cidade">Cidade</label>
-              <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade" value="${c.getCidade()}">
+              <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade" value="${cliente.getCidade()}">
             </div>
             <div class="form-group">
               <label for="uf">UF</label>
-              <input type="text" class="form-control" name="uf" id="uf" placeholder="UF" value="${c.getUf()}">
+              <input type="text" class="form-control" name="uf" id="uf" placeholder="UF" value="${cliente.getUf()}">
             </div>
             <button type="submit" class="btn btn-warning">Alterar</button>
             <a href="ClientesServlet"><button type="button" class="btn btn-light">Cancelar</button></a>
