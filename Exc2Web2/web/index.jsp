@@ -20,9 +20,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
     <body>
-        <% if (request.getAttribute("msg") != null) { %>
-            <h2 class="text-center text-danger"><%= request.getAttribute("msg") %></h2>
-        <% } %>
+        <h2 class="text-center text-danger">${msg}</h2>
         
         <% if (request.getParameter("msg") != null) { %>
             <h2 class="text-center text-danger"><%= request.getParameter("msg") %></h2>

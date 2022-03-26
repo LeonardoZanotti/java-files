@@ -24,10 +24,8 @@
         </jsp:forward>
     <% } %>
     
-    <jsp:useBean id="loginBean" class="beans.LoginBean" scope="session" />
-    
     <body>
-        <h1>Olá, <%= loginBean.getName() %></h1>
+        <h1>Olá, ${loginBean.getName()}</h1>
         <div class="list-group">
             <a class="list-group-item list-group-item-action" href="../ClientesServlet">Cadastro de clientes</a>
             <a class="list-group-item list-group-item-action" href="../LogoutServlet">Sair</a>

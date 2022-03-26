@@ -4,6 +4,7 @@
     Author     : leonardozanotti
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="models.Cliente" %>
@@ -24,8 +25,8 @@
         <jsp:forward page="/index.jsp">
             <jsp:param name="msg" value="Usuário deve se autenticar para acessar o sistema."></jsp:param>
         </jsp:forward>
-    <% } List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes"); %>
-    
+    <% } %>
+
     <body>
         <table border="1" class="mt-2 table">
             <thead>
@@ -39,18 +40,16 @@
                 </tr>
             </thead>
             <tbody>
-            <%
-                for (Cliente c : clientes) {
-                    out.println("<tr>");
-                    out.println("<td>" + c.getCpf() + "</td>");
-                    out.println("<td>" + c.getNome() + "</td>");
-                    out.println("<td>" + c.getEmail() + "</td>");
-                    out.println("<td><a href=\"VisualizarClienteServlet?id=" + c.getId() + "\"><img height=40 src=\"https://icon-library.com/images/white-eye-icon/white-eye-icon-15.jpg\" /></a></td>");
-                    out.println("<td><a href=\"FormAlterarClienteServlet?id=" + c.getId() + "\"><img height=40 src=\"https://www.pngitem.com/pimgs/m/31-313330_free-png-icons-pen-transparent-png.png\" /></a></td>");
-                    out.println("<td><a href=\"RemoverClienteServlet?id=" + c.getId() + "\"><img height=40 src=\"https://www.kindpng.com/picc/m/220-2200770_font-trash-fa-trash-icon-png-transparent-png.png\" /></a></td>");
-                    out.println("</tr>");
-                }
-            %>
+                <c:forEach var="c" items="${clientes}">
+                    <tr>
+                        <td>${c.getCpf()}</td>
+                        <td>${c.getNome()}</td>
+                        <td>${c.getEmail()}</td>
+                        <td><a href="VisualizarClienteServlet?id=${c.getId()}"><img height=40 src="https://icon-library.com/images/white-eye-icon/white-eye-icon-15.jpg" /></a></td>
+                        <td><a href="FormAlterarClienteServlet?id=${c.getId()}"><img height=40 src="https://www.pngitem.com/pimgs/m/31-313330_free-png-icons-pen-transparent-png.png" /></a></td>
+                        <td><a href="RemoverClienteServlet?id=${c.getId()}"><img height=40 src="https://www.kindpng.com/picc/m/220-2200770_font-trash-fa-trash-icon-png-transparent-png.png" /></a></td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
         <div><a href="FormNovoClienteServlet" class="m-2 btn btn-primary">Novo cliente</a></div>
