@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="models.Cliente" %>
+<%@ page errorPage="/erro.jsp" %>
+
 <!DOCTYPE html>
 <html>
     <head>
