@@ -23,6 +23,10 @@
         <% if (request.getAttribute("msg") != null) { %>
             <h2 class="text-center text-danger"><%= request.getAttribute("msg") %></h2>
         <% } %>
+        
+        <% if (request.getParameter("msg") != null) { %>
+            <h2 class="text-center text-danger"><%= request.getParameter("msg") %></h2>
+        <% } %>
 
         <form action="LoginServlet" method="post">
             <div class="container">

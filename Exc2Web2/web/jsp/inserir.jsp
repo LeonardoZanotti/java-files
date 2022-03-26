@@ -18,15 +18,13 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
     
-    <%
-        if (session.getAttribute("loginBean") == null) {
-            request.setAttribute("msg", "Faça login para continuar");
-            request.setAttribute("page", "../");
-            request.setAttribute("pageName", "Login");
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/erro.jsp");
-            rd.forward(request, response);
-        }
-    %>
+    <% if (session.getAttribute("loginBean") == null) { %>
+        <jsp:forward page="/jsp/erro.jsp">
+            <jsp:param name="msg" value="Usuário deve se autenticar para acessar o sistema."></jsp:param>
+            <jsp:param name="page" value="../"></jsp:param>
+            <jsp:param name="pageName" value="Login"></jsp:param>
+        </jsp:forward>
+    <% } %>
     
     <body>
         <form method="POST" action="../CadastrarUsuarioServlet">

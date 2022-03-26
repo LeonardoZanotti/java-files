@@ -20,15 +20,11 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
     
-    <%
-        if (session.getAttribute("loginBean") == null) {
-            request.setAttribute("msg", "Usuário deve se autenticar para acessar o sistema.");
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
-            rd.forward(request, response);
-        }
-        
-        List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes");
-    %>
+    <% if (session.getAttribute("loginBean") == null) { %>
+        <jsp:forward page="/index.jsp">
+            <jsp:param name="msg" value="Usuário deve se autenticar para acessar o sistema."></jsp:param>
+        </jsp:forward>
+    <% } List<Cliente> clientes = (List<Cliente>) request.getAttribute("clientes"); %>
     
     <body>
         <table border="1" class="mt-2 table">
