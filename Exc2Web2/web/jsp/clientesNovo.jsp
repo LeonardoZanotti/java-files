@@ -27,7 +27,7 @@
     <% } %>
     
     <body>
-        <form action="NovoClienteServlet" method="POST" class="m-3">
+        <form action="ClientesServlet&action=new" method="POST" class="m-3">
             <div class="form-group">
               <label for="cpf">CPF</label>
               <input type="text" class="form-control" name="cpf" id="cpf" required placeholder="CPF">

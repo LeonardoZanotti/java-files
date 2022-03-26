@@ -26,7 +26,7 @@
     <% } %>
     
     <body>
-        <a href="ClientesServlet"><button type="button" class="m-3 btn btn-primary">Voltar</button></a>
+        <a href="ClientesServlet?action=list"><button type="button" class="m-3 btn btn-primary">Voltar</button></a>
         <form action="AlterarClienteServlet" method="POST" class="m-3">
             <input type="hidden" name="id" class="form-control" id="id" value="${c.getId()}">
             <div class="form-group">

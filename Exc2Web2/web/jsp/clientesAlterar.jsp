@@ -26,7 +26,7 @@
     <% } %>
     
     <body>
-        <form action="AlterarClienteServlet" method="POST" class="m-3">
+        <form action="ClientesServlet?action=update" method="POST" class="m-3">
             <input type="hidden" name="id" class="form-control" id="id" value="${c.getId()}">
             <div class="form-group">
               <label for="cpf">CPF</label>

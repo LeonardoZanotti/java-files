@@ -45,14 +45,14 @@
                         <td>${c.getCpf()}</td>
                         <td>${c.getNome()}</td>
                         <td>${c.getEmail()}</td>
-                        <td><a href="VisualizarClienteServlet?id=${c.getId()}"><img height=40 src="https://icon-library.com/images/white-eye-icon/white-eye-icon-15.jpg" /></a></td>
-                        <td><a href="FormAlterarClienteServlet?id=${c.getId()}"><img height=40 src="https://www.pngitem.com/pimgs/m/31-313330_free-png-icons-pen-transparent-png.png" /></a></td>
-                        <td><a href="RemoverClienteServlet?id=${c.getId()}"><img height=40 src="https://www.kindpng.com/picc/m/220-2200770_font-trash-fa-trash-icon-png-transparent-png.png" /></a></td>
+                        <td><a href="ClientesServlet?action=show&id=${c.getId()}"><img height=40 src="https://icon-library.com/images/white-eye-icon/white-eye-icon-15.jpg" /></a></td>
+                        <td><a href="ClientesServlet?action=formUpdate&id=${c.getId()}"><img height=40 src="https://www.pngitem.com/pimgs/m/31-313330_free-png-icons-pen-transparent-png.png" /></a></td>
+                        <td><a href="ClientesServlet?action=remove&id=${c.getId()}"><img height=40 src="https://www.kindpng.com/picc/m/220-2200770_font-trash-fa-trash-icon-png-transparent-png.png" /></a></td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-        <div><a href="FormNovoClienteServlet" class="m-2 btn btn-primary">Novo cliente</a></div>
+        <div><a href="ClientesServlet?action=formNew" class="m-2 btn btn-primary">Novo cliente</a></div>
         <div><a href="./jsp/portal.jsp" class="m-2 btn btn-light">Voltar</a></div>
     </body>
 </html>
