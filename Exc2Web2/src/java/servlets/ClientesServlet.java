@@ -10,6 +10,8 @@ import java.io.IOException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -59,76 +61,85 @@ public class ClientesServlet extends HttpServlet {
             return;
         }
         
-        switch (action) {
-            default:
-            case "list":
-                List<Cliente> clientes = ClientesFacade.buscarTodos();
-                request.setAttribute("clientes", clientes);
-                rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
-                rd.forward(request, response);
-                break;
-            case "show":
-                id = Integer.parseInt(request.getParameter("id"));
-                cliente = ClientesFacade.buscar(id);
-                request.setAttribute("cliente", cliente);
-                rd = getServletContext().getRequestDispatcher("/jsp/clientesVisualizar.jsp");
-                rd.forward(request, response);
-                break;
-            case "formUpdate":
-                id = Integer.parseInt(request.getParameter("id"));
-                cliente = ClientesFacade.buscar(id);
-                request.setAttribute("cliente", cliente);
-                rd = getServletContext().getRequestDispatcher("/jsp/clientesAlterar.jsp");
-                rd.forward(request, response);
-                break;
-            case "remove":
-                id = Integer.parseInt(request.getParameter("id"));
-                cliente = ClientesFacade.buscar(id);
-                ClientesFacade.remover(cliente);
-                rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
-                rd.forward(request, response);
-                break;
-            case "update":
-                id = Integer.parseInt(request.getParameter("id"));
-                Cliente clienteBD = ClientesFacade.buscar(id);
-                dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
-                cliente = new Cliente(
-                    clienteBD.getId(),
-                    request.getParameter("cpf"),
-                    request.getParameter("email"),
-                    request.getParameter("nome"),
-                    new java.sql.Date(dt.getTime()),
-                    request.getParameter("rua"),
-                    Integer.parseInt(request.getParameter("numero")),
-                    request.getParameter("cep"),
-                    request.getParameter("cidade"),
-                    request.getParameter("uf")
-                );
-                ClientesFacade.alterar(cliente);
-                rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
-                rd.forward(request, response);
-                break;
-            case "formNew":
-                rd = getServletContext().getRequestDispatcher("/jsp/clientesNovo.jsp");
-                rd.forward(request, response);
-                break;
-            case "new":
-                dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
-                cliente = new Cliente(
-                    request.getParameter("cpf"),
-                    request.getParameter("email"),
-                    request.getParameter("nome"),
-                    new java.sql.Date(dt.getTime()),
-                    request.getParameter("rua"),
-                    Integer.parseInt(request.getParameter("numero")),
-                    request.getParameter("cep"),
-                    request.getParameter("cidade"),
-                    request.getParameter("uf")
-                );
-                ClientesFacade.inserir(cliente);
-                rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
-                rd.forward(request, response);
-                break;
+        try {
+            switch (action) {
+                default:
+                case "list":
+                    List<Cliente> clientes = ClientesFacade.buscarTodos();
+                    request.setAttribute("clientes", clientes);
+                    rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
+                    rd.forward(request, response);
+                    break;
+                case "show":
+                    id = Integer.parseInt(request.getParameter("id"));
+                    cliente = ClientesFacade.buscar(id);
+                    request.setAttribute("cliente", cliente);
+                    rd = getServletContext().getRequestDispatcher("/jsp/clientesVisualizar.jsp");
+                    rd.forward(request, response);
+                    break;
+                case "formUpdate":
+                    id = Integer.parseInt(request.getParameter("id"));
+                    cliente = ClientesFacade.buscar(id);
+                    request.setAttribute("cliente", cliente);
+                    rd = getServletContext().getRequestDispatcher("/jsp/clientesAlterar.jsp");
+                    rd.forward(request, response);
+                    break;
+                case "remove":
+                    id = Integer.parseInt(request.getParameter("id"));
+                    cliente = ClientesFacade.buscar(id);
+                    ClientesFacade.remover(cliente);
+                    rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
+                    rd.forward(request, response);
+                    break;
+                case "update":
+                    id = Integer.parseInt(request.getParameter("id"));
+                    Cliente clienteBD = ClientesFacade.buscar(id);
+                    dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
+                    cliente = new Cliente(
+                        clienteBD.getId(),
+                        request.getParameter("cpf"),
+                        request.getParameter("email"),
+                        request.getParameter("nome"),
+                        new java.sql.Date(dt.getTime()),
+                        request.getParameter("rua"),
+                        Integer.parseInt(request.getParameter("numero")),
+                        request.getParameter("cep"),
+                        request.getParameter("cidade"),
+                        request.getParameter("uf")
+                    );
+                    ClientesFacade.alterar(cliente);
+                    rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
+                    rd.forward(request, response);
+                    break;
+                case "formNew":
+                    rd = getServletContext().getRequestDispatcher("/jsp/clientesNovo.jsp");
+                    rd.forward(request, response);
+                    break;
+                case "new":
+                    dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
+                    cliente = new Cliente(
+                        request.getParameter("cpf"),
+                        request.getParameter("email"),
+                        request.getParameter("nome"),
+                        new java.sql.Date(dt.getTime()),
+                        request.getParameter("rua"),
+                        Integer.parseInt(request.getParameter("numero")),
+                        request.getParameter("cep"),
+                        request.getParameter("cidade"),
+                        request.getParameter("uf")
+                    );
+                    ClientesFacade.inserir(cliente);
+                    rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
+                    rd.forward(request, response);
+                    break;
+            }
+        } catch (DAOException | ServletException | IOException | NumberFormatException | SQLException | ParseException e) {
+            request.setAttribute("jspException", e);
+            request.setAttribute("status_code", 500);
+            request.setAttribute("pageName", "Clientes");
+            request.setAttribute("redirect", "./ClientesServlet?action=list");
+            rd = getServletContext().getRequestDispatcher("/jsp/erro.jsp");
+            rd.forward(request, response);
         }
     }
 

@@ -20,52 +20,42 @@ import java.util.logging.Logger;
  */
 public class ClientesFacade {
     
-    public static void inserir(Cliente c) {
+    public static void inserir(Cliente c) throws DAOException, SQLException {
         try (Connection con = new ConnectionFactory().getConnection()) {
             ClienteDAO dao = new ClienteDAO(con);
             dao.inserir(c);
-        } catch (DAOException | SQLException ex) {
-            Logger.getLogger(ClientesFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public static void alterar(Cliente c) {
+    public static void alterar(Cliente c) throws DAOException, SQLException {
         try (Connection con = new ConnectionFactory().getConnection()) {
             ClienteDAO dao = new ClienteDAO(con);
             dao.atualizar(c);
-        } catch (DAOException | SQLException ex) {
-            Logger.getLogger(ClientesFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public static Cliente buscar(int id) {
+    public static Cliente buscar(int id) throws DAOException, SQLException {
         Cliente cliente = null;
         try (Connection con = new ConnectionFactory().getConnection()) {
             ClienteDAO dao = new ClienteDAO(con);
             cliente = dao.buscar(id);
-        } catch (DAOException | SQLException ex) {
-            Logger.getLogger(ClientesFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cliente;
     }
     
-    public static List<Cliente> buscarTodos() {
+    public static List<Cliente> buscarTodos() throws DAOException, SQLException {
         List<Cliente> clientes = null;
         try (Connection con = new ConnectionFactory().getConnection()) {
             ClienteDAO dao = new ClienteDAO(con);
             clientes = dao.buscarTodos();
-        } catch (DAOException | SQLException ex) {
-            Logger.getLogger(ClientesFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
         return clientes;
     }
     
-    public static void remover(Cliente c) {
+    public static void remover(Cliente c) throws DAOException, SQLException {
         try (Connection con = new ConnectionFactory().getConnection()) {
             ClienteDAO dao = new ClienteDAO(con);
             dao.remover(c);
-        } catch (DAOException | SQLException ex) {
-            Logger.getLogger(ClientesFacade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
