@@ -6,10 +6,13 @@ package servlets;
 
 import database.ConnectionFactory;
 import database.DAOException;
+import facade.ClientesFacade;
 import java.io.IOException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,12 +46,83 @@ public class ClientesServlet extends HttpServlet {
             rd.forward(request, response);
         }
         
-        try (ConnectionFactory factory = new ConnectionFactory()) {
-            ClienteDAO dao = new ClienteDAO(factory.getConnection());
-            List<Cliente> clientes = dao.buscarTodos();
-            request.setAttribute("clientes", clientes);
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
-            rd.forward(request, response);
+        String action = (String) request.getParameter("action");
+        RequestDispatcher rd;
+        int id;
+        Date dt;
+        Cliente cliente;
+        
+        switch (action) {
+            case "list":
+                List<Cliente> clientes = ClientesFacade.buscarTodos();
+                request.setAttribute("clientes", clientes);
+                rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
+                rd.forward(request, response);
+                break;
+            case "show":
+                id = Integer.parseInt(request.getParameter("id"));
+                cliente = ClientesFacade.buscar(id);
+                request.setAttribute("cliente", cliente);
+                rd = getServletContext().getRequestDispatcher("/jsp/clientesVisualizar.jsp");
+                rd.forward(request, response);
+                break;
+            case "formUpdate":
+                id = Integer.parseInt(request.getParameter("id"));
+                cliente = ClientesFacade.buscar(id);
+                request.setAttribute("cliente", cliente);
+                rd = getServletContext().getRequestDispatcher("/jsp/clientesAlterar.jsp");
+                rd.forward(request, response);
+                break;
+            case "remove":
+                id = Integer.parseInt(request.getParameter("id"));
+                cliente = ClientesFacade.buscar(id);
+                ClientesFacade.remover(cliente);
+                rd = getServletContext().getRequestDispatcher("/ClientesServlet");
+                rd.forward(request, response);
+                break;
+            case "update":
+                id = Integer.parseInt(request.getParameter("id"));
+                Cliente clienteBD = ClientesFacade.buscar(id);
+                dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
+                cliente = new Cliente(
+                    clienteBD.getId(),
+                    request.getParameter("cpf"),
+                    request.getParameter("email"),
+                    request.getParameter("nome"),
+                    new java.sql.Date(dt.getTime()),
+                    request.getParameter("rua"),
+                    Integer.parseInt(request.getParameter("numero")),
+                    request.getParameter("cep"),
+                    request.getParameter("cidade"),
+                    request.getParameter("uf")
+                );
+                ClientesFacade.alterar(cliente);
+                rd = getServletContext().getRequestDispatcher("/ClientesServlet");
+                rd.forward(request, response);
+                break;
+            case "formNew":
+                rd = getServletContext().getRequestDispatcher("/jsp/clientesNovo.jsp");
+                rd.forward(request, response);
+                break;
+            case "new":
+                dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
+                cliente = new Cliente(
+                    request.getParameter("cpf"),
+                    request.getParameter("email"),
+                    request.getParameter("nome"),
+                    new java.sql.Date(dt.getTime()),
+                    request.getParameter("rua"),
+                    Integer.parseInt(request.getParameter("numero")),
+                    request.getParameter("cep"),
+                    request.getParameter("cidade"),
+                    request.getParameter("uf")
+                );
+                ClientesFacade.inserir(cliente);
+                rd = getServletContext().getRequestDispatcher("/ClientesServlet");
+                rd.forward(request, response);
+                break;
+            default:
+                break;
         }
     }
 
