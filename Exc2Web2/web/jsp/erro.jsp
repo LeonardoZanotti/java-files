@@ -25,6 +25,7 @@
     </head>
     <body>
         <h1 class="text-center text-danger"><%= msg %></h1>
+        <h1 class="text-center text-danger"><%= exception.message %></h1>
         <br>
         <a href=<%= redirect %>><%= pageName %></a>
         <%@ include file="footer.jsp" %>

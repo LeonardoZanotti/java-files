@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page errorPage="/erro.jsp" %>
+<%@ page errorPage="/jsp/erro.jsp" %>
     
 <!DOCTYPE html>
 <html>
