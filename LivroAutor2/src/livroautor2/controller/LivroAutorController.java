@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import livroautor2.model.Autor;
 import livroautor2.model.Livro;
 import livroautor2.model.dao.AutorDAO;
@@ -20,9 +21,11 @@ import livroautor2.model.dao.LivroDAO;
  */
 public class LivroAutorController {
 
-    public void createBook(String titulo, String assunto, String isbnCode, Date publicacao) {
+    public void createBook(String titulo, String assunto, String isbnCode, Date publicacao, String autores) {
         LivroDAO dao = new LivroDAO();
-        dao.inserirLivro(new Livro(titulo, assunto, isbnCode, publicacao));
+        List<Autor> autoresDB = this.listAutores().stream().filter(autor -> autores.contains(autor.getNome())).collect(Collectors.toList());
+        Livro newLivro = new Livro(titulo, assunto, isbnCode, publicacao, autoresDB);
+        dao.inserirLivro(newLivro);
     }
 
     public void createAutor(String nome, String documento, String naturalidade, Date nascimento) {

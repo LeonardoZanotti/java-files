@@ -31,7 +31,6 @@ public class LivroDAO {
             int idLivroGravado = lerIdLivro(stmt);
             livro.setId(idLivroGravado);
             this.gravarAutores(livro, con);
-
             con.commit();
         } catch (SQLException ex) {
             try{con.rollback();}catch(SQLException ex1){System.out.println("Erro ao tentar rollback. Ex="+ex1.getMessage());};
@@ -85,7 +84,7 @@ public class LivroDAO {
 
     private List<Autor> lerAutores(long idLivro, Connection con) throws SQLException{
         //Select para pegar os autores de um livro
-        String sql = "SELECT autor.id,autor.nome"
+        String sql = "SELECT *"
                 + " FROM autor"
                 + " INNER JOIN livro_autor"
                 + " 	ON autor.id = livro_autor.idAutor"

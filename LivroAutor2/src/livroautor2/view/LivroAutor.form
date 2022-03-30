@@ -67,15 +67,21 @@
                                   <Component id="AssuntoInput" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="PublicacaoLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                              <Component id="PublicacaoInput" pref="364" max="32767" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="ISBNLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                               <Component id="ISBNInput" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="PublicacaoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="AutoresLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="PublicacaoInput" pref="364" max="32767" attributes="0"/>
+                                  <Component id="AutoresInput" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -105,7 +111,12 @@
                           <Component id="PublicacaoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="PublicacaoInput" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="114" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="AutoresLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="AutoresInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="77" max="32767" attributes="0"/>
                       <Component id="SalvarLivroBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -148,6 +159,16 @@
             <Component class="javax.swing.JTextField" name="ISBNInput">
             </Component>
             <Component class="javax.swing.JTextField" name="PublicacaoInput">
+            </Component>
+            <Component class="javax.swing.JLabel" name="AutoresLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Autores:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="AutoresInput">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Autor1, Autor2..."/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

@@ -49,6 +49,8 @@ public class LivroAutor extends javax.swing.JFrame {
         PublicacaoLabel = new javax.swing.JLabel();
         ISBNInput = new javax.swing.JTextField();
         PublicacaoInput = new javax.swing.JTextField();
+        AutoresLabel = new javax.swing.JLabel();
+        AutoresInput = new javax.swing.JTextField();
         IncluirAutor = new javax.swing.JPanel();
         NaturalidadeLabel = new javax.swing.JLabel();
         NascimentoLabel = new javax.swing.JLabel();
@@ -83,6 +85,10 @@ public class LivroAutor extends javax.swing.JFrame {
 
         PublicacaoLabel.setText("Publicação:");
 
+        AutoresLabel.setText("Autores:");
+
+        AutoresInput.setText("Autor1, Autor2...");
+
         javax.swing.GroupLayout IncluirLivroLayout = new javax.swing.GroupLayout(IncluirLivro);
         IncluirLivro.setLayout(IncluirLivroLayout);
         IncluirLivroLayout.setHorizontalGroup(
@@ -102,13 +108,17 @@ public class LivroAutor extends javax.swing.JFrame {
                             .addComponent(TituloInput)
                             .addComponent(AssuntoInput)))
                     .addGroup(IncluirLivroLayout.createSequentialGroup()
-                        .addComponent(PublicacaoLabel)
-                        .addGap(8, 8, 8)
-                        .addComponent(PublicacaoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
-                    .addGroup(IncluirLivroLayout.createSequentialGroup()
                         .addComponent(ISBNLabel)
                         .addGap(52, 52, 52)
-                        .addComponent(ISBNInput)))
+                        .addComponent(ISBNInput))
+                    .addGroup(IncluirLivroLayout.createSequentialGroup()
+                        .addGroup(IncluirLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PublicacaoLabel)
+                            .addComponent(AutoresLabel))
+                        .addGap(8, 8, 8)
+                        .addGroup(IncluirLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(PublicacaoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                            .addComponent(AutoresInput))))
                 .addContainerGap())
         );
         IncluirLivroLayout.setVerticalGroup(
@@ -130,7 +140,11 @@ public class LivroAutor extends javax.swing.JFrame {
                 .addGroup(IncluirLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PublicacaoLabel)
                     .addComponent(PublicacaoInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(IncluirLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AutoresLabel)
+                    .addComponent(AutoresInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(SalvarLivroBtn)
                 .addContainerGap())
         );
@@ -262,7 +276,8 @@ public class LivroAutor extends javax.swing.JFrame {
             String assunto = AssuntoInput.getText();
             String isbnCode = ISBNInput.getText();
             Date publicacao = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(PublicacaoInput.getText());
-            this.controller.createBook(titulo, assunto, isbnCode, publicacao);
+            String autores = AutoresInput.getText();
+            this.controller.createBook(titulo, assunto, isbnCode, publicacao, autores);
             this.cleanAllForms();
         } catch (ParseException ex) {
             Logger.getLogger(LivroAutor.class.getName()).log(Level.SEVERE, null, ex);
@@ -334,6 +349,8 @@ public class LivroAutor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField AssuntoInput;
     private javax.swing.JLabel AssuntoLabel;
+    private javax.swing.JTextField AutoresInput;
+    private javax.swing.JLabel AutoresLabel;
     private javax.swing.JTextField DocumentoInput;
     private javax.swing.JLabel DocumentoLabel;
     private javax.swing.JTextField ISBNInput;
