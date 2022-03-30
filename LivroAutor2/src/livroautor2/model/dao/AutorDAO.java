@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import livroautor2.model.Autor;
+import livroautor2.model.Livro;
 
 public class AutorDAO {
 
@@ -112,5 +113,53 @@ public class AutorDAO {
             try{con.close();;}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());};               
         }
 
+    }
+
+    private List<Livro> lerLivros(long idAutor, Connection con) throws SQLException{
+        //Select para pegar os livros de um autor
+        String sql = "SELECT *"
+                + " FROM livro"
+                + " INNER JOIN livro_autor"
+                + " 	ON livro.id = livro_autor.idLivro"
+                + " WHERE livro_autor.idAutor = ? ";
+        PreparedStatement stmt = null;
+        List<Livro> livros = null;
+        stmt = con.prepareStatement(sql);
+        stmt.setLong(1, idAutor);
+        ResultSet resultado = stmt.executeQuery();
+        livros = new ArrayList<Livro>();
+        while (resultado.next()) {
+            Livro livroLido = new Livro(resultado.getString("titulo"), resultado.getString("assunto"), resultado.getString("isbnCode"), resultado.getDate("publicacao"));
+            livroLido.setId(resultado.getInt("id"));
+            livros.add(livroLido);
+        }
+
+        return livros;
+    }
+    
+    public List<Autor> listarAutoresComLivros() {
+        Connection con = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Autor> lista = new ArrayList();
+        try{
+            con = ConnectionFactory.getConnection();
+            stmt = con.prepareStatement(stmtListar);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                List<Livro> listLivros = lerLivros(rs.getInt(1),con);
+                System.out.println(listLivros.size());
+                Autor autor = new Autor(rs.getString("nome"), rs.getString("documento"), rs.getString("naturalidade"), rs.getDate("nascimento"), listLivros);
+                autor.setId(rs.getInt("id"));
+                lista.add(autor);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            throw new RuntimeException("Erro ao consultar uma lista de autores. Origem="+ex.getMessage());
+        }finally{
+            try{rs.close();}catch(Exception ex){System.out.println("Erro ao fechar result set. Ex="+ex.getMessage());};
+            try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());};
+            try{con.close();;}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());};               
+        }
     }
 }

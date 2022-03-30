@@ -41,7 +41,7 @@ public class LivroAutorController {
     public List<Autor> listAutores() {
         AutorDAO dao = new AutorDAO();
         try {
-            return dao.listarAutores();
+            return dao.listarAutoresComLivros();
         } catch (Exception ex) {
             Logger.getLogger(LivroAutorController.class.getName()).log(Level.SEVERE, null, ex);
         }

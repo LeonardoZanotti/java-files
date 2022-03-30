@@ -5,7 +5,6 @@
 package livroautor2.view;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +18,7 @@ import livroautor2.model.Livro;
  */
 public class LivroTable extends AbstractTableModel {
     private List<Livro> livros = new ArrayList();
-    private String[] columns = new String[]{"Titulo", "Assunto", "ISBN", "Publicação"};
+    private String[] columns = new String[]{"Titulo", "Assunto", "ISBN", "Publicação", "Autores"};
 
     public LivroTable() {
     }
@@ -50,31 +49,35 @@ public class LivroTable extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Livro cliente = livros.get(rowIndex);
+        Livro livro = livros.get(rowIndex);
         switch (columnIndex) {
-            case 0: return cliente.getTitulo();
-            case 1: return cliente.getAssunto();
-            case 2: return cliente.getIsbnCode();
-            case 3: return cliente.getPublicacao();
+            case 0: return livro.getTitulo();
+            case 1: return livro.getAssunto();
+            case 2: return livro.getIsbnCode();
+            case 3: return livro.getPublicacao();
+            case 4: return livro.getAutores().stream().map(autor -> autor.getNome()).collect(Collectors.joining("; "));
             default : return null;
         }
     }
     
     @Override
     public void setValueAt(Object value, int row, int col) {
-        Livro cliente = livros.get(row);
+        Livro livro = livros.get(row);
         switch (col) {
             case 0:
-                cliente.setTitulo((String) value);
+                livro.setTitulo((String) value);
                 break;
             case 1:
-                cliente.setAssunto((String) value);
+                livro.setAssunto((String) value);
                 break;
             case 2:
-                cliente.setIsbnCode((String) value);
+                livro.setIsbnCode((String) value);
                 break;
             case 3:
-                cliente.setPublicacao((Date) value);
+                livro.setPublicacao((Date) value);
+                break;
+            case 4:
+                livro.setAutores((List<Autor>) value);
                 break;
             default:
                 break;
