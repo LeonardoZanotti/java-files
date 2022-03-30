@@ -11,7 +11,7 @@ import livroautor2.model.Livro;
 
 public class LivroDAO {
 
-    private final String stmtInserir = "INSERT INTO livro(titulo) VALUES(?)";
+    private final String stmtInserir = "INSERT INTO livro (titulo, assunto, isbnCode, publicacao) VALUES (?, ?, ?, ?)";
     private final String stmtConsultar = "SELECT * FROM livro WHERE id = ?";
     private final String stmtListaLivroAutor = "SELECT * FROM livro";
 
@@ -23,6 +23,9 @@ public class LivroDAO {
             con.setAutoCommit(false);
             stmt = con.prepareStatement(stmtInserir, PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setString(1, livro.getTitulo());
+            stmt.setString(2, livro.getAssunto());
+            stmt.setString(3, livro.getIsbnCode());
+            stmt.setDate(4, livro.getPublicacao());
             stmt.executeUpdate();
             int idLivroGravado = lerIdLivro(stmt);
             livro.setId(idLivroGravado);
@@ -55,8 +58,7 @@ public class LivroDAO {
             rs = stmt.executeQuery();
             rs.next();
             List<Autor> listaAutores = lerAutores(id,con);
-            livroLido = new Livro(rs.getString("titulo"), listaAutores);
-            livroLido.setId(rs.getInt("Id"));
+            livroLido = new Livro(rs.getInt("Id"), rs.getString("titulo"), rs.getString("assunto"), rs.getString("isbnCode"), rs.getDate("publicacao"), listaAutores);
             return livroLido;           
         }catch(SQLException ex){
             throw new RuntimeException("Erro ao consultar um livro no banco de dados. Origem="+ex.getMessage());            
@@ -94,7 +96,7 @@ public class LivroDAO {
         ResultSet resultado = stmt.executeQuery();
         autores = new ArrayList<Autor>();
         while (resultado.next()) {
-            Autor autorLido = new Autor(resultado.getString("nome"));
+            Autor autorLido = new Autor(resultado.getString("nome"), resultado.getString("documento"), resultado.getString("naturalidade"), resultado.getDate("nascimento"));
             autorLido.setId(resultado.getInt("id"));
             autores.add(autorLido);
         }
@@ -115,8 +117,7 @@ public class LivroDAO {
             List<Livro> listaLivros = new ArrayList<Livro>();
             while (rs.next()) {
                 List<Autor> listAutores = lerAutores(rs.getInt(1),con);
-                Livro livro = new Livro(rs.getString(2), listAutores);
-                livro.setId(rs.getInt(1));
+                Livro livro = new Livro(rs.getInt("Id"), rs.getString("titulo"), rs.getString("assunto"), rs.getString("isbnCode"), rs.getDate("publicacao"), listAutores);
                 listaLivros.add(livro);
             }
 

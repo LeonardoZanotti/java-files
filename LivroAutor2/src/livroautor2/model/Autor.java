@@ -1,50 +1,38 @@
 package livroautor2.model;
-import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
-public final class Autor implements Comparable {
+public final class Autor {
 
     private int id;
-    private String nome;
+    private String nome, documento, naturalidade;
+    private Date nascimento;
     private List<Livro> livros;
 
-    public Autor(String nome) {
+    public Autor(int id, String nome, String documento, String naturalidade, Date nascimento, List<Livro> livros) {
+        this.id = id;
         this.nome = nome;
-        this.livros = new ArrayList();
+        this.documento = documento;
+        this.naturalidade = naturalidade;
+        this.nascimento = nascimento;
+        this.livros = livros;
     }
 
-    public void setNome(String nome) {
+    public Autor(String nome, String documento, String naturalidade, Date nascimento, List<Livro> livros) {
         this.nome = nome;
+        this.documento = documento;
+        this.naturalidade = naturalidade;
+        this.nascimento = nascimento;
+        this.livros = livros;
     }
-
-    public String getNome() {
-        return nome;
+    
+    public Autor(String nome, String documento, String naturalidade, Date nascimento) {
+        this.nome = nome;
+        this.documento = documento;
+        this.naturalidade = naturalidade;
+        this.nascimento = nascimento;
     }
-
-    public void setLivros(List<Livro> livros) {
-         for(Livro livro: livros){
-             this.adicionarLivro(livro);
-        }
-    }
-
-    public List<Livro> getLivros() {
-        return this.livros;
-    }
-
-    public void adicionarLivro(Livro livro) {
-        if (!this.getLivros().contains(livro)) {
-            this.livros.add(livro);
-            livro.adicionarAutor(this);
-        }
-    }
-
-    public void removerLivro(Livro livro) {
-        if (this.getLivros().contains(livro)) {
-            this.livros.remove(livro);
-            livro.removerAutor(this);
-        }
-    }
-
+    
     public int getId() {
         return id;
     }
@@ -52,40 +40,46 @@ public final class Autor implements Comparable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
+    public String getNaturalidade() {
+        return naturalidade;
+    }
+
+    public void setNaturalidade(String naturalidade) {
+        this.naturalidade = naturalidade;
+    }
+
+    public Date getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(Date nascimento) {
+        this.nascimento = nascimento;
+    }
+
+    public List<Livro> getLivros() {
+        return livros;
+    }
+
+    public void setLivros(List<Livro> livros) {
+        this.livros = livros;
+    }
     
     
-    /**
-     * Método que produz um hashCode igual para bicicletas iguais.
-     * @return Inteiro que representa o hashCode do objeto
-     */
-    public int hashCode() {
-        int hash = 7;
-        hash = 71 * hash + this.id;
-        return hash;
-    }
-    /**
-     * Método que compara duas bicicletas pelo seu conteúdo
-     * @return booleano: Verndadeiro se igual, falso, caso contrário.
-     */
-    @Override
-    public boolean equals(Object obj){
-        if(obj == null){
-            return false;
-        }
-        if(!obj.getClass().equals(this.getClass()) )
-            return false;
-
-        Autor objAutor = (Autor)obj;
-
-        if(objAutor.getId()!=this.getId())
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int compareTo(Object autor) {
-        Autor a = (Autor) autor;
-        return this.getNome().compareTo(a.getNome());
-    }
 }

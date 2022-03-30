@@ -10,11 +10,10 @@ import livroautor2.model.Autor;
 
 public class AutorDAO {
 
-    private final String stmtInserir = "INSERT INTO autor(nome) VALUES(?)";
-    private final String stmtInserirLA = "INSERT INTO Livro_Autor VALUES(?, ?)";
+    private final String stmtInserir = "INSERT INTO autor (nome, documento, naturalidade, nascimento) VALUES (?, ?, ?, ?)";
     private final String stmtConsultar = "SELECT * FROM autor WHERE id = ?";
+    private final String stmtInserirLA = "INSERT INTO Livro_Autor VALUES(?, ?)";
     private final String stmtListar = "SELECT * FROM autor";
-    private final String stmtExcluir = "DELETE FROM AUTOR WHERE ID = ?";
 
     public void inserirAutor(Autor autor, List<Integer> ids) {
         Connection con=null;
@@ -23,6 +22,9 @@ public class AutorDAO {
             con = ConnectionFactory.getConnection();
             stmt = con.prepareStatement(stmtInserir,PreparedStatement.RETURN_GENERATED_KEYS);
             stmt.setString(1, autor.getNome());
+            stmt.setString(2, autor.getDocumento());
+            stmt.setString(3, autor.getNaturalidade());
+            stmt.setDate(4, autor.getNascimento());
             stmt.executeUpdate();
             autor.setId(lerIdAutor(stmt));
             this.gravarLivros(con, autor, ids);
@@ -69,7 +71,7 @@ public class AutorDAO {
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             if(rs.next()){
-                autorLido = new Autor(rs.getString("nome"));
+                autorLido = new Autor(rs.getString("nome"), rs.getString("documento"), rs.getString("naturalidade"), rs.getDate("nascimento"));
                 autorLido.setId(rs.getInt("id"));
                 return autorLido;
             }else{
@@ -96,7 +98,7 @@ public class AutorDAO {
             stmt = con.prepareStatement(stmtListar);
             rs = stmt.executeQuery();
             while(rs.next()){
-                Autor autor = new Autor(rs.getString("nome"));
+                Autor autor = new Autor(rs.getString("nome"), rs.getString("documento"), rs.getString("naturalidade"), rs.getDate("nascimento"));
                 autor.setId(rs.getInt("id"));
                 lista.add(autor);
             }
@@ -110,21 +112,4 @@ public class AutorDAO {
         }
 
     }
-    
-    public void excluirAutor(long id){
-        Connection con = null;
-        PreparedStatement stmt = null;
-        try{
-            con = ConnectionFactory.getConnection();
-            stmt = con.prepareStatement(stmtExcluir);
-            stmt.setLong(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException ex) {
-            throw new RuntimeException("Erro ao inserir um autor no banco de dados. Origem="+ex.getMessage());
-        } finally{
-            try{stmt.close();}catch(Exception ex){System.out.println("Erro ao fechar stmt. Ex="+ex.getMessage());};
-            try{con.close();}catch(Exception ex){System.out.println("Erro ao fechar conexão. Ex="+ex.getMessage());};
-        }        
-    }
-
 }
