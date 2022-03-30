@@ -1,4 +1,4 @@
-package A04_jdbc.livroautor;
+package A04_jdbc.livroautor.model.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

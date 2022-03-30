@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package A04_jdbc.livroautor;
+package A04_jdbc.livroautor.model;
 
 /**
  *

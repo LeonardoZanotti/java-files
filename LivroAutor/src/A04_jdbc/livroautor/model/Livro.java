@@ -1,5 +1,6 @@
-package A04_jdbc.livroautor;
+package A04_jdbc.livroautor.model;
 
+import A04_jdbc.livroautor.model.Autor;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
