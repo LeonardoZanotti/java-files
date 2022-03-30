@@ -1,6 +1,7 @@
 package livroautor2.model;
 
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public final class Livro {
@@ -31,6 +32,7 @@ public final class Livro {
         this.assunto = assunto;
         this.isbnCode = isbnCode;
         this.publicacao = publicacao;
+        this.autores = new ArrayList<>();
     }
     
     public int getId() {

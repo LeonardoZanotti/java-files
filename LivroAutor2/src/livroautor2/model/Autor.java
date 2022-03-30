@@ -1,5 +1,6 @@
 package livroautor2.model;
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public final class Autor {
@@ -31,6 +32,7 @@ public final class Autor {
         this.documento = documento;
         this.naturalidade = naturalidade;
         this.nascimento = nascimento;
+        this.livros = new ArrayList<>();
     }
     
     public int getId() {

@@ -4,7 +4,7 @@
  */
 package livroautor2.view;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -263,6 +263,7 @@ public class LivroAutor extends javax.swing.JFrame {
             String isbnCode = ISBNInput.getText();
             Date publicacao = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(PublicacaoInput.getText());
             this.controller.createBook(titulo, assunto, isbnCode, publicacao);
+            this.cleanAllForms();
         } catch (ParseException ex) {
             Logger.getLogger(LivroAutor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -275,11 +276,26 @@ public class LivroAutor extends javax.swing.JFrame {
             String naturalidade = NaturalidadeInput.getText();
             Date nascimento = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(NascimentoInput.getText());
             this.controller.createAutor(nome, documento, naturalidade, nascimento);
+            this.cleanAllForms();
         } catch (ParseException ex) {
             Logger.getLogger(LivroAutor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_SalvarAutorBtnActionPerformed
 
+    private void cleanAllForms() {
+        TituloInput.setText("");
+        AssuntoInput.setText("");
+        ISBNInput.setText("");
+        PublicacaoInput.setText("");
+        NomeInput.setText("");
+        DocumentoInput.setText("");
+        NaturalidadeInput.setText("");
+        NascimentoInput.setText("");
+        
+        this.LivroTable.setLivros(this.controller.listLivros());
+        this.AutorTable.setAutores(this.controller.listAutores());
+    }
+    
     /**
      * @param args the command line arguments
      */

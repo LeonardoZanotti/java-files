@@ -1,6 +1,7 @@
 package livroautor2.model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +25,7 @@ public class AutorDAO {
             stmt.setString(1, autor.getNome());
             stmt.setString(2, autor.getDocumento());
             stmt.setString(3, autor.getNaturalidade());
-            stmt.setDate(4, autor.getNascimento());
+            stmt.setDate(4, new java.sql.Date(autor.getNascimento().getTime()));
             stmt.executeUpdate();
             autor.setId(lerIdAutor(stmt));
             this.gravarLivros(con, autor, ids);
