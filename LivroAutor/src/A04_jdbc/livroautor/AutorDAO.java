@@ -1,7 +1,5 @@
-package A04_jdbc.livroautor.model.dao;
+package A04_jdbc.livroautor;
 
-import A04_jdbc.livroautor.model.Autor;
-import A04_jdbc.livroautor.model.Autor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

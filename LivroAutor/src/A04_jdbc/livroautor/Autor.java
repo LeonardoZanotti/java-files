@@ -1,4 +1,4 @@
-package A04_jdbc.livroautor.model;
+package A04_jdbc.livroautor;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,10 +1,5 @@
 package A04_jdbc.livroautor;
 
-import A04_jdbc.livroautor.model.dao.LivroAutorDAO;
-import A04_jdbc.livroautor.model.dao.LivroDAO;
-import A04_jdbc.livroautor.model.Livro;
-import A04_jdbc.livroautor.model.dao.AutorDAO;
-import A04_jdbc.livroautor.model.Autor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
