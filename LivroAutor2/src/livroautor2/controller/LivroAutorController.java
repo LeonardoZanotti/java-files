@@ -6,6 +6,7 @@ package livroautor2.controller;
 
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,5 +47,20 @@ public class LivroAutorController {
             Logger.getLogger(LivroAutorController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public List<Livro> listLivrosByAutor(String text) {
+        AutorDAO autorDao = new AutorDAO();
+        LivroDAO livroDao = new LivroDAO();
+        List<Livro> livros = new ArrayList<>();
+        try {
+            List<Autor> autores = autorDao.listarAutoresComLivros().stream().filter(autor -> autor.getNome().contains(text)).collect(Collectors.toList());
+            autores.forEach(autor -> {
+                livros.addAll(livroDao.listarLivroComAutoresPorIdDoAutor(autor.getId()));
+            });
+        } catch (Exception ex) {
+            Logger.getLogger(LivroAutorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return livros.stream().distinct().collect(Collectors.toList());
     }
 }

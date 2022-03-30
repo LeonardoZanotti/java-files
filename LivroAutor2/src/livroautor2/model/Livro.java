@@ -3,6 +3,7 @@ package livroautor2.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public final class Livro {
     private int id;
@@ -82,4 +83,34 @@ public final class Livro {
     public void setAutores(List<Autor> autores) {
         this.autores = autores;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Livro other = (Livro) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.titulo, other.titulo)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + this.id;
+        hash = 29 * hash + Objects.hashCode(this.titulo);
+        return hash;
+    }
+    
 }

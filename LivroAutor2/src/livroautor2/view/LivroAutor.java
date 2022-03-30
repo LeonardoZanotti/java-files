@@ -64,6 +64,9 @@ public class LivroAutor extends javax.swing.JFrame {
         ListarLivros = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        searchLabel = new javax.swing.JLabel();
+        searchInput = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
         ListarAutores = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -117,7 +120,7 @@ public class LivroAutor extends javax.swing.JFrame {
                             .addComponent(AutoresLabel))
                         .addGap(8, 8, 8)
                         .addGroup(IncluirLivroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PublicacaoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                            .addComponent(PublicacaoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                             .addComponent(AutoresInput))))
                 .addContainerGap())
         );
@@ -184,7 +187,7 @@ public class LivroAutor extends javax.swing.JFrame {
                             .addComponent(NascimentoLabel))
                         .addGap(13, 13, 13)
                         .addGroup(IncluirAutorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NascimentoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                            .addComponent(NascimentoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
                             .addComponent(NaturalidadeInput)
                             .addComponent(NomeInput)
                             .addComponent(DocumentoInput))))
@@ -219,18 +222,42 @@ public class LivroAutor extends javax.swing.JFrame {
         jTable1.setModel(LivroTable);
         jScrollPane1.setViewportView(jTable1);
 
+        searchLabel.setText("Pesquisar autor:");
+
+        searchBtn.setText("Pesquisar");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout ListarLivrosLayout = new javax.swing.GroupLayout(ListarLivros);
         ListarLivros.setLayout(ListarLivrosLayout);
         ListarLivrosLayout.setHorizontalGroup(
             ListarLivrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ListarLivrosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(ListarLivrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(ListarLivrosLayout.createSequentialGroup()
+                        .addComponent(searchLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchBtn)))
                 .addContainerGap())
         );
         ListarLivrosLayout.setVerticalGroup(
             ListarLivrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+            .addGroup(ListarLivrosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ListarLivrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchLabel)
+                    .addComponent(searchInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchBtn))
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Listar livros", ListarLivros);
@@ -294,6 +321,10 @@ public class LivroAutor extends javax.swing.JFrame {
             Logger.getLogger(LivroAutor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_SalvarAutorBtnActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        this.LivroTable.setLivros(this.searchInput.getText().length() > 0 ? this.controller.listLivrosByAutor(this.searchInput.getText()) : this.controller.listLivros());
+    }//GEN-LAST:event_searchBtnActionPerformed
 
     private void cleanAllForms() {
         TituloInput.setText("");
@@ -378,5 +409,8 @@ public class LivroAutor extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JTextField searchInput;
+    private javax.swing.JLabel searchLabel;
     // End of variables declaration//GEN-END:variables
 }
