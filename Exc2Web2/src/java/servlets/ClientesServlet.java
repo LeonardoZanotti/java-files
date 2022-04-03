@@ -111,7 +111,7 @@ public class ClientesServlet extends HttpServlet {
                         request.getParameter("rua"),
                         Integer.parseInt(request.getParameter("numero")),
                         request.getParameter("cep"),
-                        Integer.parseInt(request.getParameter("idCidade"))
+                        Integer.parseInt(request.getParameter("cidade"))
                     );
                     ClientesFacade.alterar(cliente);
                     rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
@@ -134,7 +134,7 @@ public class ClientesServlet extends HttpServlet {
                         request.getParameter("rua"),
                         Integer.parseInt(request.getParameter("numero")),
                         request.getParameter("cep"),
-                        Integer.parseInt(request.getParameter("idCidade"))
+                        Integer.parseInt(request.getParameter("cidade"))
                     );
                     ClientesFacade.inserir(cliente);
                     rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
@@ -142,6 +142,7 @@ public class ClientesServlet extends HttpServlet {
                     break;
             }
         } catch (DAOException | ServletException | IOException | SQLException | ParseException | RuntimeException e) {
+            e.printStackTrace();
             request.setAttribute("jspException", e);
             request.setAttribute("status_code", 500);
             request.setAttribute("pageName", "Clientes");
