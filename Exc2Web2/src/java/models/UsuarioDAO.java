@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class UsuarioDAO implements DAO<Usuario> {
     private static final String QUERY_INSERIR = "INSERT INTO tb_usuario (login_usuario, senha_usuario, nome_usuario) VALUES (?, ?, ?)";
     private static final String QUERY_BUSCAR_TODOS = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario";
-        private static final String QUERY_BUSCAR_NOME_PELO_EMAIL = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario WHERE login_usuario = (?)";
+    private static final String QUERY_BUSCAR_NOME_PELO_EMAIL = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario WHERE login_usuario = (?)";
 
     private Connection con = null;
     

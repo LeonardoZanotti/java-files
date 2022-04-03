@@ -6,6 +6,7 @@ package servlets;
 
 import database.DAOException;
 import facade.ClientesFacade;
+import facade.EstadoFacade;
 import java.io.IOException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Cliente;
+import models.Estado;
 
 /**
  *
@@ -53,6 +55,7 @@ public class ClientesServlet extends HttpServlet {
         int id;
         Date dt;
         Cliente cliente;
+        List<Estado> estados;
         
         if (action == null) {
             List<Cliente> clientes = ClientesFacade.buscarTodos();
@@ -81,8 +84,10 @@ public class ClientesServlet extends HttpServlet {
                 case "formUpdate":
                     id = Integer.parseInt(request.getParameter("id"));
                     cliente = ClientesFacade.buscar(id);
+                    estados = EstadoFacade.buscarTodos();
                     request.setAttribute("cliente", cliente);
-                    rd = getServletContext().getRequestDispatcher("/jsp/clientesAlterar.jsp");
+                    request.setAttribute("estados", estados);
+                    rd = getServletContext().getRequestDispatcher("/jsp/clientesForm.jsp");
                     rd.forward(request, response);
                     break;
                 case "remove":
