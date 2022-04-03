@@ -31,7 +31,7 @@
         <form action="ClientesServlet?action=new" method="POST" class="m-3">
             <div class="form-group">
               <label for="cpf">CPF</label>
-              <input type="text" class="form-control" name="cpf" id="cpf" required placeholder="CPF">
+              <input type="text" class="form-control" name="cpf" id="cpf" maxlength="11" required placeholder="XXXXXXXXXXX">
             </div>
             <div class="form-group">
               <label for="email">Email</label>
@@ -39,31 +39,31 @@
             </div>
             <div class="form-group">
               <label for="nome">Nome</label>
-              <input type="text" class="form-control" name="nome" id="nome" required placeholder="Nome">
+              <input type="text" class="form-control" name="nome" id="nome" maxlength="100" required placeholder="Nome">
             </div>
             <div class="form-group">
               <label for="data">Data de nascimento</label>
-              <input type="date" class="form-control" name="data" id="data" required placeholder="Data de nascimento">
+              <input type="date" class="form-control" name="data" id="data" placeholder="Data de nascimento">
             </div>
             <div class="form-group">
               <label for="rua">Rua</label>
-              <input type="text" class="form-control" name="rua" id="rua" required placeholder="Rua">
+              <input type="text" class="form-control" name="rua" id="rua" maxlength="100" placeholder="Rua">
             </div>
             <div class="form-group">
               <label for="numero">Número</label>
-              <input type="number" class="form-control" name="numero" id="numero" required placeholder="Número">
+              <input type="number" class="form-control" name="numero" id="numero" placeholder="XX">
             </div>
             <div class="form-group">
               <label for="cep">CEP</label>
-              <input type="text" class="form-control" name="cep" id="cep" required placeholder="CEP">
+              <input type="text" class="form-control" name="cep" id="cep" maxlength="8" placeholder="XXXXXXXX">
             </div>
             <div class="form-group">
               <label for="cidade">Cidade</label>
-              <input type="text" class="form-control" name="cidade" id="cidade" required placeholder="Cidade">
+              <input type="text" class="form-control" name="cidade" id="cidade" maxlength="100" placeholder="Cidade">
             </div>
             <div class="form-group">
               <label for="uf">UF</label>
-              <input type="text" class="form-control" name="uf" id="uf" required placeholder="UF">
+              <input type="text" class="form-control" name="uf" id="uf" maxlength="2" placeholder="UF">
             </div>
             <button type="submit" class="btn btn-warning">Salvar</button>
             <a href="ClientesServlet"><button type="button" class="btn btn-light">Cancelar</button></a>

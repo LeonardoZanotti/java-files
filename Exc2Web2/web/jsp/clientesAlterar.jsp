@@ -28,18 +28,18 @@
     
     <body>
         <form action="ClientesServlet?action=update" method="POST" class="m-3">
-            <input type="hidden" name="id" class="form-control" id="id" value="${cliente.id}">
+            <input type="hidden" name="id" class="form-control" id="id" required value="${cliente.id}">
             <div class="form-group">
               <label for="cpf">CPF</label>
-              <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" value="${cliente.cpf}">
+              <input type="text" class="form-control" name="cpf" id="cpf" placeholder="XXXXXXXXXXX" maxlength="11" required value="${cliente.cpf}">
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Email" value="${cliente.email}">
+              <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Email" maxlength="50" required value="${cliente.email}">
             </div>
             <div class="form-group">
               <label for="nome">Nome</label>
-              <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" value="${cliente.nome}">
+              <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" maxlength="100" required value="${cliente.nome}">
             </div>
             <div class="form-group">
               <label for="data">Data de nascimento</label>
@@ -47,23 +47,23 @@
             </div>
             <div class="form-group">
               <label for="rua">Rua</label>
-              <input type="text" class="form-control" name="rua" id="rua" placeholder="Rua" value="${cliente.rua}">
+              <input type="text" class="form-control" name="rua" id="rua" placeholder="Rua" maxlength="100" value="${cliente.rua}">
             </div>
             <div class="form-group">
               <label for="numero">Número</label>
-              <input type="number" class="form-control" name="numero" id="numero" placeholder="Número" value="${cliente.numero}">
+              <input type="number" class="form-control" name="numero" id="numero" placeholder="XX" value="${cliente.numero}">
             </div>
             <div class="form-group">
               <label for="cep">CEP</label>
-              <input type="text" class="form-control" name="cep" id="cep" placeholder="CEP" value="${cliente.cep}">
+              <input type="text" class="form-control" name="cep" id="cep" placeholder="XXXXXXXX" maxlength="8" value="${cliente.cep}">
             </div>
             <div class="form-group">
               <label for="cidade">Cidade</label>
-              <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade" value="${cliente.cidade}">
+              <input type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade" maxlength="100" value="${cliente.cidade}">
             </div>
             <div class="form-group">
               <label for="uf">UF</label>
-              <input type="text" class="form-control" name="uf" id="uf" placeholder="UF" value="${cliente.uf}">
+              <input type="text" class="form-control" name="uf" id="uf" placeholder="UF" maxlength="2" value="${cliente.uf}">
             </div>
             <button type="submit" class="btn btn-warning">Alterar</button>
             <a href="ClientesServlet"><button type="button" class="btn btn-light">Cancelar</button></a>
