@@ -15,7 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Visualizar cliente</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
@@ -59,13 +59,38 @@
               <input disabled type="text" class="form-control" name="cep" id="cep" placeholder="CEP" value="${cliente.cep}">
             </div>
             <div class="form-group">
-              <label for="cidade">Cidade</label>
-              <input disabled type="text" class="form-control" name="cidade" id="cidade" placeholder="Cidade" value="${cliente.cidade}">
-            </div>
-            <div class="form-group">
-              <label for="uf">UF</label>
-              <input disabled type="text" class="form-control" name="uf" id="uf" placeholder="UF" value="${cliente.uf}">
+                <label for="cidade">Cidade</label>
+                <select disabled class="form-control" name="cidade" id="cidade"></select>
+                <input disabled type="hidden" class="form-control" name="cidadeId" id="cidadeId" placeholder="Cidade" value="${cliente.idCidade}">
             </div>
         </form>
     </body>
+    
+    <script type="text/javascript" >
+        $(document).ready(function() {
+            var cidadeId = $("#cidadeId").val();
+            var url = "CidadeServlet";
+            if (cidadeId) {
+                $.ajax({
+                        url : url, // URL da sua Servlet
+                        data : {
+                            cidadeId : cidadeId
+                        }, // Parâmetro passado para a Servlet
+                        dataType : 'json',
+                        success : function(data) {
+                            // Se sucesso, limpa e preenche a combo de cidade
+                            // alert(JSON.stringify(data));
+                            $("#cidade").empty();
+                             $.each(data, function(i, obj) {
+                                $("#cidade").append('<option value=' + obj.id + '>' + obj.nome + '</option>');
+                            });
+                        },
+                        error : function(request, textStatus, errorThrown) {
+                            alert(request.status + ', Error: ' + request.statusText);
+                             // Erro
+                        }
+                    });
+            }
+        });
+    </script>
 </html>
