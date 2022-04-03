@@ -47,7 +47,7 @@
                         <td>${c.email}</td>
                         <td><a href="ClientesServlet?action=show&id=${c.id}"><img height=40 src="https://icon-library.com/images/white-eye-icon/white-eye-icon-15.jpg" /></a></td>
                         <td><a href="ClientesServlet?action=formUpdate&id=${c.id}"><img height=40 src="https://www.pngitem.com/pimgs/m/31-313330_free-png-icons-pen-transparent-png.png" /></a></td>
-                        <td><a href="ClientesServlet?action=remove&id=${c.id}"><img height=40 src="https://www.kindpng.com/picc/m/220-2200770_font-trash-fa-trash-icon-png-transparent-png.png" /></a></td>
+                        <td><a style="cursor:pointer" onclick="removeClient(${c.id})"><img height=40 src="https://www.kindpng.com/picc/m/220-2200770_font-trash-fa-trash-icon-png-transparent-png.png" /></a></td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -55,4 +55,13 @@
         <div><a href="ClientesServlet?action=formNew" class="m-2 btn btn-primary">Novo cliente</a></div>
         <div><a href="./jsp/portal.jsp" class="m-2 btn btn-light">Voltar</a></div>
     </body>
+    
+    <script>
+        function removeClient(id) {
+            console.log(id)
+            if (confirm("Tem certeza de que quer remover este cliente?")) {
+                window.location.href = "ClientesServlet?action=remove&id=" + id;
+            }
+        }
+    </script>
 </html>

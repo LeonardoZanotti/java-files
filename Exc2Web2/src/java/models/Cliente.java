@@ -19,12 +19,11 @@ public class Cliente {
     private String rua;
     private int numero;
     private String cep;
-    private String cidade;
-    private String uf;
+    private int idCidade;
     
     public Cliente() {}
 
-    public Cliente(String cpf, String email, String nome, Date data, String rua, int numero, String cep, String cidade, String uf) {
+    public Cliente(String cpf, String email, String nome, Date data, String rua, int numero, String cep, int idCidade) {
         this.cpf = cpf;
         this.email = email;
         this.nome = nome;
@@ -32,11 +31,10 @@ public class Cliente {
         this.rua = rua;
         this.numero = numero;
         this.cep = cep;
-        this.cidade = cidade;
-        this.uf = uf;
+        this.idCidade = idCidade;
     }
     
-    public Cliente(int id, String cpf, String email, String nome, Date data, String rua, int numero, String cep, String cidade, String uf) {
+    public Cliente(int id, String cpf, String email, String nome, Date data, String rua, int numero, String cep, int idCidade) {
         this.id = id;
         this.cpf = cpf;
         this.email = email;
@@ -45,8 +43,7 @@ public class Cliente {
         this.rua = rua;
         this.numero = numero;
         this.cep = cep;
-        this.cidade = cidade;
-        this.uf = uf;
+        this.idCidade = idCidade;
     }
 
     public int getId() {
@@ -113,19 +110,13 @@ public class Cliente {
         this.cep = cep;
     }
 
-    public String getCidade() {
-        return cidade;
+    public int getIdCidade() {
+        return idCidade;
     }
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
+    public void setIdCidade(int idCidade) {
+        this.idCidade = idCidade;
     }
-
-    public String getUf() {
-        return uf;
-    }
-
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
+    
+    
 }

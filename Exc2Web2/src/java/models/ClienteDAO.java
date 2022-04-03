@@ -19,10 +19,10 @@ import java.util.List;
  * @author leonardozanotti
  */
 public class ClienteDAO implements DAO<Cliente> {
-    private static final String QUERY_INSERIR = "INSERT INTO tb_cliente (cpf_cliente, email_cliente, nome_cliente, data_cliente, rua_cliente, nr_cliente, cep_cliente, cidade_cliente, uf_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String QUERY_INSERIR = "INSERT INTO tb_cliente (cpf_cliente, email_cliente, nome_cliente, data_cliente, rua_cliente, nr_cliente, cep_cliente, id_cidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String QUERY_BUSCAR = "SELECT * FROM tb_cliente WHERE id_cliente = (?)";
     private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM tb_cliente";
-    private static final String QUERY_ALTERAR = "UPDATE tb_cliente SET cpf_cliente = (?), email_cliente = (?), nome_cliente = (?), data_cliente = (?), rua_cliente = (?), nr_cliente = (?), cep_cliente = (?), cidade_cliente = (?), uf_cliente = (?) WHERE id_cliente = (?)";
+    private static final String QUERY_ALTERAR = "UPDATE tb_cliente SET cpf_cliente = (?), email_cliente = (?), nome_cliente = (?), data_cliente = (?), rua_cliente = (?), nr_cliente = (?), cep_cliente = (?), id_cidade = (?) WHERE id_cliente = (?)";
     private static final String QUERY_REMOVER = "DELETE FROM tb_cliente WHERE id_cliente = (?)";
 
     private Connection con = null;
@@ -49,8 +49,7 @@ public class ClienteDAO implements DAO<Cliente> {
                             rs.getString("rua_cliente"),
                             rs.getInt("nr_cliente"),
                             rs.getString("cep_cliente"),
-                            rs.getString("cidade_cliente"),
-                            rs.getString("uf_cliente")
+                            rs.getInt("id_cidade")
                     );
             }
             return null;
@@ -65,16 +64,15 @@ public class ClienteDAO implements DAO<Cliente> {
         try (PreparedStatement st = this.con.prepareStatement(ClienteDAO.QUERY_BUSCAR_TODOS); ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
                 Cliente client = new Cliente(
-                    rs.getInt("id_cliente"),
-                    rs.getString("cpf_cliente"),
-                    rs.getString("email_cliente"),
-                    rs.getString("nome_cliente"),
-                    rs.getDate("data_cliente"),
-                    rs.getString("rua_cliente"),
-                    rs.getInt("nr_cliente"),
-                    rs.getString("cep_cliente"),
-                    rs.getString("cidade_cliente"),
-                    rs.getString("uf_cliente")
+                            rs.getInt("id_cliente"),
+                            rs.getString("cpf_cliente"),
+                            rs.getString("email_cliente"),
+                            rs.getString("nome_cliente"),
+                            rs.getDate("data_cliente"),
+                            rs.getString("rua_cliente"),
+                            rs.getInt("nr_cliente"),
+                            rs.getString("cep_cliente"),
+                            rs.getInt("id_cidade")
                 );
                 clientes.add(client);
             }
@@ -94,8 +92,7 @@ public class ClienteDAO implements DAO<Cliente> {
             st.setString(5, c.getRua());
             st.setInt(6, c.getNumero());
             st.setString(7, c.getCep());
-            st.setString(8, c.getCidade());
-            st.setString(9, c.getUf());
+            st.setInt(8, c.getIdCidade());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro inserindo cliente: " + ClienteDAO.QUERY_INSERIR + "/ " + c.toString(), e);
@@ -112,9 +109,8 @@ public class ClienteDAO implements DAO<Cliente> {
             st.setString(5, c.getRua());
             st.setInt(6, c.getNumero());
             st.setString(7, c.getCep());
-            st.setString(8, c.getCidade());
-            st.setString(9, c.getUf());
-            st.setInt(10, c.getId());
+            st.setInt(8, c.getIdCidade());
+            st.setInt(9, c.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro atualizando cliente: " + ClienteDAO.QUERY_ALTERAR + "/ " + c.toString(), e);

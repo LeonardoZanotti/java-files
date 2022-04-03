@@ -111,15 +111,16 @@ public class ClientesServlet extends HttpServlet {
                         request.getParameter("rua"),
                         Integer.parseInt(request.getParameter("numero")),
                         request.getParameter("cep"),
-                        request.getParameter("cidade"),
-                        request.getParameter("uf")
+                        Integer.parseInt(request.getParameter("idCidade"))
                     );
                     ClientesFacade.alterar(cliente);
                     rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
                     rd.forward(request, response);
                     break;
                 case "formNew":
-                    rd = getServletContext().getRequestDispatcher("/jsp/clientesNovo.jsp");
+                    estados = EstadoFacade.buscarTodos();
+                    request.setAttribute("estados", estados);
+                    rd = getServletContext().getRequestDispatcher("/jsp/clientesForm.jsp");
                     rd.forward(request, response);
                     break;
                 case "new":
@@ -133,8 +134,7 @@ public class ClientesServlet extends HttpServlet {
                         request.getParameter("rua"),
                         Integer.parseInt(request.getParameter("numero")),
                         request.getParameter("cep"),
-                        request.getParameter("cidade"),
-                        request.getParameter("uf")
+                        Integer.parseInt(request.getParameter("idCidade"))
                     );
                     ClientesFacade.inserir(cliente);
                     rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");

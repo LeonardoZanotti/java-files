@@ -18,7 +18,7 @@ import java.util.List;
  * @author leonardozanotti
  */
 public class EstadoDAO implements DAO<Estado>  {
-    private static final String QUERY_BUSCAR_TODOS = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT id_estado, nome_estado, sigla_estado FROM tb_estado";
     private Connection con = null;
     
     public EstadoDAO(Connection con) throws DAOException {
