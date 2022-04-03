@@ -4,11 +4,11 @@
     Author     : leonardozanotti
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
-<%@ page import="models.Cliente" %>
-<%@ page errorPage="/jsp/erro.jsp" %>
+<%@page import="java.util.*" %>
+<%@page import="models.Cliente" %>
+<%@page errorPage="/jsp/erro.jsp" %>
         
 <!DOCTYPE html>
 <html>
@@ -21,12 +21,12 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
     
-    <% if (session.getAttribute("loginBean") == null) { %>
+    <c:if test="${loginBean == null}">
         <jsp:forward page="/index.jsp">
             <jsp:param name="msg" value="Usuário deve se autenticar para acessar o sistema."></jsp:param>
         </jsp:forward>
-    <% } %>
-
+    </c:if>
+    
     <body>
         <table border="1" class="mt-2 table">
             <thead>
@@ -42,12 +42,12 @@
             <tbody>
                 <c:forEach var="c" items="${clientes}">
                     <tr>
-                        <td>${c.getCpf()}</td>
-                        <td>${c.getNome()}</td>
-                        <td>${c.getEmail()}</td>
-                        <td><a href="ClientesServlet?action=show&id=${c.getId()}"><img height=40 src="https://icon-library.com/images/white-eye-icon/white-eye-icon-15.jpg" /></a></td>
-                        <td><a href="ClientesServlet?action=formUpdate&id=${c.getId()}"><img height=40 src="https://www.pngitem.com/pimgs/m/31-313330_free-png-icons-pen-transparent-png.png" /></a></td>
-                        <td><a href="ClientesServlet?action=remove&id=${c.getId()}"><img height=40 src="https://www.kindpng.com/picc/m/220-2200770_font-trash-fa-trash-icon-png-transparent-png.png" /></a></td>
+                        <td>${c.cpf}</td>
+                        <td>${c.nome}</td>
+                        <td>${c.email}</td>
+                        <td><a href="ClientesServlet?action=show&id=${c.id}"><img height=40 src="https://icon-library.com/images/white-eye-icon/white-eye-icon-15.jpg" /></a></td>
+                        <td><a href="ClientesServlet?action=formUpdate&id=${c.id}"><img height=40 src="https://www.pngitem.com/pimgs/m/31-313330_free-png-icons-pen-transparent-png.png" /></a></td>
+                        <td><a href="ClientesServlet?action=remove&id=${c.id}"><img height=40 src="https://www.kindpng.com/picc/m/220-2200770_font-trash-fa-trash-icon-png-transparent-png.png" /></a></td>
                     </tr>
                 </c:forEach>
             </tbody>

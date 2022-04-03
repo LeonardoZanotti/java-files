@@ -5,7 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page errorPage="/jsp/erro.jsp" %>
+<%@page errorPage="/jsp/erro.jsp" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <!DOCTYPE html>
 <html>
@@ -18,14 +19,14 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
     
-    <% if (session.getAttribute("loginBean") == null) { %>
+    <c:if test="${loginBean == null}">
         <jsp:forward page="/index.jsp">
             <jsp:param name="msg" value="Usuário deve se autenticar para acessar o sistema."></jsp:param>
         </jsp:forward>
-    <% } %>
+    </c:if>
     
     <body>
-        <h1>Olá, ${loginBean.getName()}</h1>
+        <h1>Olá, <c:out value="${loginBean.name}"/></h1>
         <div class="list-group">
             <a class="list-group-item list-group-item-action" href="../ClientesServlet">Cadastro de clientes</a>
             <a class="list-group-item list-group-item-action" href="../LogoutServlet">Sair</a>
