@@ -34,13 +34,13 @@ CREATE TABLE tb_cidade (
 );
 
 INSERT INTO tb_usuario(login_usuario, senha_usuario, nome_usuario)
-VALUES ('leozanotti', 'leo123', 'leonardo zanotti');
+VALUES ('leozanotti', '657b298b04e033810343842f993c9817', 'leonardo zanotti');
 
 INSERT INTO tb_usuario(login_usuario, senha_usuario, nome_usuario)
-VALUES ('joaquim', 'joaquimsenha', 'joaquim alfredo');
+VALUES ('joaquim', '12705eee806dbc01eef5d0233cdfa7a8', 'joaquim alfredo');
 
 INSERT INTO tb_usuario(login_usuario, senha_usuario, nome_usuario)
-VALUES ('novousuario', 'senha.forte', 'novo usuário');
+VALUES ('novousuario', '82788f72090471a9133b9c0d107d8192', 'novo usuário');
 
 CREATE TABLE tb_cliente (
     id_cliente serial PRIMARY KEY,
