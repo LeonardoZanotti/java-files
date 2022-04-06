@@ -14,7 +14,12 @@ public class Threads {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        ThreadCount tc1 = new ThreadCount(10, 1);
+        ThreadCount tc2 = new ThreadCount(20, 2);
+        Thread t1 = new Thread(tc1);
+        Thread t2 = new Thread(tc2);
+        t1.start();
+        t2.start();
     }
     
 }
