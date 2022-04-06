@@ -11,7 +11,7 @@ import java.util.Random;
  *
  * @author leonardozanotti
  */
-public class MatrixMT {
+public class MatrixMT implements Runnable {
     private int[][] matrix;
     private int length;
     
@@ -54,5 +54,9 @@ public class MatrixMT {
     public static void populateMatrix(MatrixMT m) {
         for(int i = 0; i < m.getLength(); i++)
             Arrays.fill(m.getMatrix()[i], new Random().nextInt(10) * 10);
+    }
+
+    @Override
+    public void run() {
     }
 }
