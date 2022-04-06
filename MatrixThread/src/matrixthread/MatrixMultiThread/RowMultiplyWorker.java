@@ -10,8 +10,8 @@ package matrixthread.MatrixMultiThread;
  */
 public class RowMultiplyWorker implements Runnable {
     private final int[][] result;
-    private int[][] matrix1;
-    private int[][] matrix2;
+    private final int[][] matrix1;
+    private final int[][] matrix2;
     private final int row;
 
     public RowMultiplyWorker(int[][] result, int[][] matrix1, int[][] matrix2, int row) {
@@ -23,11 +23,14 @@ public class RowMultiplyWorker implements Runnable {
 
     @Override
     public void run() {
-        for (int i = 0; i < matrix2[0].length; i++) {
-            result[row][i] = 0;
-            for (int j = 0; j < matrix1[row].length; j++) {
-                result[row][i] += matrix1[row][j] * matrix2[j][i];
+        int[] newRow = new int[this.matrix2[0].length];
+        for (int i = 0; i < this.matrix2[0].length; i++) {
+            newRow[i] = 0;
+            for (int j = 0; j < this.matrix1[row].length; j++) {
+                newRow[i] += this.matrix1[row][j] * this.matrix2[j][i];
             }
         }
+        System.out.printf("%d/%d done\n", this.row, this.matrix2[0].length);
+        this.result[row] = newRow;
     }
 }

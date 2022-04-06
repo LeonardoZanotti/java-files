@@ -27,7 +27,7 @@ public class MatrixThreadTest {
         Matrix m3 = new Matrix(length);
         Matrix.populateMatrix(m1);
         Matrix.populateMatrix(m2);
-        ParallelThreadsCreator.multiply(m1.getMatrix(), m2.getMatrix(), m3.getMatrix());;
+        ParallelThreadsCreator.multiply(m1.getMatrix(), m2.getMatrix(), m3.getMatrix());
     }
 }
 

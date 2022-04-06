@@ -5,6 +5,7 @@
 package matrixthread.MatrixMultiThread;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -28,13 +29,15 @@ public class ParallelThreadsCreator {
     }
 
     private static void waitForThreads(List<Thread> threads) {
-        for (Thread thread : threads) {
+        for (Iterator<Thread> iterator = threads.iterator(); iterator.hasNext(); ) {
+            Thread t = iterator.next();
             try {
-                thread.join();
+                if (t != null)
+                    t.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            threads.clear();
         }
+        threads.clear();
     }
 }
