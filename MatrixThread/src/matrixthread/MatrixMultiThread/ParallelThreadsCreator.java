@@ -7,6 +7,7 @@ package matrixthread.MatrixMultiThread;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import matrixthread.Matrix;
 
 /**
  *
@@ -14,11 +15,11 @@ import java.util.List;
  */
 public class ParallelThreadsCreator {
     // creating 10 threads and waiting for them to complete then again repeat steps.
-    public static void multiply(int[][] matrix1, int[][] matrix2, int[][] result) {
+    public static void multiply(Matrix matrix1, Matrix matrix2, Matrix result) {
         List<Thread> threads = new ArrayList<>();
-        int rows1 = matrix1.length;
+        int rows1 = matrix1.getLength();
         for (int i = 0; i < rows1; i++) {
-            RowMultiplyWorker task = new RowMultiplyWorker(result, matrix1, matrix2, i);
+            RowMultiplyWorker task = new RowMultiplyWorker(result.getMatrix(), matrix1.getMatrix(), matrix2.getMatrix(), result.getLength(), i);
             Thread thread = new Thread(task);
             thread.start();
             threads.add(thread);

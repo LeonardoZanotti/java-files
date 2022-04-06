@@ -21,13 +21,14 @@ public class MatrixThreadTest {
         System.out.printf("Time elapsed: %d seconds\n", (t2 - t1)/1000);
     }
     
-    private static void runMultiThread(int length) {
+    private static Matrix runMultiThread(int length) {
         Matrix m1 = new Matrix(length);
         Matrix m2 = new Matrix(length);
         Matrix m3 = new Matrix(length);
         Matrix.populateMatrix(m1);
         Matrix.populateMatrix(m2);
-        ParallelThreadsCreator.multiply(m1.getMatrix(), m2.getMatrix(), m3.getMatrix());
+        ParallelThreadsCreator.multiply(m1, m2, m3);
+        return m3;
     }
 }
 
