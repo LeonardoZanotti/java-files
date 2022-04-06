@@ -11,17 +11,17 @@ import java.util.Random;
  *
  * @author leonardozanotti
  */
-public class Matrix {
+public class MatrixMT {
     private int[][] matrix;
     private int length;
     
-    public Matrix(int length) {
+    public MatrixMT(int length) {
         this.length = length;
         this.matrix = new int[length][length];
     }
     
-    protected static Matrix multiply(Matrix m1, Matrix m2) {
-        Matrix m3 = new Matrix(m1.getLength());
+    protected static MatrixMT multiply(MatrixMT m1, MatrixMT m2) {
+        MatrixMT m3 = new MatrixMT(m1.getLength());
         
         for (int i = 0; i < m3.getLength(); i++) {
             System.out.printf("%d/%d done\n", i, m3.getLength());
@@ -36,7 +36,7 @@ public class Matrix {
     }
     
     public int[][] getMatrix() {
-        return matrix;
+        return this.matrix;
     }
 
     public void setMatrix(int[][] matrix) {
@@ -44,14 +44,14 @@ public class Matrix {
     }
 
     public int getLength() {
-        return length;
+        return this.length;
     }
 
     public void setLength(int length) {
         this.length = length;
     }
     
-    public static void populateMatrix(Matrix m) {
+    public static void populateMatrix(MatrixMT m) {
         for(int i = 0; i < m.getLength(); i++)
             Arrays.fill(m.getMatrix()[i], new Random().nextInt(10) * 10);
     }

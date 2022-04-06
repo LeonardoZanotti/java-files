@@ -15,13 +15,17 @@ public class MatrixThread {
      */
     public static void main(String[] args) {
         long t1 = System.currentTimeMillis();
-        Matrix m1 = new Matrix(2000);
-        Matrix m2 = new Matrix(2000);
+        MatrixThread.runSingleThread(1500);
+        long t2 = System.currentTimeMillis();
+        System.out.printf("Time elapsed: %d seconds\n", (t2 - t1)/1000);
+    }
+    
+    private static void runSingleThread(int length) {
+        Matrix m1 = new Matrix(length);
+        Matrix m2 = new Matrix(length);
         Matrix.populateMatrix(m1);
         Matrix.populateMatrix(m2);
         Matrix.multiply(m1, m2);
-        long t2 = System.currentTimeMillis();
-        System.out.printf("Time elapsed: %d seconds\n", (t2 - t1)/1000);
     }
     
 }
