@@ -13,10 +13,11 @@ import matrixthread.Matrix;
  */
 public class MatrixThreadTest {
     private static final int strength = 1500;
+    private static final int maxThreads = 10;
 
     public static void main(String[] args) {
         long t1 = System.currentTimeMillis();
-        MatrixThreadTest.runMultiThread(strength);
+        MatrixThreadTest.runMultiThread(MatrixThreadTest.strength);
         long t2 = System.currentTimeMillis();
         System.out.printf("Time elapsed: %d seconds\n", (t2 - t1)/1000);
     }
@@ -27,7 +28,7 @@ public class MatrixThreadTest {
         Matrix m3 = new Matrix(length);
         Matrix.populateMatrix(m1);
         Matrix.populateMatrix(m2);
-        ParallelThreadsCreator.multiply(m1, m2, m3);
+        ParallelThreadsCreator.multiply(m1, m2, m3, MatrixThreadTest.maxThreads);
         return m3;
     }
 }

@@ -15,7 +15,7 @@ import matrixthread.Matrix;
  */
 public class ParallelThreadsCreator {
     // creating 10 threads and waiting for them to complete then again repeat steps.
-    public static void multiply(Matrix matrix1, Matrix matrix2, Matrix result) {
+    public static void multiply(Matrix matrix1, Matrix matrix2, Matrix result, int maxThreads) {
         List<Thread> threads = new ArrayList<>();
         int rows1 = matrix1.getLength();
         for (int i = 0; i < rows1; i++) {
@@ -23,7 +23,7 @@ public class ParallelThreadsCreator {
             Thread thread = new Thread(task);
             thread.start();
             threads.add(thread);
-            if (threads.size() % 10 == 0) {
+            if (threads.size() % maxThreads == 0) {
                 waitForThreads(threads);
             }
         }
