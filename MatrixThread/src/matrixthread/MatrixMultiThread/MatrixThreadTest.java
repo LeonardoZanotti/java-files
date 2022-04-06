@@ -12,14 +12,14 @@ import matrixthread.Matrix;
  * @author leonardozanotti
  */
 public class MatrixThreadTest {
-    private static final int strength = 1500;
-    private static final int maxThreads = 10;
+    private static final int strength = 4000;
+    private static final int maxThreads = 16;
 
     public static void main(String[] args) {
         long t1 = System.currentTimeMillis();
         MatrixThreadTest.runMultiThread(MatrixThreadTest.strength);
         long t2 = System.currentTimeMillis();
-        System.out.printf("Time elapsed: %d seconds\n", (t2 - t1)/1000);
+        System.out.printf("Time elapsed using %d threads: %d seconds\n", MatrixThreadTest.maxThreads, (t2 - t1)/1000);
     }
     
     private static Matrix runMultiThread(int length) {

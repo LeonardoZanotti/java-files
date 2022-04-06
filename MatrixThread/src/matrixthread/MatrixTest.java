@@ -9,7 +9,7 @@ package matrixthread;
  * @author leonardozanotti
  */
 public class MatrixTest {
-    private static final int strength = 1500;
+    private static final int strength = 4000;
     /**
      * @param args the command line arguments
      */
