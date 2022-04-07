@@ -9,15 +9,15 @@ package matrixthread;
  * @author leonardozanotti
  */
 public class MatrixTest {
-    private static final int strength = 4000;
+    private static final int STRENGTH = 4000;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         long t1 = System.currentTimeMillis();
-        MatrixTest.runSingleThread(strength);
+        MatrixTest.runSingleThread(STRENGTH);
         long t2 = System.currentTimeMillis();
-        System.out.printf("Time elapsed: %d seconds\n", (t2 - t1)/1000);
+        System.out.printf("Time elapsed using a %dx%d matrix: %d seconds\n", MatrixTest.STRENGTH, MatrixTest.STRENGTH, (t2 - t1)/1000);
     }
     
     private static Matrix runSingleThread(int length) {
