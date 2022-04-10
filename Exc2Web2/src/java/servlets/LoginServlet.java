@@ -6,6 +6,7 @@ package servlets;
 
 import beans.LoginBean;
 import database.ConnectionFactory;
+import exceptions.LoginException;
 import facade.LoginFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,7 +34,7 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter(); ConnectionFactory factory = new ConnectionFactory();) {
             String login = request.getParameter("login");
@@ -62,6 +63,14 @@ public class LoginServlet extends HttpServlet {
             
             out.println("</body>");
             out.println("</html>");
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("jspException", e);
+            request.setAttribute("status_code", 500);
+            request.setAttribute("pageName", "Clientes");
+            request.setAttribute("redirect", "./ClientesServlet?action=list");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/erro.jsp");
+            rd.forward(request, response);
         }
     }
 
@@ -77,11 +86,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -95,11 +100,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

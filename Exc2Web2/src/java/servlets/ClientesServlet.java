@@ -4,22 +4,19 @@
  */
 package servlets;
 
-import database.DAOException;
 import exceptions.ClienteException;
+import exceptions.EstadoException;
 import facade.ClientesFacade;
 import facade.EstadoFacade;
 import java.io.IOException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.Cliente;
 import models.Estado;
 
@@ -41,7 +38,7 @@ public class ClientesServlet extends HttpServlet {
      * @throws database.DAOException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, DAOException, Exception {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         if (session.getAttribute("loginBean") == null) {
@@ -58,15 +55,16 @@ public class ClientesServlet extends HttpServlet {
         Cliente cliente;
         List<Estado> estados;
         
-        if (action == null) {
-            List<Cliente> clientes = ClientesFacade.buscarTodos();
-            request.setAttribute("clientes", clientes);
-            rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
-            rd.forward(request, response);
-            return;
-        }
-        
         try {
+            if (action == null) {
+                List<Cliente> clientes;
+                clientes = ClientesFacade.buscarTodos();
+                request.setAttribute("clientes", clientes);
+                rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             switch (action) {
                 default:
                 case "list":
@@ -99,7 +97,7 @@ public class ClientesServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 case "update":
-                    if (!validCPF(request.getParameter("cpf"))) throw new RuntimeException("CPF Inválido!");
+                    if (!validCPF(request.getParameter("cpf"))) throw new ClienteException("CPF Inválido!");
                     id = Integer.parseInt(request.getParameter("id"));
                     Cliente clienteBD = ClientesFacade.buscar(id);
                     dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
@@ -125,7 +123,7 @@ public class ClientesServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 case "new":
-                    if (!validCPF(request.getParameter("cpf"))) throw new RuntimeException("CPF Inválido!");
+                    if (!validCPF(request.getParameter("cpf"))) throw new ClienteException("CPF Inválido!");
                     dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
                     cliente = new Cliente(
                         request.getParameter("cpf"),
@@ -142,8 +140,7 @@ public class ClientesServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
             }
-        } catch (ClienteException e) {
-            e.printStackTrace();
+        } catch (ClienteException | EstadoException | ParseException e) {
             request.setAttribute("jspException", e);
             request.setAttribute("status_code", 500);
             request.setAttribute("pageName", "Clientes");
@@ -221,13 +218,7 @@ public class ClientesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (DAOException ex) {
-            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -241,13 +232,8 @@ public class ClientesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (DAOException ex) {
-            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
+        
     }
 
     /**

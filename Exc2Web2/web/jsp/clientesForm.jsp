@@ -31,7 +31,7 @@
             <input type="hidden" name="id" class="form-control" id="id" required value="${cliente != null ? cliente.id : ''}">
             <div class="form-group">
               <label for="cpf">CPF</label>
-              <input type="text" class="form-control" name="cpf" id="cpf" oninput="mascaraCPF(this)" placeholder="XXX.XXX.XXX-XX" maxlength="11" required value="${cliente != null ? cliente.cpf : ''}">
+              <input type="text" class="form-control" name="cpf" id="cpf" placeholder="XXX.XXX.XXX-XX" maxlength="11" required value="${cliente != null ? cliente.cpf : ''}">
             </div>
             <div class="form-group">
               <label for="email">Email</label>
@@ -55,7 +55,7 @@
             </div>
             <div class="form-group">
               <label for="cep">CEP</label>
-              <input type="text" class="form-control" name="cep" id="cep" oninput="mascaraCEP(this)" placeholder="XX.XXX-XXX" maxlength="8" value="${cliente != null ? cliente.cep : ''}">
+              <input type="text" class="form-control" name="cep" id="cep" placeholder="XX.XXX-XXX" maxlength="8" value="${cliente != null ? cliente.cep : ''}">
             </div>
             <div class="form-group">
               <label for="estado">UF</label>

@@ -39,25 +39,34 @@ public class CidadeServlet extends HttpServlet {
      * @throws exceptions.CidadeException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, DAOException, SQLException, CidadeException {
-        List<Cidade> cidades = new ArrayList<>();
-        if (request.getParameter("estadoId") != null) {
-            int estado = Integer.parseInt(request.getParameter("estadoId"));
-            cidades = CidadeFacade.buscarPorEstado(estado);
-        } else {
-            int cidade = Integer.parseInt(request.getParameter("cidadeId"));
-            Cidade cidadeDB = CidadeFacade.buscar(cidade);
-            System.out.println(cidadeDB.getNome());
-            cidades.add(cidadeDB);
-        }
-        
-        // transforma o MAP em JSON
-        String json = new Gson().toJson(cidades);   
+            throws ServletException, IOException {
+        try {
+            List<Cidade> cidades = new ArrayList<>();
+            if (request.getParameter("estadoId") != null) {
+                int estado = Integer.parseInt(request.getParameter("estadoId"));
+                cidades = CidadeFacade.buscarPorEstado(estado);
+            } else {
+                int cidade = Integer.parseInt(request.getParameter("cidadeId"));
+                Cidade cidadeDB = CidadeFacade.buscar(cidade);
+                cidades.add(cidadeDB);
+            }
 
-        // retorna o JSON
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);    
+            // transforma o MAP em JSON
+            String json = new Gson().toJson(cidades);   
+
+            // retorna o JSON
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json); 
+        } catch (CidadeException e) {
+            e.printStackTrace();
+            request.setAttribute("jspException", e);
+            request.setAttribute("status_code", 500);
+            request.setAttribute("pageName", "Clientes");
+            request.setAttribute("redirect", "./ClientesServlet?action=list");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/erro.jsp");
+            rd.forward(request, response);
+        }   
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,11 +81,7 @@ public class CidadeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (DAOException | SQLException | CidadeException ex) {
-            Logger.getLogger(CidadeServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -90,11 +95,7 @@ public class CidadeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (DAOException | SQLException | CidadeException ex) {
-            Logger.getLogger(CidadeServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

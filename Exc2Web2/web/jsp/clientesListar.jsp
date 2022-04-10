@@ -42,7 +42,7 @@
             <tbody>
                 <c:forEach var="c" items="${clientes}">
                     <tr>
-                        <td>${c.cpf}</td>
+                        <td>${c.getFormattedCpf()}</td>
                         <td>${c.nome}</td>
                         <td>${c.email}</td>
                         <td><a href="ClientesServlet?action=show&id=${c.id}"><img height=40 src="https://icon-library.com/images/white-eye-icon/white-eye-icon-15.jpg" /></a></td>

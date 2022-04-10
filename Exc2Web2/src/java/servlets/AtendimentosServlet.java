@@ -7,6 +7,10 @@ package servlets;
 import beans.LoginBean;
 import database.DAOException;
 import exceptions.AtendimentoException;
+import exceptions.ClienteException;
+import exceptions.ProdutoException;
+import exceptions.TipoAtendimentoException;
+import exceptions.UsuarioException;
 import facade.AtendimentoFacade;
 import facade.ClientesFacade;
 import facade.ProdutoFacade;
@@ -48,7 +52,7 @@ public class AtendimentosServlet extends HttpServlet {
      * @throws database.DAOException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, DAOException, Exception {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         if (session.getAttribute("loginBean") == null) {
@@ -64,14 +68,15 @@ public class AtendimentosServlet extends HttpServlet {
         int id;
         Atendimento atendimento;
         
-        if (action == null) {
-            List<Atendimento> atendimentos = AtendimentoFacade.buscarTodos(userId);
-            request.setAttribute("atendimentos", atendimentos);
-            rd = getServletContext().getRequestDispatcher("/jsp/atendimentoListar.jsp");
-            rd.forward(request, response);
-            return;
-        }
         try {
+            if (action == null) {
+                List<Atendimento> atendimentos = AtendimentoFacade.buscarTodos(userId);
+                request.setAttribute("atendimentos", atendimentos);
+                rd = getServletContext().getRequestDispatcher("/jsp/atendimentoListar.jsp");
+                rd.forward(request, response);
+                return;
+            }
+            
             switch (action) {
                 default:
                 case "list":
@@ -124,7 +129,7 @@ public class AtendimentosServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
             }
-        } catch (AtendimentoException e) {
+        } catch (AtendimentoException | ClienteException | TipoAtendimentoException | UsuarioException | ProdutoException e) {
             e.printStackTrace();
             request.setAttribute("jspException", e);
             request.setAttribute("status_code", 500);
@@ -147,13 +152,7 @@ public class AtendimentosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (DAOException ex) {
-            Logger.getLogger(AtendimentosServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(AtendimentosServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -167,13 +166,7 @@ public class AtendimentosServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (DAOException ex) {
-            Logger.getLogger(AtendimentosServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(AtendimentosServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
