@@ -57,6 +57,18 @@ public class Cliente {
     public String getCpf() {
         return cpf;
     }
+    
+    public String getFormattedCpf() {
+        String formattedCpf = "";
+        for (int i = 0; i < 11; i++) {
+            formattedCpf += this.cpf.charAt(i);
+            if (i == 2 || i == 5)
+                formattedCpf += ".";
+            else if (i == 8)
+                formattedCpf += "-";
+        }
+        return formattedCpf;
+    }
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
@@ -104,6 +116,18 @@ public class Cliente {
 
     public String getCep() {
         return cep;
+    }
+    
+    public String getFormattedCep() {
+        String formattedCep = "";
+        for (int i = 0; i < 8; i++) {
+            formattedCep += this.cep.charAt(i);
+            if (i == 1)
+                formattedCep += ".";
+            if (i == 4)
+                formattedCep += "-";
+        }
+        return formattedCep;
     }
 
     public void setCep(String cep) {

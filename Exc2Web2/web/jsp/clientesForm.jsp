@@ -31,11 +31,11 @@
             <input type="hidden" name="id" class="form-control" id="id" required value="${cliente != null ? cliente.id : ''}">
             <div class="form-group">
               <label for="cpf">CPF</label>
-              <input type="text" class="form-control" name="cpf" id="cpf" placeholder="XXXXXXXXXXX" maxlength="11" required value="${cliente != null ? cliente.cpf : ''}">
+              <input type="text" class="form-control" name="cpf" id="cpf" oninput="mascaraCPF(this)" placeholder="XXX.XXX.XXX-XX" maxlength="11" required value="${cliente != null ? cliente.cpf : ''}">
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Email" maxlength="50" required value="${cliente != null ? cliente.email : ''}">
+              <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="email@email.com" maxlength="50" required value="${cliente != null ? cliente.email : ''}">
             </div>
             <div class="form-group">
               <label for="nome">Nome</label>
@@ -55,7 +55,7 @@
             </div>
             <div class="form-group">
               <label for="cep">CEP</label>
-              <input type="text" class="form-control" name="cep" id="cep" placeholder="XXXXXXXX" maxlength="8" value="${cliente != null ? cliente.cep : ''}">
+              <input type="text" class="form-control" name="cep" id="cep" oninput="mascaraCEP(this)" placeholder="XX.XXX-XXX" maxlength="8" value="${cliente != null ? cliente.cep : ''}">
             </div>
             <div class="form-group">
               <label for="estado">UF</label>
@@ -82,6 +82,34 @@
               getCidades();
             });
         });
+
+        function mascaraCPF(i){
+           var v = i.value;
+
+           if(isNaN(v[v.length-1])){ // impede entrar outro caractere que não seja número
+              i.value = v.substring(0, v.length-1);
+              return;
+           }
+
+           i.setAttribute("maxlength", "14");
+           if (v.length == 3 || v.length == 7) i.value += ".";
+           if (v.length == 11) i.value += "-";
+
+        }
+        
+        function mascaraCEP(i){
+           var v = i.value;
+
+           if(isNaN(v[v.length-1])){ // impede entrar outro caractere que não seja número
+              i.value = v.substring(0, v.length-1);
+              return;
+           }
+
+           i.setAttribute("maxlength", "10");
+           if (v.length == 2) i.value += ".";
+           if (v.length == 6) i.value += "-";
+
+        }
 
         function getCidade(){
             var cidadeId = $("#cidadeId").val();
