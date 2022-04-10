@@ -59,7 +59,7 @@ CREATE TABLE tb_tipo_atendimento (
 CREATE TABLE tb_atendimento (
     id_atendimento serial PRIMARY KEY,
     nome_produto VARCHAR(100) NOT NULL,
-    dt_hr_atendimento DATE,
+    dt_hr_atendimento TIMESTAMP,
     dsc_atendimento VARCHAR(255),
     res_atendimento CHAR(1),
     id_produto INT,
