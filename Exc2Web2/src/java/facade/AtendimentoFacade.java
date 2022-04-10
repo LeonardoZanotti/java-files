@@ -37,7 +37,7 @@ public class AtendimentoFacade {
         List<Atendimento> atendimentos;
         try (Connection con = new ConnectionFactory().getConnection()) {
             AtendimentoDAO dao = new AtendimentoDAO(con);
-            atendimentos = dao.buscarTodos();
+            atendimentos = dao.buscarTodos(id);
         }
         return atendimentos;
     }

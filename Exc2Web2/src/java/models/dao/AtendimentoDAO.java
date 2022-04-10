@@ -48,6 +48,7 @@ public class AtendimentoDAO implements DAO<Atendimento> {
                     Usuario usuario = new UsuarioDAO(this.con).buscar(rs.getInt("id_usuario"));
                     Cliente cliente = new ClienteDAO(this.con).buscar(rs.getInt("id_cliente"));
                     return new Atendimento(
+                            rs.getInt("id_atendimento"),
                             produto,
                             tipoAtendimento,
                             usuario,
@@ -75,6 +76,7 @@ public class AtendimentoDAO implements DAO<Atendimento> {
                     Usuario usuario = new UsuarioDAO(this.con).buscar(rs.getInt("id_usuario"));
                     Cliente cliente = new ClienteDAO(this.con).buscar(rs.getInt("id_cliente"));
                     Atendimento atendimento = new Atendimento(
+                            rs.getInt("id_atendimento"),
                             produto,
                             tipoAtendimento,
                             usuario,

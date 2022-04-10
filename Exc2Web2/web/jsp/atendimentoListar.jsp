@@ -49,7 +49,7 @@ import="java.util.*" %> <%@page import="models.Atendimento" %> <%@page errorPage
       <tbody>
         <c:forEach var="a" items="${atendimentos}">
           <tr>
-            <td>${a.dtHrAtendimento}</td>
+            <td>${a.getFormattedDateHour()}</td>
             <td>${a.produto.name}</td>
             <td>${a.cliente.nome}</td>
             <td>

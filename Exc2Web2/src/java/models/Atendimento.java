@@ -5,6 +5,7 @@
 package models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -30,7 +31,7 @@ public class Atendimento {
         this.dtHrAtendimento = dtHrAtendimento;
     }
     
-    public Atendimento(int id, Produto produto, TipoAtendimento tipoAtendimento, Usuario usuario, Cliente cliente, String nomeProduto, String dscAtendimento, char resAtendimento, LocalDateTime dtHrAtendimento) {
+    public Atendimento(int id, Produto produto, TipoAtendimento tipoAtendimento, Usuario usuario, Cliente cliente, String dscAtendimento, char resAtendimento, LocalDateTime dtHrAtendimento) {
         this.id = id;
         this.produto = produto;
         this.tipoAtendimento = tipoAtendimento;
@@ -105,5 +106,11 @@ public class Atendimento {
         this.dtHrAtendimento = dtHrAtendimento;
     }
 
+    public String getFormattedDateHour() {
+        return this.dtHrAtendimento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+    }
     
+    public Boolean isSolved() {
+        return this.resAtendimento == 'S';
+    }
 }
