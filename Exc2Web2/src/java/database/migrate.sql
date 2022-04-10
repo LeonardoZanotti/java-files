@@ -16932,13 +16932,13 @@ INSERT INTO tb_produto(nome_produto)
 VALUES ('produto 10');
 
 INSERT INTO tb_tipo_atendimento(nome_tipo_atendimento)
-VALUES ('tipo atendimento 1');
+VALUES ('Reclamação');
 
 INSERT INTO tb_tipo_atendimento(nome_tipo_atendimento)
-VALUES ('tipo atendimento 2');
+VALUES ('Dúvida');
 
 INSERT INTO tb_tipo_atendimento(nome_tipo_atendimento)
-VALUES ('tipo atendimento 3');
+VALUES ('Sugestão');
 
 INSERT INTO tb_tipo_atendimento(nome_tipo_atendimento)
-VALUES ('tipo atendimento 4');
+VALUES ('Elogio');

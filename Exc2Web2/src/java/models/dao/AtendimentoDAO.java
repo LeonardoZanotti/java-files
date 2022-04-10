@@ -26,7 +26,7 @@ import models.Usuario;
 public class AtendimentoDAO implements DAO<Atendimento> {
     private static final String QUERY_INSERIR = "INSERT INTO tb_atendimento (id_produto, id_tipo_atendimento, id_usuario, id_cliente, dsc_atendimento, res_atendimento, dt_hr_atendimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String QUERY_BUSCAR = "SELECT * FROM tb_atendimento WHERE id_atendimento = (?)";
-    private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM tb_atendimento";
+    private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM tb_atendimento WHERE id_usuario = (?)";
 
     private Connection con = null;
 
@@ -64,25 +64,27 @@ public class AtendimentoDAO implements DAO<Atendimento> {
         }
     }
 
-    @Override
-    public List<Atendimento> buscarTodos() throws DAOException {
+    public List<Atendimento> buscarTodos(long id) throws DAOException {
         List<Atendimento> atendimentos = new ArrayList<>();
-        try (PreparedStatement st = this.con.prepareStatement(AtendimentoDAO.QUERY_BUSCAR_TODOS); ResultSet rs = st.executeQuery()) {
-            while (rs.next()) {
-                Produto produto = new ProdutoDAO(this.con).buscar(rs.getInt("id_produto"));
-                TipoAtendimento tipoAtendimento = new TipoAtendimentoDAO(this.con).buscar(rs.getInt("id_tipo_atendimento"));
-                Usuario usuario = new UsuarioDAO(this.con).buscar(rs.getInt("id_usuario"));
-                Cliente cliente = new ClienteDAO(this.con).buscar(rs.getInt("id_cliente"));
-                Atendimento atendimento = new Atendimento(
-                        produto,
-                        tipoAtendimento,
-                        usuario,
-                        cliente,
-                        rs.getString("dsc_atendimento"),
-                        rs.getString("res_atendimento").charAt(0),
-                        rs.getTimestamp("dt_hr_atendimento").toLocalDateTime()
-                );
-                atendimentos.add(atendimento);
+        try (PreparedStatement st = this.con.prepareStatement(AtendimentoDAO.QUERY_BUSCAR_TODOS)) {
+            st.setLong(1, id);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    Produto produto = new ProdutoDAO(this.con).buscar(rs.getInt("id_produto"));
+                    TipoAtendimento tipoAtendimento = new TipoAtendimentoDAO(this.con).buscar(rs.getInt("id_tipo_atendimento"));
+                    Usuario usuario = new UsuarioDAO(this.con).buscar(rs.getInt("id_usuario"));
+                    Cliente cliente = new ClienteDAO(this.con).buscar(rs.getInt("id_cliente"));
+                    Atendimento atendimento = new Atendimento(
+                            produto,
+                            tipoAtendimento,
+                            usuario,
+                            cliente,
+                            rs.getString("dsc_atendimento"),
+                            rs.getString("res_atendimento").charAt(0),
+                            rs.getTimestamp("dt_hr_atendimento").toLocalDateTime()
+                    );
+                    atendimentos.add(atendimento);
+                }
             }
             return atendimentos;
         } catch (SQLException e) {
@@ -114,6 +116,11 @@ public class AtendimentoDAO implements DAO<Atendimento> {
 
     @Override
     public void remover(Atendimento t) throws DAOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Atendimento> buscarTodos() throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

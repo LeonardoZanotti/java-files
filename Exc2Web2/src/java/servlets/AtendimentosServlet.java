@@ -16,14 +16,10 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,13 +57,14 @@ public class AtendimentosServlet extends HttpServlet {
             return;
         }
 
+        int userId = ((LoginBean) session.getAttribute("loginBean")).getId();
         String action = (String) request.getParameter("action");
         RequestDispatcher rd;
         int id;
         Atendimento atendimento;
         
         if (action == null) {
-            List<Atendimento> atendimentos = AtendimentoFacade.buscarTodos();
+            List<Atendimento> atendimentos = AtendimentoFacade.buscarTodos(userId);
             request.setAttribute("atendimentos", atendimentos);
             rd = getServletContext().getRequestDispatcher("/jsp/atendimentoListar.jsp");
             rd.forward(request, response);
@@ -77,7 +74,7 @@ public class AtendimentosServlet extends HttpServlet {
             switch (action) {
                 default:
                 case "list":
-                    List<Atendimento> atendimentos = AtendimentoFacade.buscarTodos();
+                    List<Atendimento> atendimentos = AtendimentoFacade.buscarTodos(userId);
                     request.setAttribute("atendimentos", atendimentos);
                     rd = getServletContext().getRequestDispatcher("/jsp/atendimentoListar.jsp");
                     rd.forward(request, response);
@@ -93,7 +90,6 @@ public class AtendimentosServlet extends HttpServlet {
                     List<Cliente> clientes = ClientesFacade.buscarTodos();
                     List<Produto> produtos = ProdutoFacade.buscarTodos();
                     List<TipoAtendimento> tipoAtendimentos = TipoAtendimentoFacade.buscarTodos();
-                    int userId = ((LoginBean) session.getAttribute("loginBean")).getId();
                     request.setAttribute("clientes", clientes);
                     request.setAttribute("produtos", produtos);
                     request.setAttribute("tipoAtendimentos", tipoAtendimentos);

@@ -33,7 +33,7 @@ public class AtendimentoFacade {
         return atendimento;
     }
     
-    public static List<Atendimento> buscarTodos() throws DAOException, SQLException {
+    public static List<Atendimento> buscarTodos(int id) throws DAOException, SQLException {
         List<Atendimento> atendimentos;
         try (Connection con = new ConnectionFactory().getConnection()) {
             AtendimentoDAO dao = new AtendimentoDAO(con);
