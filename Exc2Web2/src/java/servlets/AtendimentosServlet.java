@@ -96,7 +96,6 @@ public class AtendimentosServlet extends HttpServlet {
                         tipoAtendimento,
                         usuario,
                         cliente,
-                        request.getParameter("nomeProduto"),
                         request.getParameter("dscAtendimento"),
                         ((String) request.getParameter("resAtendimento")).charAt(0),
                         LocalDateTime.parse(request.getParameter("dtHrAtendimento"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))

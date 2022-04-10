@@ -16,16 +16,15 @@ public class Atendimento {
     private TipoAtendimento tipoAtendimento;
     private Usuario usuario;
     private Cliente cliente;
-    private String nomeProduto, dscAtendimento;
+    private String dscAtendimento;
     private char resAtendimento;
     private LocalDateTime dtHrAtendimento;
 
-    public Atendimento(Produto produto, TipoAtendimento tipoAtendimento, Usuario usuario, Cliente cliente, String nomeProduto, String dscAtendimento, char resAtendimento, LocalDateTime dtHrAtendimento) {
+    public Atendimento(Produto produto, TipoAtendimento tipoAtendimento, Usuario usuario, Cliente cliente, String dscAtendimento, char resAtendimento, LocalDateTime dtHrAtendimento) {
         this.produto = produto;
         this.tipoAtendimento = tipoAtendimento;
         this.usuario = usuario;
         this.cliente = cliente;
-        this.nomeProduto = nomeProduto;
         this.dscAtendimento = dscAtendimento;
         this.resAtendimento = resAtendimento;
         this.dtHrAtendimento = dtHrAtendimento;
@@ -37,7 +36,6 @@ public class Atendimento {
         this.tipoAtendimento = tipoAtendimento;
         this.usuario = usuario;
         this.cliente = cliente;
-        this.nomeProduto = nomeProduto;
         this.dscAtendimento = dscAtendimento;
         this.resAtendimento = resAtendimento;
         this.dtHrAtendimento = dtHrAtendimento;
@@ -81,14 +79,6 @@ public class Atendimento {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public String getNomeProduto() {
-        return nomeProduto;
-    }
-
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
     }
 
     public String getDscAtendimento() {

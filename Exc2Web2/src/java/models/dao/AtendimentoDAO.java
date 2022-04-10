@@ -24,7 +24,7 @@ import models.Usuario;
  * @author leonardozanotti
  */
 public class AtendimentoDAO implements DAO<Atendimento> {
-    private static final String QUERY_INSERIR = "INSERT INTO tb_atendimento (nome_produto, dt_hr_atendimento, dsc_atendimento, res_atendimento, id_produto, id_tipo_atendimento, id_usuario, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String QUERY_INSERIR = "INSERT INTO tb_atendimento (dt_hr_atendimento, dsc_atendimento, res_atendimento, id_produto, id_tipo_atendimento, id_usuario, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String QUERY_BUSCAR = "SELECT * FROM tb_atendimento WHERE id_atendimento = (?)";
     private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM tb_atendimento";
 
@@ -52,7 +52,6 @@ public class AtendimentoDAO implements DAO<Atendimento> {
                             tipoAtendimento,
                             usuario,
                             cliente,
-                            rs.getString("nome_produto"),
                             rs.getString("dsc_atendimento"),
                             rs.getString("res_atendimento").charAt(0),
                             rs.getTimestamp("dt_hr_atendimento").toLocalDateTime()
@@ -79,7 +78,6 @@ public class AtendimentoDAO implements DAO<Atendimento> {
                         tipoAtendimento,
                         usuario,
                         cliente,
-                        rs.getString("nome_produto"),
                         rs.getString("dsc_atendimento"),
                         rs.getString("res_atendimento").charAt(0),
                         rs.getTimestamp("dt_hr_atendimento").toLocalDateTime()
@@ -99,11 +97,10 @@ public class AtendimentoDAO implements DAO<Atendimento> {
             st.setInt(2, a.getTipoAtendimento().getId());
             st.setInt(3, a.getUsuario().getId());
             st.setInt(4, a.getCliente().getId());
-            st.setString(5, a.getNomeProduto());
-            st.setString(6, a.getDscAtendimento());
-            st.setString(7, String.valueOf(a.getResAtendimento()));
-            st.setTimestamp(8, Timestamp.valueOf(a.getDtHrAtendimento()));
-            st.setInt(9, a.getId());
+            st.setString(5, a.getDscAtendimento());
+            st.setString(6, String.valueOf(a.getResAtendimento()));
+            st.setTimestamp(7, Timestamp.valueOf(a.getDtHrAtendimento()));
+            st.setInt(8, a.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Erro inserindo atendimento: " + AtendimentoDAO.QUERY_INSERIR + "/ " + a.toString(), e);
