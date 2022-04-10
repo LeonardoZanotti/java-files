@@ -46,6 +46,32 @@ CREATE TABLE tb_cliente (
     CONSTRAINT fk_cidade FOREIGN KEY(id_cidade) REFERENCES tb_cidade(id_cidade)
 );
 
+CREATE TABLE tb_produto (
+    id_produto serial PRIMARY KEY,
+    nome_produto VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE tb_tipo_atendimento (
+    id_tipo_atendimento serial PRIMARY KEY,
+    nome_tipo_atendimento VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE tb_atendimento (
+    id_atendimento serial PRIMARY KEY,
+    nome_produto VARCHAR(100) NOT NULL,
+    dt_hr_atendimento DATE,
+    dsc_atendimento VARCHAR(255),
+    res_atendimento CHAR(1),
+    id_produto INT,
+    id_tipo_atendimento INT,
+    id_usuario INT,
+    id_cliente INT,
+    CONSTRAINT fk_produto FOREIGN KEY(id_produto) REFERENCES tb_produto(id_produto),
+    CONSTRAINT fk_tipo_atendimento FOREIGN KEY(id_tipo_atendimento) REFERENCES tb_tipo_atendimento(id_tipo_atendimento),
+    CONSTRAINT fk_usuario FOREIGN KEY(id_usuario) REFERENCES tb_usuario(id_usuario),
+    CONSTRAINT fk_cliente FOREIGN KEY(id_cliente) REFERENCES tb_cliente(id_cliente)
+);
+
 INSERT INTO tb_usuario(login_usuario, senha_usuario, nome_usuario)
 VALUES ('leozanotti', '657b298b04e033810343842f993c9817', 'leonardo zanotti');
 
@@ -16875,3 +16901,45 @@ VALUES ('00000000009', 'email9@gmail.com', 'cliente9', '2009-09-09', 'rua 9', 9,
 
 INSERT INTO tb_cliente(cpf_cliente, email_cliente, nome_cliente, data_cliente, rua_cliente, nr_cliente, cep_cliente, id_cidade)
 VALUES ('00000000010', 'email10@gmail.com', 'cliente10', '2010-10-10', 'rua 10', 10, '00000010', 111);
+
+INSERT INTO tb_produto(nome_produto)
+VALUES ('produto 1');
+
+INSERT INTO tb_produto(nome_produto)
+VALUES ('produto 2');
+
+INSERT INTO tb_produto(nome_produto)
+VALUES ('produto 3');
+
+INSERT INTO tb_produto(nome_produto)
+VALUES ('produto 4');
+
+INSERT INTO tb_produto(nome_produto)
+VALUES ('produto 5');
+
+INSERT INTO tb_produto(nome_produto)
+VALUES ('produto 6');
+
+INSERT INTO tb_produto(nome_produto)
+VALUES ('produto 7');
+
+INSERT INTO tb_produto(nome_produto)
+VALUES ('produto 8');
+
+INSERT INTO tb_produto(nome_produto)
+VALUES ('produto 9');
+
+INSERT INTO tb_produto(nome_produto)
+VALUES ('produto 10');
+
+INSERT INTO tb_tipo_atendimento(nome_tipo_atendimento)
+VALUES ('tipo atendimento 1');
+
+INSERT INTO tb_tipo_atendimento(nome_tipo_atendimento)
+VALUES ('tipo atendimento 2');
+
+INSERT INTO tb_tipo_atendimento(nome_tipo_atendimento)
+VALUES ('tipo atendimento 3');
+
+INSERT INTO tb_tipo_atendimento(nome_tipo_atendimento)
+VALUES ('tipo atendimento 4');
