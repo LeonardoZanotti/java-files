@@ -29,7 +29,7 @@
         <h1>Olá, <c:out value="${loginBean.name}"/></h1>
         <div class="list-group">
             <a class="list-group-item list-group-item-action" href="../ClientesServlet">Cadastro de clientes</a>
-            <a class="list-group-item list-group-item-action" href="../AtendimentosServlet?action=listar">Mostrar atendimentos</a>
+            <a class="list-group-item list-group-item-action" href="../AtendimentosServlet?action=list">Mostrar atendimentos</a>
             <a class="list-group-item list-group-item-action" href="../AtendimentosServlet?action=formNew">Efetuar atendimento</a>
             <a class="list-group-item list-group-item-action" href="../LogoutServlet">Sair</a>
         </div>

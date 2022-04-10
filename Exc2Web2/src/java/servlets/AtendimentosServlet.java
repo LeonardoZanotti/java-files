@@ -5,8 +5,7 @@
 package servlets;
 
 import database.DAOException;
-import facade.ClientesFacade;
-import facade.EstadoFacade;
+import facade.AtendimentoFacade;
 import java.io.IOException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,20 +13,20 @@ import jakarta.servlet.http.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Cliente;
-import models.Estado;
+import models.Atendimento;
 
 /**
  *
  * @author leonardozanotti
  */
 @WebServlet(name = "ClientesServlet", urlPatterns = {"/ClientesServlet"})
-public class ClientesServlet extends HttpServlet {
+public class AtendimentosServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -53,13 +52,11 @@ public class ClientesServlet extends HttpServlet {
         String action = (String) request.getParameter("action");
         RequestDispatcher rd;
         int id;
-        Date dt;
-        Cliente cliente;
-        List<Estado> estados;
+        Atendimento atendimento;
         
         if (action == null) {
-            List<Cliente> clientes = ClientesFacade.buscarTodos();
-            request.setAttribute("clientes", clientes);
+            List<Atendimento> atendimentos = AtendimentoFacade.buscarTodos();
+            request.setAttribute("atendimentos", atendimentos);
             rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
             rd.forward(request, response);
             return;
@@ -69,145 +66,49 @@ public class ClientesServlet extends HttpServlet {
             switch (action) {
                 default:
                 case "list":
-                    List<Cliente> clientes = ClientesFacade.buscarTodos();
-                    request.setAttribute("clientes", clientes);
-                    rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
+                    List<Atendimento> atendimentos = AtendimentoFacade.buscarTodos();
+                    request.setAttribute("atendimentos", atendimentos);
+                    rd = getServletContext().getRequestDispatcher("/jsp/atendimentosListar.jsp");
                     rd.forward(request, response);
                     break;
                 case "show":
                     id = Integer.parseInt(request.getParameter("id"));
-                    cliente = ClientesFacade.buscar(id);
-                    request.setAttribute("cliente", cliente);
-                    rd = getServletContext().getRequestDispatcher("/jsp/clientesVisualizar.jsp");
-                    rd.forward(request, response);
-                    break;
-                case "formUpdate":
-                    id = Integer.parseInt(request.getParameter("id"));
-                    cliente = ClientesFacade.buscar(id);
-                    estados = EstadoFacade.buscarTodos();
-                    request.setAttribute("cliente", cliente);
-                    request.setAttribute("estados", estados);
-                    rd = getServletContext().getRequestDispatcher("/jsp/clientesForm.jsp");
-                    rd.forward(request, response);
-                    break;
-                case "remove":
-                    id = Integer.parseInt(request.getParameter("id"));
-                    cliente = ClientesFacade.buscar(id);
-                    ClientesFacade.remover(cliente);
-                    rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
-                    rd.forward(request, response);
-                    break;
-                case "update":
-                    if (!validCPF(request.getParameter("cpf"))) throw new RuntimeException("CPF Inválido!");
-                    id = Integer.parseInt(request.getParameter("id"));
-                    Cliente clienteBD = ClientesFacade.buscar(id);
-                    dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
-                    cliente = new Cliente(
-                        clienteBD.getId(),
-                        request.getParameter("cpf"),
-                        request.getParameter("email"),
-                        request.getParameter("nome"),
-                        new java.sql.Date(dt.getTime()),
-                        request.getParameter("rua"),
-                        Integer.parseInt(request.getParameter("numero")),
-                        request.getParameter("cep"),
-                        Integer.parseInt(request.getParameter("cidade"))
-                    );
-                    ClientesFacade.alterar(cliente);
-                    rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
+                    atendimento = AtendimentoFacade.buscar(id);
+                    request.setAttribute("atendimento", atendimento);
+                    rd = getServletContext().getRequestDispatcher("/jsp/atendimentoDetalhes.jsp");
                     rd.forward(request, response);
                     break;
                 case "formNew":
-                    estados = EstadoFacade.buscarTodos();
-                    request.setAttribute("estados", estados);
-                    rd = getServletContext().getRequestDispatcher("/jsp/clientesForm.jsp");
+                    rd = getServletContext().getRequestDispatcher("/jsp/atendimento.jsp");
                     rd.forward(request, response);
                     break;
                 case "new":
-                    if (!validCPF(request.getParameter("cpf"))) throw new RuntimeException("CPF Inválido!");
-                    dt = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("data"));
-                    cliente = new Cliente(
-                        request.getParameter("cpf"),
-                        request.getParameter("email"),
-                        request.getParameter("nome"),
-                        new java.sql.Date(dt.getTime()),
-                        request.getParameter("rua"),
-                        Integer.parseInt(request.getParameter("numero")),
-                        request.getParameter("cep"),
-                        Integer.parseInt(request.getParameter("cidade"))
+                    atendimento = new Atendimento(
+                        Integer.parseInt(request.getParameter("idProduto")),
+                        Integer.parseInt(request.getParameter("idTipoAtendimento")),
+                        Integer.parseInt(request.getParameter("idUsuario")),
+                        Integer.parseInt(request.getParameter("idCliente")),
+                        request.getParameter("nomeProduto"),
+                        request.getParameter("dscAtendimento"),
+                        ((String) request.getParameter("resAtendimento")).charAt(0),
+                        LocalDateTime.parse(request.getParameter("dtHrAtendimento"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
                     );
-                    ClientesFacade.inserir(cliente);
-                    rd = getServletContext().getRequestDispatcher("/ClientesServlet?action=list");
+                    AtendimentoFacade.inserir(atendimento);
+                    rd = getServletContext().getRequestDispatcher("/AtendimentosServlet?action=list");
                     rd.forward(request, response);
                     break;
             }
-        } catch (DAOException | ServletException | IOException | SQLException | ParseException | RuntimeException e) {
+        } catch (DAOException | ServletException | IOException | SQLException | RuntimeException e) {
             e.printStackTrace();
             request.setAttribute("jspException", e);
             request.setAttribute("status_code", 500);
-            request.setAttribute("pageName", "Clientes");
-            request.setAttribute("redirect", "./ClientesServlet?action=list");
+            request.setAttribute("pageName", "Atendimentos");
+            request.setAttribute("redirect", "./AtendimentosServlet?action=list");
             rd = getServletContext().getRequestDispatcher("/jsp/erro.jsp");
             rd.forward(request, response);
         }
     }
     
-    private boolean validCPF(String CPF) {
-        // considera-se erro CPF's formados por uma sequencia de numeros iguais
-        if (CPF.equals("00000000000") ||
-            CPF.equals("11111111111") ||
-            CPF.equals("22222222222") || CPF.equals("33333333333") ||
-            CPF.equals("44444444444") || CPF.equals("55555555555") ||
-            CPF.equals("66666666666") || CPF.equals("77777777777") ||
-            CPF.equals("88888888888") || CPF.equals("99999999999") ||
-            (CPF.length() != 11))
-            return(false);
-
-        char dig10, dig11;
-        int sm, i, r, num, peso;
-
-        // "try" - protege o codigo para eventuais erros de conversao de tipo (int)
-        try {
-        // Calculo do 1o. Digito Verificador
-            sm = 0;
-            peso = 10;
-            for (i=0; i<9; i++) {
-        // converte o i-esimo caractere do CPF em um numero:
-        // por exemplo, transforma o caractere '0' no inteiro 0
-        // (48 eh a posicao de '0' na tabela ASCII)
-            num = (int)(CPF.charAt(i) - 48);
-            sm = sm + (num * peso);
-            peso = peso - 1;
-            }
-
-            r = 11 - (sm % 11);
-            if ((r == 10) || (r == 11))
-                dig10 = '0';
-            else dig10 = (char)(r + 48); // converte no respectivo caractere numerico
-
-        // Calculo do 2o. Digito Verificador
-            sm = 0;
-            peso = 11;
-            for(i=0; i<10; i++) {
-            num = (int)(CPF.charAt(i) - 48);
-            sm = sm + (num * peso);
-            peso = peso - 1;
-            }
-
-            r = 11 - (sm % 11);
-            if ((r == 10) || (r == 11))
-                 dig11 = '0';
-            else dig11 = (char)(r + 48);
-
-        // Verifica se os digitos calculados conferem com os digitos informados.
-            if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10)))
-                 return(true);
-            else return(false);
-        } catch (InputMismatchException erro) {
-            return(false);
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -223,9 +124,9 @@ public class ClientesServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (DAOException ex) {
-            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AtendimentosServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AtendimentosServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -243,9 +144,9 @@ public class ClientesServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (DAOException ex) {
-            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AtendimentosServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(ClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AtendimentosServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
