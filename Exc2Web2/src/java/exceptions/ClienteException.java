@@ -8,16 +8,16 @@ package exceptions;
  *
  * @author leonardozanotti
  */
-public class ErroInserindoClienteException extends AppException {
-    public ErroInserindoClienteException() {
+public class ClienteException extends AppException {
+    public ClienteException() {
         
     }
     
-    public ErroInserindoClienteException(String string) {
+    public ClienteException(String string) {
         super(string);
     }
     
-    public ErroInserindoClienteException(String string, Throwable thrwbl) {
+    public ClienteException(String string, Throwable thrwbl) {
         super(string, thrwbl);
     }
 }

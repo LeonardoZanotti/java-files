@@ -8,16 +8,16 @@ package exceptions;
  *
  * @author leonardozanotti
  */
-public class ErroRemovendoClienteException extends AppException {
-    public ErroRemovendoClienteException() {
+public class UsuarioException extends AppException {
+    public UsuarioException() {
         
     }
     
-    public ErroRemovendoClienteException(String string) {
+    public UsuarioException(String string) {
         super(string);
     }
     
-    public ErroRemovendoClienteException(String string, Throwable thrwbl) {
+    public UsuarioException(String string, Throwable thrwbl) {
         super(string, thrwbl);
     }
 }

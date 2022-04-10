@@ -5,9 +5,8 @@
 package facade;
 
 import database.ConnectionFactory;
-import database.DAOException;
+import exceptions.EstadoException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 import models.Estado;
 import models.dao.EstadoDAO;
@@ -17,11 +16,13 @@ import models.dao.EstadoDAO;
  * @author leonardozanotti
  */
 public class EstadoFacade {
-    public static List<Estado> buscarTodos() throws DAOException, SQLException {
+    public static List<Estado> buscarTodos() throws EstadoException {
         List<Estado> estados;
         try (Connection con = new ConnectionFactory().getConnection()) {
             EstadoDAO dao = new EstadoDAO(con);
             estados = dao.buscarTodos();
+        } catch (Exception e) {
+            throw new EstadoException("Erro buscando estados");
         }
         return estados;
     }

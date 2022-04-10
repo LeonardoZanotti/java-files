@@ -8,16 +8,16 @@ package exceptions;
  *
  * @author leonardozanotti
  */
-public class ErroBuscandoClienteException extends AppException {
-    public ErroBuscandoClienteException() {
+public class EstadoException extends AppException {
+    public EstadoException() {
         
     }
     
-    public ErroBuscandoClienteException(String string) {
+    public EstadoException(String string) {
         super(string);
     }
     
-    public ErroBuscandoClienteException(String string, Throwable thrwbl) {
+    public EstadoException(String string, Throwable thrwbl) {
         super(string, thrwbl);
     }
 }

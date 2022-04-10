@@ -6,6 +6,7 @@ package servlets;
 
 import beans.LoginBean;
 import database.DAOException;
+import exceptions.AtendimentoException;
 import facade.AtendimentoFacade;
 import facade.ClientesFacade;
 import facade.ProdutoFacade;
@@ -123,7 +124,7 @@ public class AtendimentosServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
             }
-        } catch (DAOException | ServletException | IOException | SQLException | RuntimeException e) {
+        } catch (AtendimentoException e) {
             e.printStackTrace();
             request.setAttribute("jspException", e);
             request.setAttribute("status_code", 500);

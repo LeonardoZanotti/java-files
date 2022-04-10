@@ -6,6 +6,7 @@ package servlets;
 
 import com.google.gson.Gson;
 import database.DAOException;
+import exceptions.CidadeException;
 import facade.CidadeFacade;
 import java.io.IOException;
 import jakarta.servlet.*;
@@ -35,9 +36,10 @@ public class CidadeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      * @throws database.DAOException
      * @throws java.sql.SQLException
+     * @throws exceptions.CidadeException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, DAOException, SQLException {
+            throws ServletException, IOException, DAOException, SQLException, CidadeException {
         List<Cidade> cidades = new ArrayList<>();
         if (request.getParameter("estadoId") != null) {
             int estado = Integer.parseInt(request.getParameter("estadoId"));
@@ -72,7 +74,7 @@ public class CidadeServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (DAOException | SQLException ex) {
+        } catch (DAOException | SQLException | CidadeException ex) {
             Logger.getLogger(CidadeServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -90,7 +92,7 @@ public class CidadeServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (DAOException | SQLException ex) {
+        } catch (DAOException | SQLException | CidadeException ex) {
             Logger.getLogger(CidadeServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

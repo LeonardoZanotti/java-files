@@ -8,16 +8,16 @@ package exceptions;
  *
  * @author leonardozanotti
  */
-public class UsuarioSenhaInvalidosException extends AppException {
-    public UsuarioSenhaInvalidosException() {
+public class AtendimentoException extends AppException {
+    public AtendimentoException() {
         
     }
     
-    public UsuarioSenhaInvalidosException(String string) {
+    public AtendimentoException(String string) {
         super(string);
     }
     
-    public UsuarioSenhaInvalidosException(String string, Throwable thrwbl) {
+    public AtendimentoException(String string, Throwable thrwbl) {
         super(string, thrwbl);
     }
 }

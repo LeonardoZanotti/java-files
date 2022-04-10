@@ -4,9 +4,8 @@
  */
 package facade;
 import database.ConnectionFactory;
-import database.DAOException;
+import exceptions.UsuarioException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import models.Usuario;
 import models.dao.UsuarioDAO;
 
@@ -15,11 +14,13 @@ import models.dao.UsuarioDAO;
  * @author leonardozanotti
  */
 public class UsuarioFacade {
-    public static Usuario buscar(int id) throws DAOException, SQLException {
+    public static Usuario buscar(int id) throws UsuarioException {
         Usuario usuario;
         try (Connection con = new ConnectionFactory().getConnection()) {
             UsuarioDAO dao = new UsuarioDAO(con);
             usuario = dao.buscar(id);
+        } catch (Exception e) {
+            throw new UsuarioException("Erro buscando usuário");
         }
         return usuario;
     }

@@ -8,16 +8,16 @@ package exceptions;
  *
  * @author leonardozanotti
  */
-public class ClienteNaoExisteException extends AppException {
-    public ClienteNaoExisteException() {
+public class ProdutoException extends AppException {
+    public ProdutoException() {
         
     }
     
-    public ClienteNaoExisteException(String string) {
+    public ProdutoException(String string) {
         super(string);
     }
     
-    public ClienteNaoExisteException(String string, Throwable thrwbl) {
+    public ProdutoException(String string, Throwable thrwbl) {
         super(string, thrwbl);
     }
 }

@@ -5,6 +5,7 @@
 package servlets;
 
 import database.DAOException;
+import exceptions.ClienteException;
 import facade.ClientesFacade;
 import facade.EstadoFacade;
 import java.io.IOException;
@@ -141,7 +142,7 @@ public class ClientesServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
             }
-        } catch (DAOException | ServletException | IOException | SQLException | ParseException | RuntimeException e) {
+        } catch (ClienteException e) {
             e.printStackTrace();
             request.setAttribute("jspException", e);
             request.setAttribute("status_code", 500);

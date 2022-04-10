@@ -5,8 +5,7 @@
 package facade;
 
 import database.ConnectionFactory;
-import database.DAOException;
-import jakarta.mail.NoSuchProviderException;
+import exceptions.LoginException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -18,17 +17,25 @@ import models.dao.UsuarioDAO;
  * @author leonardozanotti
  */
 public class LoginFacade {
-    public static boolean validLogin(String login, String password, ConnectionFactory factory) throws DAOException, NoSuchAlgorithmException, NoSuchProviderException, java.security.NoSuchProviderException {
-        UsuarioDAO dao = new UsuarioDAO(factory.getConnection());
-        List<Usuario> usuarios = dao.buscarTodos();
-        String hashedPassword = getSecurePassword(password);
-        return usuarios.stream().anyMatch(user -> user.getLogin().equals(login) && user.getPassword().equals(hashedPassword));
+    public static boolean validLogin(String login, String password, ConnectionFactory factory) throws LoginException {
+        try {
+            UsuarioDAO dao = new UsuarioDAO(factory.getConnection());
+            List<Usuario> usuarios = dao.buscarTodos();
+            String hashedPassword = getSecurePassword(password);
+            return usuarios.stream().anyMatch(user -> user.getLogin().equals(login) && user.getPassword().equals(hashedPassword));
+        } catch (Exception e) {
+            throw new LoginException("Erro buscando validando login");
+        }
     }
     
-    public static Usuario getUserByLogin(String login, ConnectionFactory factory) throws DAOException {
-        UsuarioDAO dao = new UsuarioDAO(factory.getConnection());
-        Usuario usuario = dao.buscarPeloEmail(login);
-        return usuario;
+    public static Usuario getUserByLogin(String login, ConnectionFactory factory) throws LoginException {
+        try {
+            UsuarioDAO dao = new UsuarioDAO(factory.getConnection());
+            Usuario usuario = dao.buscarPeloEmail(login);
+            return usuario;
+        } catch (Exception e) {
+            throw new LoginException("Erro buscando usuário pelo login");
+        }
     }
 
     private static String getSecurePassword(String passwordToHash) {
