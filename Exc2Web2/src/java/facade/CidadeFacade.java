@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import models.Cidade;
-import models.CidadeDAO;
+import models.dao.CidadeDAO;
 
 /**
  *

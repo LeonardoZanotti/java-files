@@ -8,7 +8,7 @@ import database.ConnectionFactory;
 import database.DAOException;
 import java.util.List;
 import models.Cliente;
-import models.ClienteDAO;
+import models.dao.ClienteDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
 
