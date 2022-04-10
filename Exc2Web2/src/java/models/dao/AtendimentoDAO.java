@@ -24,7 +24,7 @@ import models.Usuario;
  * @author leonardozanotti
  */
 public class AtendimentoDAO implements DAO<Atendimento> {
-    private static final String QUERY_INSERIR = "INSERT INTO tb_atendimento (dt_hr_atendimento, dsc_atendimento, res_atendimento, id_produto, id_tipo_atendimento, id_usuario, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String QUERY_INSERIR = "INSERT INTO tb_atendimento (id_produto, id_tipo_atendimento, id_usuario, id_cliente, dsc_atendimento, res_atendimento, dt_hr_atendimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String QUERY_BUSCAR = "SELECT * FROM tb_atendimento WHERE id_atendimento = (?)";
     private static final String QUERY_BUSCAR_TODOS = "SELECT * FROM tb_atendimento";
 
@@ -100,9 +100,9 @@ public class AtendimentoDAO implements DAO<Atendimento> {
             st.setString(5, a.getDscAtendimento());
             st.setString(6, String.valueOf(a.getResAtendimento()));
             st.setTimestamp(7, Timestamp.valueOf(a.getDtHrAtendimento()));
-            st.setInt(8, a.getId());
             st.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new DAOException("Erro inserindo atendimento: " + AtendimentoDAO.QUERY_INSERIR + "/ " + a.toString(), e);
         }
     }

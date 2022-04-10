@@ -8,6 +8,7 @@ import database.ConnectionFactory;
 import database.DAOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import models.TipoAtendimento;
 import models.dao.TipoAtendimentoDAO;
 
@@ -23,5 +24,14 @@ public class TipoAtendimentoFacade {
             tipoAtendimento = dao.buscar(id);
         }
         return tipoAtendimento;
+    }
+
+    public static List<TipoAtendimento> buscarTodos() throws DAOException, SQLException {
+        List<TipoAtendimento> tipoAtendimentos;
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            TipoAtendimentoDAO dao = new TipoAtendimentoDAO(con);
+            tipoAtendimentos = dao.buscarTodos();
+        }
+        return tipoAtendimentos;
     }
 }

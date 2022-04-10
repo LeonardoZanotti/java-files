@@ -1,11 +1,11 @@
 <%-- 
-    Document   : clientesAlterar
+    Document   : atendimento
     Created on : Mar 19, 2022, 3:37:12 PM
     Author     : leonardozanotti
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="models.Cliente" %>
+<%@page import="models.Atendimento" %>
 <%@page errorPage="/jsp/erro.jsp" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -13,11 +13,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>${cliente != null ? 'Alterar' : 'Novo'} cliente</title>
+        <title>Novo atendimento</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     </head>
     
     <c:if test="${loginBean == null}">
@@ -27,139 +30,66 @@
     </c:if>
     
     <body>
-        <form action="${cliente != null ? 'ClientesServlet?action=update' : 'ClientesServlet?action=new'}" method="POST" class="m-3">
-            <input type="hidden" name="id" class="form-control" id="id" required value="${cliente != null ? cliente.id : ''}">
+        <form action="AtendimentosServlet?action=new" method="POST" class="m-3">
+            <input type="hidden" id="usuario" name="usuario" value="${userId}">
+            
             <div class="form-group">
-              <label for="cpf">CPF</label>
-              <input type="text" class="form-control" name="cpf" id="cpf" oninput="mascaraCPF(this)" placeholder="XXX.XXX.XXX-XX" maxlength="11" required value="${cliente != null ? cliente.cpf : ''}">
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="email@email.com" maxlength="50" required value="${cliente != null ? cliente.email : ''}">
-            </div>
-            <div class="form-group">
-              <label for="nome">Nome</label>
-              <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" maxlength="100" required value="${cliente != null ? cliente.nome : ''}">
-            </div>
-            <div class="form-group">
-              <label for="data">Data de nascimento</label>
-              <input type="date" class="form-control" name="data" id="data" placeholder="Data de nascimento" value="${cliente != null ? cliente.data : ''}">
-            </div>
-            <div class="form-group">
-              <label for="rua">Rua</label>
-              <input type="text" class="form-control" name="rua" id="rua" placeholder="Rua" maxlength="100" value="${cliente != null ? cliente.rua : ''}">
-            </div>
-            <div class="form-group">
-              <label for="numero">Número</label>
-              <input type="number" class="form-control" name="numero" id="numero" placeholder="XX" value="${cliente != null ? cliente.numero : ''}">
-            </div>
-            <div class="form-group">
-              <label for="cep">CEP</label>
-              <input type="text" class="form-control" name="cep" id="cep" oninput="mascaraCEP(this)" placeholder="XX.XXX-XXX" maxlength="8" value="${cliente != null ? cliente.cep : ''}">
-            </div>
-            <div class="form-group">
-              <label for="estado">UF</label>
-              <select class="form-control" name="estado" id="estado">
-                  <c:forEach var="e" items="${estados}">
-                    <option value="${e.id}">${e.nome}</option>
+              <label for="produto">Produto</label>
+              <select class="form-control" name="produto" id="produto">
+                  <c:forEach var="p" items="${produtos}">
+                    <option value="${p.id}">${p.name}</option>
                   </c:forEach>
                </select>
             </div>
+            
             <div class="form-group">
-              <label for="cidade">Cidade</label>
-              <select class="form-control" name="cidade" id="cidade"></select>
-              <input type="hidden" id="cidadeId" value="${cliente != null ? cliente.idCidade : ''}" />
+              <label for="tipoAtendimento">Tipo do atendimento</label>
+              <select class="form-control" name="tipoAtendimento" id="tipoAtendimento">
+                  <c:forEach var="ta" items="${tipoAtendimentos}">
+                    <option value="${ta.id}">${ta.name}</option>
+                  </c:forEach>
+               </select>
             </div>
-
-            <button type="submit" class="btn btn-warning">${cliente != null ? 'Alterar' : 'Salvar'}</button>
-            <a href="ClientesServlet"><button type="button" class="btn btn-light">Cancelar</button></a>
+            
+            <div class="form-group">
+              <label for="cliente">Clientes</label>
+              <select class="form-control" name="cliente" id="cliente">
+                  <c:forEach var="c" items="${clientes}">
+                    <option value="${c.id}">${c.nome}</option>
+                  </c:forEach>
+               </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="dscAtendimento">Descrição</label>
+              <input type="text" class="form-control" name="dscAtendimento" id="dscAtendimento" maxlength="100" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="dataAtendimento">Data do atendimento</label>
+              <input type="text" class="form-control" name="dataAtendimento" id="dataAtendimento" value="${defaultDate}">
+            </div>
+            <div class="form-group">
+              <label for="horaAtendimento">Horário do atendimento</label>
+              <input type="time" class="form-control" name="horaAtendimento" id="horaAtendimento" value="${defaultTime}">
+            </div>
+            
+            <div class="form-group">
+              <label for="resAtendimento">Atendimento resolvido?</label>
+              <input type="checkbox" name="resAtendimento" id="resAtendimento">
+            </div>
+            
+            <button type="submit" class="btn btn-warning">Salvar</button>
+            <a href="./jsp/portal.jsp"><button type="button" class="btn btn-light">Cancelar</button></a>
         </form>
     </body>
-     <script type="text/javascript" >
-        $(document).ready(function() {
-            getCidade();
-            $( "#estado" ).change(function() {
-              getCidades();
-            });
-        });
-
-        function mascaraCPF(i){
-           var v = i.value;
-
-           if(isNaN(v[v.length-1])){ // impede entrar outro caractere que não seja número
-              i.value = v.substring(0, v.length-1);
-              return;
-           }
-
-           i.setAttribute("maxlength", "14");
-           if (v.length == 3 || v.length == 7) i.value += ".";
-           if (v.length == 11) i.value += "-";
-
-        }
-        
-        function mascaraCEP(i){
-           var v = i.value;
-
-           if(isNaN(v[v.length-1])){ // impede entrar outro caractere que não seja número
-              i.value = v.substring(0, v.length-1);
-              return;
-           }
-
-           i.setAttribute("maxlength", "10");
-           if (v.length == 2) i.value += ".";
-           if (v.length == 6) i.value += "-";
-
-        }
-
-        function getCidade(){
-            var cidadeId = $("#cidadeId").val();
-            var url = "CidadeServlet";
-            if (cidadeId) {
-                $.ajax({
-                        url : url, // URL da sua Servlet
-                        data : {
-                            cidadeId : cidadeId
-                        }, // Parâmetro passado para a Servlet
-                        dataType : 'json',
-                        success : function(data) {
-                            // Se sucesso, limpa e preenche a combo de cidade
-                            // alert(JSON.stringify(data));
-                            $("#cidade").empty();
-                             $.each(data, function(i, obj) {
-                                $("#cidade").append('<option value=' + obj.id + '>' + obj.nome + '</option>');
-                            });
-                        },
-                        error : function(request, textStatus, errorThrown) {
-                            alert(request.status + ', Error: ' + request.statusText);
-                             // Erro
-                        }
-                    });
-            } else getCidades();
-        }
-        
-        function getCidades(){
-            var estadoId = $("#estado").val();
-            var url = "CidadeServlet";
-            $.ajax({
-                    url : url, // URL da sua Servlet
-                    data : {
-                        estadoId : estadoId
-                    }, // Parâmetro passado para a Servlet
-                    dataType : 'json',
-                    success : function(data) {
-                        // Se sucesso, limpa e preenche a combo de cidade
-                        // alert(JSON.stringify(data));
-                        $("#cidade").empty();
-                        $.each(data, function(i, obj) {
-                            $("#cidade").append('<option value=' + obj.id + '>' + obj.nome + '</option>');
-                        });
-                    },
-                    error : function(request, textStatus, errorThrown) {
-                        alert(request.status + ', Error: ' + request.statusText);
-                         // Erro
-                    }
-                });
-        }
-        </script>
-
+    
+    <script>
+      $( function() {
+        $( "#dataAtendimento" ).datepicker({
+                  dateFormat: 'dd/mm/yy'
+              }).val();
+      } );
+    </script>
+  
 </html>

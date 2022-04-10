@@ -4,6 +4,7 @@
  */
 package servlets;
 
+import beans.LoginBean;
 import database.DAOException;
 import facade.AtendimentoFacade;
 import facade.ClientesFacade;
@@ -15,8 +16,14 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,22 +90,37 @@ public class AtendimentosServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 case "formNew":
+                    List<Cliente> clientes = ClientesFacade.buscarTodos();
+                    List<Produto> produtos = ProdutoFacade.buscarTodos();
+                    List<TipoAtendimento> tipoAtendimentos = TipoAtendimentoFacade.buscarTodos();
+                    int userId = ((LoginBean) session.getAttribute("loginBean")).getId();
+                    request.setAttribute("clientes", clientes);
+                    request.setAttribute("produtos", produtos);
+                    request.setAttribute("tipoAtendimentos", tipoAtendimentos);
+                    request.setAttribute("userId", userId);
+                    request.setAttribute("defaultDate", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                    request.setAttribute("defaultTime", LocalDateTime.now().getHour() + ":" + (LocalDateTime.now().getMinute() < 10 ? "0" : "") + LocalDateTime.now().getMinute());
                     rd = getServletContext().getRequestDispatcher("/jsp/atendimento.jsp");
                     rd.forward(request, response);
                     break;
                 case "new":
-                    Produto produto = ProdutoFacade.buscar(Integer.parseInt(request.getParameter("idProduto")));
-                    TipoAtendimento tipoAtendimento = TipoAtendimentoFacade.buscar(Integer.parseInt(request.getParameter("idTipoAtendimento")));
-                    Usuario usuario = UsuarioFacade.buscar(Integer.parseInt(request.getParameter("idUsuario")));
-                    Cliente cliente = ClientesFacade.buscar(Integer.parseInt(request.getParameter("idCliente")));
+                    Produto produto = ProdutoFacade.buscar(Integer.parseInt(request.getParameter("produto")));
+                    TipoAtendimento tipoAtendimento = TipoAtendimentoFacade.buscar(Integer.parseInt(request.getParameter("tipoAtendimento")));
+                    Usuario usuario = UsuarioFacade.buscar(Integer.parseInt(request.getParameter("usuario")));
+                    Cliente cliente = ClientesFacade.buscar(Integer.parseInt(request.getParameter("cliente")));
+                    
+                    LocalDate datePart = LocalDate.parse(request.getParameter("dataAtendimento"), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    LocalTime timePart = LocalTime.parse(request.getParameter("horaAtendimento"), DateTimeFormatter.ofPattern("HH:mm"));
+                    LocalDateTime dateTime = LocalDateTime.of(datePart, timePart);
+                    
                     atendimento = new Atendimento(
                         produto,
                         tipoAtendimento,
                         usuario,
                         cliente,
                         request.getParameter("dscAtendimento"),
-                        ((String) request.getParameter("resAtendimento")).charAt(0),
-                        LocalDateTime.parse(request.getParameter("dtHrAtendimento"), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+                        request.getParameter("resAtendimento") == null ? 'N' : 'S',
+                        dateTime
                     );
                     AtendimentoFacade.inserir(atendimento);
                     rd = getServletContext().getRequestDispatcher("/AtendimentosServlet?action=list");

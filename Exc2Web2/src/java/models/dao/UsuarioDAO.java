@@ -20,6 +20,7 @@ import models.Usuario;
  */
 public class UsuarioDAO implements DAO<Usuario> {
     private static final String QUERY_INSERIR = "INSERT INTO tb_usuario (login_usuario, senha_usuario, nome_usuario) VALUES (?, ?, ?)";
+    private static final String QUERY_BUSCAR = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario WHERE id_usuario = (?)";
     private static final String QUERY_BUSCAR_TODOS = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario";
     private static final String QUERY_BUSCAR_NOME_PELO_EMAIL = "SELECT id_usuario, login_usuario, senha_usuario, nome_usuario FROM tb_usuario WHERE login_usuario = (?)";
 
@@ -34,7 +35,21 @@ public class UsuarioDAO implements DAO<Usuario> {
     
     @Override
     public Usuario buscar(long id) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (PreparedStatement st = this.con.prepareStatement(UsuarioDAO.QUERY_BUSCAR)) {
+            st.setLong(1, id);
+            Usuario user;
+            try (ResultSet rs = st.executeQuery()) {
+                rs.next();
+                user = new Usuario();
+                user.setId(rs.getInt("id_usuario"));
+                user.setName(rs.getString("nome_usuario"));
+                user.setLogin(rs.getString("login_usuario"));
+                user.setPassword(rs.getString("senha_usuario"));
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new DAOException("Erro buscando usuário pelo id: " + UsuarioDAO.QUERY_BUSCAR, e);
+        }
     }
 
     @Override

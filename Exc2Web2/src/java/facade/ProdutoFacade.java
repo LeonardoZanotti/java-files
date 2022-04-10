@@ -4,10 +4,12 @@
  */
 package facade;
 
-import database.ConnectionFactory;
-import database.DAOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
+
+import database.ConnectionFactory;
+import database.DAOException;
 import models.Produto;
 import models.dao.ProdutoDAO;
 
@@ -23,5 +25,14 @@ public class ProdutoFacade {
             produto = dao.buscar(id);
         }
         return produto;
+    }
+
+    public static List<Produto> buscarTodos() throws DAOException, SQLException {
+        List<Produto> produtos;
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            ProdutoDAO dao = new ProdutoDAO(con);
+            produtos = dao.buscarTodos();
+        }
+        return produtos;
     }
 }
