@@ -6,26 +6,31 @@ package servlets;
 
 import database.DAOException;
 import facade.AtendimentoFacade;
+import facade.ClientesFacade;
+import facade.ProdutoFacade;
+import facade.TipoAtendimentoFacade;
+import facade.UsuarioFacade;
 import java.io.IOException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Atendimento;
+import models.Cliente;
+import models.Produto;
+import models.TipoAtendimento;
+import models.Usuario;
 
 /**
  *
  * @author leonardozanotti
  */
-@WebServlet(name = "ClientesServlet", urlPatterns = {"/ClientesServlet"})
+@WebServlet(name = "AtendimentosServlet", urlPatterns = {"/AtendimentosServlet"})
 public class AtendimentosServlet extends HttpServlet {
 
     /**
@@ -48,7 +53,7 @@ public class AtendimentosServlet extends HttpServlet {
             rd.forward(request, response);
             return;
         }
-        
+
         String action = (String) request.getParameter("action");
         RequestDispatcher rd;
         int id;
@@ -57,18 +62,17 @@ public class AtendimentosServlet extends HttpServlet {
         if (action == null) {
             List<Atendimento> atendimentos = AtendimentoFacade.buscarTodos();
             request.setAttribute("atendimentos", atendimentos);
-            rd = getServletContext().getRequestDispatcher("/jsp/clientesListar.jsp");
+            rd = getServletContext().getRequestDispatcher("/jsp/atendimentoListar.jsp");
             rd.forward(request, response);
             return;
         }
-        
         try {
             switch (action) {
                 default:
                 case "list":
                     List<Atendimento> atendimentos = AtendimentoFacade.buscarTodos();
                     request.setAttribute("atendimentos", atendimentos);
-                    rd = getServletContext().getRequestDispatcher("/jsp/atendimentosListar.jsp");
+                    rd = getServletContext().getRequestDispatcher("/jsp/atendimentoListar.jsp");
                     rd.forward(request, response);
                     break;
                 case "show":
@@ -83,11 +87,15 @@ public class AtendimentosServlet extends HttpServlet {
                     rd.forward(request, response);
                     break;
                 case "new":
+                    Produto produto = ProdutoFacade.buscar(Integer.parseInt(request.getParameter("idProduto")));
+                    TipoAtendimento tipoAtendimento = TipoAtendimentoFacade.buscar(Integer.parseInt(request.getParameter("idTipoAtendimento")));
+                    Usuario usuario = UsuarioFacade.buscar(Integer.parseInt(request.getParameter("idUsuario")));
+                    Cliente cliente = ClientesFacade.buscar(Integer.parseInt(request.getParameter("idCliente")));
                     atendimento = new Atendimento(
-                        Integer.parseInt(request.getParameter("idProduto")),
-                        Integer.parseInt(request.getParameter("idTipoAtendimento")),
-                        Integer.parseInt(request.getParameter("idUsuario")),
-                        Integer.parseInt(request.getParameter("idCliente")),
+                        produto,
+                        tipoAtendimento,
+                        usuario,
+                        cliente,
                         request.getParameter("nomeProduto"),
                         request.getParameter("dscAtendimento"),
                         ((String) request.getParameter("resAtendimento")).charAt(0),

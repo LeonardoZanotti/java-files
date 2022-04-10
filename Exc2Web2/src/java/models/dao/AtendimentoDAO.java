@@ -14,6 +14,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import models.Cliente;
+import models.Produto;
+import models.TipoAtendimento;
+import models.Usuario;
 
 /**
  *
@@ -38,17 +42,22 @@ public class AtendimentoDAO implements DAO<Atendimento> {
         try (PreparedStatement st = con.prepareStatement(AtendimentoDAO.QUERY_BUSCAR)) {
             st.setLong(1, id);
             try (ResultSet rs = st.executeQuery()) {
-                if (rs.next())
+                if (rs.next()) {
+                    Produto produto = new ProdutoDAO(this.con).buscar(rs.getInt("id_produto"));
+                    TipoAtendimento tipoAtendimento = new TipoAtendimentoDAO(this.con).buscar(rs.getInt("id_tipo_atendimento"));
+                    Usuario usuario = new UsuarioDAO(this.con).buscar(rs.getInt("id_usuario"));
+                    Cliente cliente = new ClienteDAO(this.con).buscar(rs.getInt("id_cliente"));
                     return new Atendimento(
-                            rs.getInt("id_produto"),
-                            rs.getInt("id_tipo_atendimento"),
-                            rs.getInt("id_usuario"),
-                            rs.getInt("id_cliente"),
+                            produto,
+                            tipoAtendimento,
+                            usuario,
+                            cliente,
                             rs.getString("nome_produto"),
                             rs.getString("dsc_atendimento"),
                             rs.getString("res_atendimento").charAt(0),
                             rs.getTimestamp("dt_hr_atendimento").toLocalDateTime()
                     );
+                }
             }
             return null;
         } catch (SQLException e) {
@@ -61,15 +70,19 @@ public class AtendimentoDAO implements DAO<Atendimento> {
         List<Atendimento> atendimentos = new ArrayList<>();
         try (PreparedStatement st = this.con.prepareStatement(AtendimentoDAO.QUERY_BUSCAR_TODOS); ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
+                Produto produto = new ProdutoDAO(this.con).buscar(rs.getInt("id_produto"));
+                TipoAtendimento tipoAtendimento = new TipoAtendimentoDAO(this.con).buscar(rs.getInt("id_tipo_atendimento"));
+                Usuario usuario = new UsuarioDAO(this.con).buscar(rs.getInt("id_usuario"));
+                Cliente cliente = new ClienteDAO(this.con).buscar(rs.getInt("id_cliente"));
                 Atendimento atendimento = new Atendimento(
-                            rs.getInt("id_produto"),
-                            rs.getInt("id_tipo_atendimento"),
-                            rs.getInt("id_usuario"),
-                            rs.getInt("id_cliente"),
-                            rs.getString("nome_produto"),
-                            rs.getString("dsc_atendimento"),
-                            rs.getString("res_atendimento").charAt(0),
-                            rs.getTimestamp("dt_hr_atendimento").toLocalDateTime()
+                        produto,
+                        tipoAtendimento,
+                        usuario,
+                        cliente,
+                        rs.getString("nome_produto"),
+                        rs.getString("dsc_atendimento"),
+                        rs.getString("res_atendimento").charAt(0),
+                        rs.getTimestamp("dt_hr_atendimento").toLocalDateTime()
                 );
                 atendimentos.add(atendimento);
             }
@@ -82,10 +95,10 @@ public class AtendimentoDAO implements DAO<Atendimento> {
     @Override
     public void inserir(Atendimento a) throws DAOException {
         try (PreparedStatement st = con.prepareStatement(AtendimentoDAO.QUERY_INSERIR)) {
-            st.setInt(1, a.getIdProduto());
-            st.setInt(2, a.getIdTipoAtendimento());
-            st.setInt(3, a.getIdUsuario());
-            st.setInt(4, a.getIdCliente());
+            st.setInt(1, a.getProduto().getId());
+            st.setInt(2, a.getTipoAtendimento().getId());
+            st.setInt(3, a.getUsuario().getId());
+            st.setInt(4, a.getCliente().getId());
             st.setString(5, a.getNomeProduto());
             st.setString(6, a.getDscAtendimento());
             st.setString(7, String.valueOf(a.getResAtendimento()));

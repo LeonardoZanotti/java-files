@@ -11,28 +11,32 @@ import java.time.LocalDateTime;
  * @author leonardozanotti
  */
 public class Atendimento {
-    private int id, idProduto, idTipoAtendimento, idUsuario, idCliente;
+    private int id;
+    private Produto produto;
+    private TipoAtendimento tipoAtendimento;
+    private Usuario usuario;
+    private Cliente cliente;
     private String nomeProduto, dscAtendimento;
     private char resAtendimento;
     private LocalDateTime dtHrAtendimento;
 
-    public Atendimento(int idProduto, int idTipoAtendimento, int idUsuario, int idCliente, String nomeProduto, String dscAtendimento, char resAtendimento, LocalDateTime dtHrAtendimento) {
-        this.idProduto = idProduto;
-        this.idTipoAtendimento = idTipoAtendimento;
-        this.idUsuario = idUsuario;
-        this.idCliente = idCliente;
+    public Atendimento(Produto produto, TipoAtendimento tipoAtendimento, Usuario usuario, Cliente cliente, String nomeProduto, String dscAtendimento, char resAtendimento, LocalDateTime dtHrAtendimento) {
+        this.produto = produto;
+        this.tipoAtendimento = tipoAtendimento;
+        this.usuario = usuario;
+        this.cliente = cliente;
         this.nomeProduto = nomeProduto;
         this.dscAtendimento = dscAtendimento;
         this.resAtendimento = resAtendimento;
         this.dtHrAtendimento = dtHrAtendimento;
     }
     
-    public Atendimento(int id, int idProduto, int idTipoAtendimento, int idUsuario, int idCliente, String nomeProduto, String dscAtendimento, char resAtendimento, LocalDateTime dtHrAtendimento) {
+    public Atendimento(int id, Produto produto, TipoAtendimento tipoAtendimento, Usuario usuario, Cliente cliente, String nomeProduto, String dscAtendimento, char resAtendimento, LocalDateTime dtHrAtendimento) {
         this.id = id;
-        this.idProduto = idProduto;
-        this.idTipoAtendimento = idTipoAtendimento;
-        this.idUsuario = idUsuario;
-        this.idCliente = idCliente;
+        this.produto = produto;
+        this.tipoAtendimento = tipoAtendimento;
+        this.usuario = usuario;
+        this.cliente = cliente;
         this.nomeProduto = nomeProduto;
         this.dscAtendimento = dscAtendimento;
         this.resAtendimento = resAtendimento;
@@ -47,36 +51,36 @@ public class Atendimento {
         this.id = id;
     }
 
-    public int getIdProduto() {
-        return idProduto;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setIdProduto(int idProduto) {
-        this.idProduto = idProduto;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
-    public int getIdTipoAtendimento() {
-        return idTipoAtendimento;
+    public TipoAtendimento getTipoAtendimento() {
+        return tipoAtendimento;
     }
 
-    public void setIdTipoAtendimento(int idTipoAtendimento) {
-        this.idTipoAtendimento = idTipoAtendimento;
+    public void setTipoAtendimento(TipoAtendimento tipoAtendimento) {
+        this.tipoAtendimento = tipoAtendimento;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public String getNomeProduto() {
@@ -110,4 +114,6 @@ public class Atendimento {
     public void setDtHrAtendimento(LocalDateTime dtHrAtendimento) {
         this.dtHrAtendimento = dtHrAtendimento;
     }
+
+    
 }
