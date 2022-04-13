@@ -35,7 +35,7 @@
             <a class="list-group-item list-group-item-action" href="../GeradorRelatorioServlet?report=pessoas">Relatório de pessoas</a>
             <a class="list-group-item list-group-item-action" href="../GeradorRelatorioServlet?report=atendimentos">Relatório de atendimentos</a>
             <a class="list-group-item list-group-item-action" href="../GeradorRelatorioServlet?report=atendimentos-resolvidos">Relatório de atendimentos resolvidos</a>
-            <a class="list-group-item list-group-item-action" href="../GeradorRelatorioServlet?report=atendimentos-tipo">Relatório de atendimentos por tipo</a>
+            <a class="list-group-item list-group-item-action" href="../GeradorRelatorioServlet?report=atendimentos-tipo">Relatório de reclamações</a>
             <hr>
             <a class="list-group-item list-group-item-action" href="../LogoutServlet">Sair</a>
         </div>
